@@ -20,7 +20,7 @@ public class SearchController {
 
 
     @GetMapping
-    public List<SearchResult> search(@RequestParam("q") String query) {
+    public List<String> search(@RequestParam("q") String query) {
         return searchService.search(query);
     }
 }
