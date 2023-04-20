@@ -1,4 +1,4 @@
-package com.example.shopeepy.service;
+package com.example.shopeepy.service.db;
 
 import java.io.FileInputStream;
 import java.io.IOException;
