@@ -2,6 +2,7 @@ package com.example.shopeepy.service;
 
 import com.example.shopeepy.model.Person;
 import com.google.firebase.database.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,11 +13,6 @@ import java.util.concurrent.Future;
 
 @Service
 public class UserService {
-    private final DatabaseReference ref;
-    public UserService() {
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        ref = db.getReference("users");
-    }
 
     public String createUser(Person person) throws Exception, ExecutionException, InterruptedException {
         FirebaseDatabase db = FirebaseDatabase.getInstance();

@@ -5,7 +5,6 @@ import com.example.shopeepy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,11 +19,11 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public Person getUserById(@RequestHeader() Long id) {
-        return null;
+    public Person getUserById(@RequestHeader() String id) {
+        return userService.getUserById(id);
     }
 
-    @PostMapping("/createUser")
+    @PostMapping("/add")
     public String createUser(@RequestBody Person person) throws Exception {
         System.out.println("createuser");
         userService.createUser(person);
