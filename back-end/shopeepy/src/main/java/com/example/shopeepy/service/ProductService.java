@@ -1,13 +1,14 @@
 package com.example.shopeepy.service;
 
 import com.example.shopeepy.model.Product;
-import com.google.api.gax.rpc.NotFoundException;
 import com.google.firebase.database.*;
 import com.google.firebase.internal.NonNull;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class ProductService {
@@ -17,19 +18,47 @@ public class ProductService {
         System.out.println("ProductService created");
     }
 
+    public CompletableFuture<List<Product>> getAllProducts() {
+        CompletableFuture<List<Product>> future = new CompletableFuture<>();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("product");
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // create a list to hold the products
+                List<Product> productList = new ArrayList<>();
+
+                // loop through the children of the snapshot, which represent the individual products
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    // Convert the DataSnapshot to a Product object and complete the future with the product
+                    Product retrievedProduct = dataSnapshot.getValue(Product.class);
+                    // add the product to the list
+                    productList.add(retrievedProduct);
+                }
+
+                // complete the future with the list of products
+                future.complete(productList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // if the operation is cancelled or fails, complete the future exceptionally
+                future.completeExceptionally(error.toException());
+            }
+        };
+
+        // attach the listener to the reference and return the future
+        ref.addValueEventListener(listener);
+        return future;
+    }
     public CompletableFuture<Product> getProductById(Long productId) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("product").child(String.valueOf(productId));
-        System.out.println(databaseReference.toString());
-
         CompletableFuture<Product> future = new CompletableFuture<>();
-
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     // Convert the DataSnapshot to a Product object and complete the future with the product
                     Product retrievedProduct = dataSnapshot.getValue(Product.class);
-                    System.out.println(retrievedProduct.getpName() + " NAMEMEM");
                     future.complete(retrievedProduct);
                 } else {
                     // If the product is not found, complete the future exceptionally with a not found exception
@@ -45,5 +74,13 @@ public class ProductService {
         });
 
         return future;
+    }
+
+    public ResponseEntity<String> createProduct(Product product) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("product");
+        DatabaseReference newProductReference = databaseReference.push();
+        newProductReference.setValueAsync(product);
+        String productId = newProductReference.getKey();
+        return ResponseEntity.ok().body(productId);
     }
 }

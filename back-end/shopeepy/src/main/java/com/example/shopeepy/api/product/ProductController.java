@@ -10,20 +10,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
     @Autowired
-    private Product product;
-    @Autowired
     private ProductService productService;
 
     @GetMapping("/")
-    public Person getAvailableProducts() {
-        ArrayList availableProducts = product.getAvailableProducts();
-        return null;
+    public CompletableFuture<ResponseEntity<List<Product>>> getAvailableProducts() {
+        return productService.getAllProducts().thenApply(product -> ResponseEntity.ok().body(product))
+                .exceptionally(e -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{id}")
@@ -33,9 +32,9 @@ public class ProductController {
                 .exceptionally(e -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public String createProduct(@RequestBody Product product) {
-        return "Created product";
+    @PostMapping("/create")
+    public ResponseEntity<String> createProduct(@RequestBody Product product) {
+        return productService.createProduct(product);
     }
 
     @PutMapping("/{id}")

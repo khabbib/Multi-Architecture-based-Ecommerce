@@ -24,10 +24,6 @@ public class Product {
     public Product() {
     }
 
-    public ArrayList getAvailableProducts() {
-        return null;
-    }
-
     public String getpName() {
         return pName;
     }
