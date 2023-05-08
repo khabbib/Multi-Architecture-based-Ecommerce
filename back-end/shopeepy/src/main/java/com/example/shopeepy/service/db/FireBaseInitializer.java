@@ -15,7 +15,7 @@ public class FireBaseInitializer {
     @PostConstruct
     public void initializeFireBase() throws IOException {
         System.out.println("FireBaseInitializer created");
-        FileInputStream serviceAccount = new FileInputStream("./serviceAccountKey.json");
+        FileInputStream serviceAccount = new FileInputStream("back-end/shopeepy/serviceAccountKey.json");
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .setDatabaseUrl("https://shopeepy-db-1.firebaseio.com/")

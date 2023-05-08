@@ -18,10 +18,6 @@ public class Person {
         this.role = role;
     }
 
-
-
-
-
     public String getPersonId() {
         return personId;
     }
