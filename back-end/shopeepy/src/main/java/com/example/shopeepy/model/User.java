@@ -3,69 +3,102 @@ package com.example.shopeepy.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
-    private String personId;
-    private String name;
-    private String familyName;
-    private String age;
+    private String customerId;
     private String role;
+    private String firstname;
+    private String lastName;
+    private String birthday;
+    private String email;
+    private String username;
+    private String password;
 
-
-    public User(@JsonProperty("personId") String personId, @JsonProperty("name") String name, @JsonProperty("familyName") String familyName, @JsonProperty("age") String age, @JsonProperty("role") String role) {
-        this.personId = personId;
-        this.name = name;
-        this.familyName = familyName;
-        this.age = age;
+    public User(
+            @JsonProperty("customerId") String customerId,
+            @JsonProperty("role") String role,
+            @JsonProperty("firstName") String firstName,
+            @JsonProperty("lastName") String lastName,
+            @JsonProperty("birthday") String birthday,
+            @JsonProperty("email") String email,
+            @JsonProperty("username") String username,
+            @JsonProperty("password") String password
+    ) {
+        this.customerId = customerId;
         this.role = role;
+        this.firstname = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.email = email;
+        this.username = username;
+        this.password = password;
     }
 
-    public String getPersonId() {
-        return personId;
+    public String getCustomerId() {
+        return customerId;
     }
-
-    public void setPersonId(String personId) {
-        this.personId = personId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getFamilyName() {
-        return familyName;
-    }
-
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
-    }
-
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public String getRole() {
         return role;
     }
-
     public void setRole(String role) {
         this.role = role;
     }
 
+    public String getFirstname() {
+        return firstname;
+    }
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
-        return "Person{" +
-                "personId='" + personId + '\'' +
-                ", name='" + name + '\'' +
-                ", familyName='" + familyName + '\'' +
-                ", age='" + age + '\'' +
+        return "Customer{" +
+                "customerId='" + customerId + '\'' +
                 ", role='" + role + '\'' +
+                ", firstName='" + firstname + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }
