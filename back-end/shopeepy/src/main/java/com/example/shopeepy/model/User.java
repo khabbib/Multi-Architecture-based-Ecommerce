@@ -2,7 +2,7 @@ package com.example.shopeepy.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Person {
+public class User {
     private String personId;
     private String name;
     private String familyName;
@@ -10,7 +10,7 @@ public class Person {
     private String role;
 
 
-    public Person(@JsonProperty("personId") String personId,@JsonProperty("name") String name,@JsonProperty("familyName") String familyName,@JsonProperty("age") String age,@JsonProperty("role") String role) {
+    public User(@JsonProperty("personId") String personId, @JsonProperty("name") String name, @JsonProperty("familyName") String familyName, @JsonProperty("age") String age, @JsonProperty("role") String role) {
         this.personId = personId;
         this.name = name;
         this.familyName = familyName;

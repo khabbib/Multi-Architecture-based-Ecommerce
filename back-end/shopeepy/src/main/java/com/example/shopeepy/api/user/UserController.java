@@ -1,43 +1,76 @@
 package com.example.shopeepy.api.user;
 
-import com.example.shopeepy.model.Person;
+import com.example.shopeepy.model.User;
 import com.example.shopeepy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
+/**
+ * Controller for Users.
+ */
 @RestController
 @RequestMapping("/users")
 public class UserController {
     @Autowired
-    private UserService userService = new UserService();
+    private UserService userService;
 
+    /**
+     * Returns all users.
+     *
+     * @return ResponseEntity<List < User>>
+     */
     @GetMapping("/")
-    public List<Person> getActiveUsers() {
-        return  userService.getActiveUsers();
+    public CompletableFuture<ResponseEntity<List<User>>> getAvailableusers() {
+        return userService.getAllUsers().thenApply(user -> ResponseEntity.ok().body(user)).exceptionally(e -> ResponseEntity.notFound().build());
     }
 
+    /**
+     * Returns user based on ID.
+     *
+     * @param id
+     * @return ResponseEntity<user>
+     */
     @GetMapping("/{id}")
-    public Person getUserById(@RequestHeader() String id) {
-        return userService.getUserById(id);
+    public CompletableFuture<ResponseEntity<User>> getuserById(@PathVariable String id) {
+        return userService.getUserById(id).thenApply(user -> ResponseEntity.ok().body(user)).exceptionally(e -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/add")
-    public String createUser(@RequestBody Person person) throws Exception {
-        System.out.println("createuser");
-        userService.createUser(person);
-        return "Created User ";
+    /**
+     * Creates user.
+     *
+     * @param user
+     * @return ResponseEntity<String>
+     */
+    @PostMapping("/create")
+    public ResponseEntity<String> createuser(@RequestBody User user) {
+        return userService.createUser(user);
     }
 
-    @PutMapping("/{id}")
-    public String updateUser(@RequestBody Person person) {
-        return "Updated User";
+    /**
+     * Updates a user based on ID.
+     *
+     * @param id
+     * @param user
+     * @return ResponseEntity<String>
+     */
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateuser(@PathVariable String id, @RequestBody User user) {
+        return userService.updateuser(id, user);
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteUser(@RequestHeader Long id) {
-        return "Deleted User ";
+    /**
+     * Deletes a user based on ID.
+     *
+     * @param id
+     * @return ResponseEntity<String>
+     */
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteuser(@PathVariable String id) {
+        return userService.deleteUser(id);
     }
-
 }
+
