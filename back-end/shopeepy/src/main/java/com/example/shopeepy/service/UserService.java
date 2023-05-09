@@ -121,7 +121,7 @@ public class UserService {
      * @param user
      * @return ResponseEntity<String>
      */
-    public ResponseEntity<String> updateuser(String id, User user) {
+    public ResponseEntity<String> updateUser(String id, User user) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("user/" + id);
         ref.setValueAsync(user);
         return ResponseEntity.ok("User updated successfully");

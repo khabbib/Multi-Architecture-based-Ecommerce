@@ -59,7 +59,7 @@ public class UserController {
      */
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateuser(@PathVariable String id, @RequestBody User user) {
-        return userService.updateuser(id, user);
+        return userService.updateUser(id, user);
     }
 
     /**
