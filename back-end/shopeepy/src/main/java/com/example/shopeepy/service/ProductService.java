@@ -21,7 +21,6 @@ public class ProductService {
 
     /**
      * Get all products as a list.
-     *
      * @return List<Product>
      */
     public CompletableFuture<List<Product>> getAllProducts() {
@@ -59,7 +58,6 @@ public class ProductService {
 
     /**
      * Get product by ID.
-     *
      * @return Product
      */
     public CompletableFuture<Product> getProductById(Long productId) {
@@ -89,6 +87,7 @@ public class ProductService {
     }
 
     /**
+     * Create a product.
      * @param product
      * @return
      */
@@ -115,6 +114,12 @@ public class ProductService {
         }
     }
 
+    /**
+     * Update a product.
+     * @param id
+     * @param product
+     * @return ResponseEntity<String>
+     */
     public ResponseEntity<String> updateProduct(String id, Product product) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("product/" + id);
         ref.setValueAsync(product);
