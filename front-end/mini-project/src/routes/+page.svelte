@@ -4,24 +4,30 @@
 <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
 -->
 
-<style>
-    h1 {
-        color: rgb(29, 126, 29);
-    }
-</style>
-
 <script>
-    import RegisterPage from '../Components/RegisterPage.svelte';
+    import "../app.css";
+    import RegisterPage from '../routes/RegisterPage.svelte';
+    import LoginPage from '../routes/LoginPage.svelte';
     import HeaderPage from '../Components/HeaderPage.svelte';
 
     let route = '/Register'; // REPL alternative to routing
 </script>
 
-<!-- if stamement and bind:route to mimic a router in the REPL -->
-{#if route == '/Register'}
+<HeaderPage />
+
+<h1 class="text-3xl font-bold underline">Hello world!</h1>
+  
+<style lang="postcss">
+    :global(html) {
+      background-color: whitesmoke;
+    }
+</style>
+
+<!-- if stamement and bind:route to mimic a router in the REPL 
+{#if route == '/Header'}
   <RegisterPage bind:route />
 {:else}
   <HeaderPage bind:route />
 {/if}
-
+-->
 
