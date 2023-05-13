@@ -29,9 +29,8 @@ public class ProductServiceApplication {
 			repository.createProduct(new Product("Orange", 2.99, 20));
 
 			// fetch all products
-			System.out.println("Find product by id" + repository.getProductById("-NVHx5LgiDbfTlkgS0be").get().getName());
-			CompletableFuture<List<Product>> products = repository.getAllProducts();
-			System.out.println("Find all products:" + products.get().size());
+			repository.deleteProduct("-NVHx5Lu-e7WBZ2Rp3YY");
+			System.out.println("Product deleted successfully");
 		};
 	}
 

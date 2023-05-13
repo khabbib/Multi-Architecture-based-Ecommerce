@@ -80,7 +80,7 @@ public class ProductRepository {
                 future.completeExceptionally(databaseError.toException());
             }
         });
-        System.out.println(future.get().getName());
+
         return future;
     }
 

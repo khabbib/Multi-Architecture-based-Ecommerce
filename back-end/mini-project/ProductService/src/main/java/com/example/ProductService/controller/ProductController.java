@@ -4,6 +4,7 @@ import com.example.ProductService.model.Product;
 import com.example.ProductService.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,25 +21,37 @@ public class ProductController {
     // Get all products
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
-    public  CompletableFuture<List<Product>> getAvailableProducts() {
-        CompletableFuture<List<Product>> products = productService.getAllProducts();
-        return products;
+    public  CompletableFuture<ResponseEntity<List<Product>>> getAvailableProducts() {
+        return productService.getAllProducts().thenApply(product -> ResponseEntity.ok().body(product))
+                .exceptionally(e -> ResponseEntity.notFound().build());
     }
 
     // Add product
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public String createProduct(@RequestBody Product product) {
+    public void createProduct(@RequestBody Product product) {
         productService.createProduct(product);
-        return product.toString();
     }
 
     // Get product by ID
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public  CompletableFuture<Product> getProductById(@PathVariable("id") String id) throws ExecutionException, InterruptedException {
-        CompletableFuture<Product> product = productService.getProductById(id);
-        return product;
+    public  CompletableFuture<ResponseEntity<Product>> getProductById(@PathVariable("id") String id) throws ExecutionException, InterruptedException {
+        return productService.getProductById(id)
+                .thenApply(product -> ResponseEntity.ok().body(product))
+                .exceptionally(e -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> deleteProduct(@RequestHeader String id) {
+        return productService.deleteProduct(id);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> updateProduct(@RequestHeader String id, @RequestBody Product product) {
+        return productService.updateProduct(id, product);
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.ProductService.service;
 import com.example.ProductService.model.Product;
 import com.example.ProductService.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,4 +28,13 @@ public class ProductService {
     public void createProduct(Product product) {
         productRepository.createProduct(product);
     }
+
+    public ResponseEntity<String> deleteProduct(String id) {
+        return productRepository.deleteProduct(id);
+    }
+
+    public ResponseEntity<String> updateProduct(String id, Product product) {
+        productRepository.updateProduct(id, product);
+    }
+
 }
