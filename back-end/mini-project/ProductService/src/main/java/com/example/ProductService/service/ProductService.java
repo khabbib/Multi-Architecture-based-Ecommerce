@@ -34,7 +34,7 @@ public class ProductService {
     }
 
     public ResponseEntity<String> updateProduct(String id, Product product) {
-        productRepository.updateProduct(id, product);
+        return productRepository.updateProduct(id, product);
     }
 
 }
