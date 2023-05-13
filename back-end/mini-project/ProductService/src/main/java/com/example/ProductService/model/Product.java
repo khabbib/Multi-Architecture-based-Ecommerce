@@ -1,46 +1,101 @@
 package com.example.ProductService.model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Product {
-    private String id;
-    private String name;
-    private double price;
-    private int quantity;
+    private String pId;
+    private String pName;
+    private String pType;
+    private String pColor;
+    private String pCondition;
+    private double pPrice;
+    private double pQuantity;
 
-    public Product(String name, double price, int quantity) {
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
+
+    public Product(String pId, String name, String type, String pColor, String pCondition, double pPrice, double pQuantity) {
+        this.pId = pId;
+        this.pName = name;
+        this.pType = type;
+        this.pColor = pColor;
+        this.pCondition = pCondition;
+        this.pPrice = pPrice;
+        this.pQuantity = pQuantity;
     }
 
-    public String getId() {
-        return id;
+
+
+    public Product() {
     }
-    public void setId(String id) {
-        this.id = id;
+
+    public String getpId() {
+        return pId;
     }
-    public String getName() {
-        return name;
+
+    public void setpId(String pId) {
+        this.pId = pId;
     }
-    public void setName(String name) {
-        this.name = name;
+
+    public String getpName() {
+        return pName;
     }
-    public double getPrice() {
-        return price;
+
+    public void setpName(String pName) {
+        this.pName = pName;
     }
-    public void setPrice(double price) {
-        this.price = price;
+
+    public String getpType() {
+        return pType;
     }
-    public int getQuantity() {
-        return quantity;
+
+    public void setpType(String pType) {
+        this.pType = pType;
     }
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+
+    public String getpColor() {
+        return pColor;
     }
+
+    public void setpColor(String pColor) {
+        this.pColor = pColor;
+    }
+
+    public String getpCondition() {
+        return pCondition;
+    }
+
+    public void setpCondition(String pCondition) {
+        this.pCondition = pCondition;
+    }
+
+    public double getpPrice() {
+        return pPrice;
+    }
+
+    public void setpPrice(Long pPrice) {
+        this.pPrice = pPrice;
+    }
+
+    public double getpQuantity() {
+        return pQuantity;
+    }
+
+    public void setpQuantity(Long pQuantity) {
+        this.pQuantity = pQuantity;
+    }
+
 
     @Override
     public String toString() {
-        return "Product: " + name + ", Price: " + price + ", Quantity: " + quantity;
+        return "Product{" +
+                "pId='" + pId + '\'' +
+                ", pName='" + pName + '\'' +
+                ", pType='" + pType + '\'' +
+                ", pColor='" + pColor + '\'' +
+                ", pCondition='" + pCondition + '\'' +
+                ", pPrice='" + pPrice + '\'' +
+                ", pQuantity='" + pQuantity + '\'' +
+                '}';
     }
-
 
 }

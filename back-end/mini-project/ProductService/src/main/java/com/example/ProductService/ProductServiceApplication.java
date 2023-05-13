@@ -7,8 +7,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @SpringBootApplication
@@ -25,12 +27,27 @@ public class ProductServiceApplication {
 	public CommandLineRunner test(ProductRepository repository) {
 		return (args) -> {
 			FirebaseInitializer.initializeFireBase();
-			repository.createProduct(new Product("Apple", 1.99, 10));
-			repository.createProduct(new Product("Orange", 2.99, 20));
+			//repository.createProduct(new Product(UUID.randomUUID().toString(), "Product 1", "Electronic", "Blue", "No condition", 100.00, 10));
+			//repository.createProduct(new Product(UUID.randomUUID().toString(), "Product 2", "Electronic", "Black", "No condition", 99.00, 1));
 
-			// fetch all products
-			repository.deleteProduct("-NVHx5Lu-e7WBZ2Rp3YY");
-			System.out.println("Product deleted successfully");
+			// Delete all products
+			//repository.deleteAllProducts();
+
+			// Get all products
+			CompletableFuture<List<Product>> products = repository.getAllProducts();
+			System.out.println("All products: " + products.get());
+
+			// Get a product by ID
+			CompletableFuture<Product> product = repository.getProductById("36f20b15-71a1-4679-8750-1e5b88d60dae");
+			System.out.println("Product by ID: " + product.get());
+
+			// Delete a product
+			ResponseEntity<String> status = repository.deleteProduct("XXX");
+			if(status.toString().contains("204")){
+				System.out.println("Product not found" + status);
+			}else {
+				System.out.println("Product deleted successfully" + status );
+			}
 		};
 	}
 

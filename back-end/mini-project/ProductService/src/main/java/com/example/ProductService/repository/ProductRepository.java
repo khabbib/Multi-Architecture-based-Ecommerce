@@ -40,19 +40,23 @@ public class ProductRepository {
 
                 // complete the future with the list of products
                 future.complete(productList);
+                System.out.println("Successfully retrieved " + productList.size() + " products.");
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // if the operation is cancelled or fails, complete the future exceptionally
                 future.completeExceptionally(error.toException());
+                System.err.println("Error retrieving products: " + error.getMessage());
             }
         };
 
         // attach the listener to the reference and return the future
         ref.addValueEventListener(listener);
-       return future;
+        System.out.println("Fetching products...");
+        return future;
     }
+
 
     /**
      * Get product by ID.
@@ -76,7 +80,6 @@ public class ProductRepository {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                System.out.println("Error fetching product: " + databaseError.getMessage());
                 future.completeExceptionally(databaseError.toException());
             }
         });
@@ -122,5 +125,10 @@ public class ProductRepository {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("product/" + id);
         ref.setValueAsync(product);
         return ResponseEntity.ok("Product updated successfully");
+    }
+
+    public void deleteAllProducts() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("product");
+        ref.removeValueAsync();
     }
 }
