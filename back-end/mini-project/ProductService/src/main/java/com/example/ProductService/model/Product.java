@@ -1,8 +1,5 @@
 package com.example.ProductService.model;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class Product {
     private String pId;
     private String pName;

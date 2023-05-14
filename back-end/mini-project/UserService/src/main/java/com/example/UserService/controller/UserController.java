@@ -1,10 +1,10 @@
-package controller;
+package com.example.UserService.controller;
 
 import lombok.RequiredArgsConstructor;
-import model.User;
+import com.example.UserService.model.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.UserService;
+import com.example.UserService.service.UserService;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutionException;
  * Controller for users.
  */
 @RestController
-@RequestMapping("/Users")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
