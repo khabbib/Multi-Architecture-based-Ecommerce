@@ -28,18 +28,18 @@ public class UserServiceApplication {
 
 			// Get all users
 			CompletableFuture<List<User>> users = repository.getAllUsers();
-			System.out.println("All products: " + users.get());
+			System.out.println("All users: " + users.get());
 
 			// Get a product by ID
 			CompletableFuture<User> user = repository.getUserById("36f20b15-71a1-4679-8750-1e5b88d60dae");
-			System.out.println("Product by ID: " + user.get());
+			System.out.println("User by ID: " + user.get());
 
 			// Delete a product
 			ResponseEntity<String> status = repository.deleteUser("XXX");
 			if(status.toString().contains("204")){
-				System.out.println("Product not found" + status);
+				System.out.println("User not found" + status);
 			}else {
-				System.out.println("Product deleted successfully" + status );
+				System.out.println("User deleted successfully" + status );
 			}
 		};
 	}
