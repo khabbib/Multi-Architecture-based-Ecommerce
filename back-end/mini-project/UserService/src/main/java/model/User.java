@@ -4,98 +4,62 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class User {
-    private String pId;
-    private String pName;
-    private String pType;
-    private String pColor;
-    private String pCondition;
-    private double pPrice;
-    private double pQuantity;
+    private String id;
+    private String name;
+    private String username;
+    private String password;
+    private String type;
 
-
-    public User(String pId, String name, String type, String pColor, String pCondition, double pPrice, double pQuantity) {
-        this.pId = pId;
-        this.pName = name;
-        this.pType = type;
-        this.pColor = pColor;
-        this.pCondition = pCondition;
-        this.pPrice = pPrice;
-        this.pQuantity = pQuantity;
+    public User(String id, String name, String username, String password, String type) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.type = type;
     }
 
-
-
-    public User() {
+    public String getId() {
+        return id;
     }
 
-    public String getpId() {
-        return pId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setpId(String pId) {
-        this.pId = pId;
+    public String getName() {
+        return name;
     }
 
-    public String getpName() {
-        return pName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setpName(String pName) {
-        this.pName = pName;
+    public String getUsername() {
+        return username;
     }
 
-    public String getpType() {
-        return pType;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setpType(String pType) {
-        this.pType = pType;
+    public String getPassword() {
+        return password;
     }
 
-    public String getpColor() {
-        return pColor;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public void setpColor(String pColor) {
-        this.pColor = pColor;
+    public String getType() {
+        return type;
     }
 
-    public String getpCondition() {
-        return pCondition;
+    public void setType(String type) {
+        this.type = type;
     }
-
-    public void setpCondition(String pCondition) {
-        this.pCondition = pCondition;
-    }
-
-    public double getpPrice() {
-        return pPrice;
-    }
-
-    public void setpPrice(Long pPrice) {
-        this.pPrice = pPrice;
-    }
-
-    public double getpQuantity() {
-        return pQuantity;
-    }
-
-    public void setpQuantity(Long pQuantity) {
-        this.pQuantity = pQuantity;
-    }
-
 
     @Override
     public String toString() {
-        return "Product{" +
-                "pId='" + pId + '\'' +
-                ", pName='" + pName + '\'' +
-                ", pType='" + pType + '\'' +
-                ", pColor='" + pColor + '\'' +
-                ", pCondition='" + pCondition + '\'' +
-                ", pPrice='" + pPrice + '\'' +
-                ", pQuantity='" + pQuantity + '\'' +
-                '}';
+        return "ID: " + id + ", Name: " + name + ", Username: " + username + ", Password: " + password + ", Type: " + type;
     }
-
 }

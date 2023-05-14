@@ -25,11 +25,11 @@ public class FirebaseInitializer {
     public static String getDatabaseUrl(String dbName) {
         switch (dbName) {
             case "product":
-                return "https://mini-project-product.firebaseio.com/";
+                return "https://mini-project-product.europe-west1.firebasedatabase.app";
             case "order":
-                return "https://mini-project-order.firebaseio.com/";
+                return "https://mini-project-order.europe-west1.firebasedatabase.app";
             case "user":
-                return "https://mini-project-user.firebaseio.com/";
+                return "https://mini-project-user.europe-west1.firebasedatabase.app";
             default:
                 return "Invalid database name";
         }

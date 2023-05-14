@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import repository.UserRepository;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @SpringBootApplication
@@ -25,22 +26,12 @@ public class UserServiceApplication {
 	public CommandLineRunner test(UserRepository repository) {
 		return (args) -> {
 			FirebaseInitializer.initializeFireBase("user");
+			repository.createUser(new User(UUID.randomUUID().toString(), "User 1", "XOUSER", "pwd", "Admin"));
+			repository.createUser(new User(UUID.randomUUID().toString(), "User 2", "XOUSER", "pwd", "User"));
 
 			// Get all users
 			CompletableFuture<List<User>> users = repository.getAllUsers();
 			System.out.println("All users: " + users.get());
-
-			// Get a product by ID
-			CompletableFuture<User> user = repository.getUserById("36f20b15-71a1-4679-8750-1e5b88d60dae");
-			System.out.println("User by ID: " + user.get());
-
-			// Delete a product
-			ResponseEntity<String> status = repository.deleteUser("XXX");
-			if(status.toString().contains("204")){
-				System.out.println("User not found" + status);
-			}else {
-				System.out.println("User deleted successfully" + status );
-			}
 		};
 	}
 
