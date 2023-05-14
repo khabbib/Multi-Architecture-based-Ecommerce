@@ -28,6 +28,8 @@ public class FirebaseInitializer {
                 return "https://mini-project-product.firebaseio.com/";
             case "order":
                 return "https://mini-project-order.firebaseio.com/";
+            case "user":
+                return "https://mini-project-user.firebaseio.com/";
             default:
                 return "Invalid database name";
         }

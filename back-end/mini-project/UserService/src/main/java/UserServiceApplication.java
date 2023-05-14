@@ -24,7 +24,7 @@ public class UserServiceApplication {
 	@Bean
 	public CommandLineRunner test(UserRepository repository) {
 		return (args) -> {
-			FirebaseInitializer.initializeFireBase();
+			FirebaseInitializer.initializeFireBase("user");
 
 			// Get all users
 			CompletableFuture<List<User>> users = repository.getAllUsers();
