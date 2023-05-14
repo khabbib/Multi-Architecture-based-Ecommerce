@@ -26,7 +26,7 @@ public class ProductServiceApplication {
 	@Bean
 	public CommandLineRunner test(ProductRepository repository) {
 		return (args) -> {
-			FirebaseInitializer.initializeFireBase();
+			FirebaseInitializer.initializeFireBase("product");
 			//repository.createProduct(new Product(UUID.randomUUID().toString(), "Product 1", "Electronic", "Blue", "No condition", 100.00, 10));
 			//repository.createProduct(new Product(UUID.randomUUID().toString(), "Product 2", "Electronic", "Black", "No condition", 99.00, 1));
 

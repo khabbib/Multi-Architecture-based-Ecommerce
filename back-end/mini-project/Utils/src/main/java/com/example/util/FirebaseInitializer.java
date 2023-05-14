@@ -9,15 +9,29 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class FirebaseInitializer {
-    public static void initializeFireBase() throws IOException {
+    public static void initializeFireBase(String dbName) throws IOException {
+        String databaseUrl = getDatabaseUrl(dbName);
         Dotenv dotenv = Dotenv.configure().load();
         String serviceAccountKeyPath = dotenv.get("FIREBASE_SERVICE_ACCOUNT_KEY_PATH");
         FileInputStream serviceAccount = new FileInputStream(serviceAccountKeyPath);
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setDatabaseUrl("https://shopeepy-db-1.firebaseio.com/")
+                .setDatabaseUrl(databaseUrl)
                 .build();
         FirebaseApp.initializeApp(options);
         System.out.println("Firebase initialized");
     }
+
+    public static String getDatabaseUrl(String dbName) {
+        switch (dbName) {
+            case "product":
+                return "https://mini-project-product.firebaseio.com/";
+            case "order":
+                return "https://mini-project-order.firebaseio.com/";
+            default:
+                return "Invalid database name";
+        }
+    }
+
+
 }
