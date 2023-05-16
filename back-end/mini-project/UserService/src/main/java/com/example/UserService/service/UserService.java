@@ -1,10 +1,10 @@
-package service;
+package com.example.UserService.service;
 
 import lombok.RequiredArgsConstructor;
-import model.User;
+import com.example.UserService.model.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import repository.UserRepository;
+import com.example.UserService.repository.UserRepository;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

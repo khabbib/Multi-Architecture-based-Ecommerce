@@ -1,8 +1,8 @@
-package repository;
+package com.example.UserService.repository;
 
 import com.google.firebase.database.*;
 import com.google.firebase.internal.NonNull;
-import model.User;
+import com.example.UserService.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;

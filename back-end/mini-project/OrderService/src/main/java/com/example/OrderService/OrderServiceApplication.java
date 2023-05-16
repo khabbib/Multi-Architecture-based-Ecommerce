@@ -3,6 +3,7 @@ package com.example.OrderService;
 import com.example.OrderService.model.ItemList;
 import com.example.OrderService.model.Order;
 import com.example.OrderService.repository.OrderRepository;
+import com.example.util.FirebaseInitializer;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,6 +26,7 @@ public class OrderServiceApplication {
 	public CommandLineRunner test(OrderRepository repository) {
 		return (args) -> {
 			// Create an
+			FirebaseInitializer.initializeFireBase("order");
 			ArrayList<ItemList> itemArray = new ArrayList<>();
 			itemArray.add(new ItemList("item1", 1, 1.99));
 			itemArray.add(new ItemList("item2", 2, 2.99));

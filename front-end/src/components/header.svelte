@@ -19,8 +19,12 @@
                 <a class="hover:text-gray-700" href="/about">about</a>
             </div>
             <div class="flex items-center gap-3">
+                <!--  
                 <button class="py-2 px-4 bg-white text-black font-semibold rounded-md hover:opacity-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75" on:click={(e) => signUp()}>Sign up</button>
                 <button class="py-2 px-4 bg-black text-white font-semibold rounded-md hover:opacity-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75" on:click={(e) => login()}>Login</button>
+                -->
+                <a class="py-2 px-4 bg-white text-black font-semibold rounded-md hover:opacity-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75" href="/register">Sign up</a>
+                <a class="py-2 px-4 bg-black text-white font-semibold rounded-md hover:opacity-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75" href="/login">Login</a>
             </div>
     </nav>
 </header>

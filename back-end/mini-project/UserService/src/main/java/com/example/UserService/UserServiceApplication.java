@@ -1,16 +1,17 @@
+package com.example.UserService;
 
+import com.example.UserService.model.User;
+import com.example.UserService.repository.UserRepository;
 import com.example.util.FirebaseInitializer;
-import model.User;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.ResponseEntity;
-import repository.UserRepository;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+
 
 @SpringBootApplication
 public class UserServiceApplication {
