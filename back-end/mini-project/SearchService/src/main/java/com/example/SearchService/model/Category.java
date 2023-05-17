@@ -1,5 +1,8 @@
 package com.example.SearchService.model;
 
+/**
+ * SUBJECT TO CHANGE, THIS WAS JUST AN IDEA
+ */
 public enum Category {
     VEHICLES,
     PROPERTY_RENTALS,
