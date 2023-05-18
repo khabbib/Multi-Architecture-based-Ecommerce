@@ -21,6 +21,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public HashMap<String, String> login(@RequestBody HashMap<String, String> emailToPwd) {
-        return authService.login(emailToPwd);
+        String email = emailToPwd.get("email");
+        String password = emailToPwd.get("password");
+        return authService.login(email, password);
     }
 }
