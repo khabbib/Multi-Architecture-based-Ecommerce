@@ -32,13 +32,18 @@ public class UserRepository {
                 List<User> userList = new ArrayList<>();
 
                 // loop through the children of the snapshot, which represent the individual Users
+                //System.out.println("Retrieving users..." + snapshot.getValue());
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    // Convert the DataSnapshot to a User object and complete the future with the User
-                    User retrievedUser = dataSnapshot.getValue(User.class);
-                    // add the User to the list
-                    userList.add(retrievedUser);
-                }
+                    String id = dataSnapshot.child("id").getValue().toString();
+                    String name = dataSnapshot.child("name").getValue().toString();
+                    String email = dataSnapshot.child("email").getValue().toString();
+                    String password = dataSnapshot.child("password").getValue().toString();
+                    String role = dataSnapshot.child("role").getValue().toString();
 
+                    // Convert the DataSnapshot to a User object and complete the future with the User
+                    // add the User to the list
+                    userList.add(new User(id, name, email, password, role));
+                }
                 // complete the future with the list of Users
                 future.complete(userList);
                 System.out.println("Successfully retrieved " + userList.size() + " users.");

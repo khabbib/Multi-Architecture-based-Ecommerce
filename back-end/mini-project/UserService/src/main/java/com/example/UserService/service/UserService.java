@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.example.UserService.repository.UserRepository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -36,4 +37,15 @@ public class UserService {
         return userRepository.updateUser(id, user);
     }
 
+    public String checkUserExists(String email, String password) {
+        System.out.println("[UserService] Email: " + email + " Password: " + password);
+
+        for (User user : userRepository.getAllUsers().join()) {
+            if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
+                return user.getId();
+            }
+        }
+
+        return null;
+    }
 }
