@@ -8,7 +8,6 @@ public class User {
     private String role;
 
     public User(String id, String name, String email, String password, String role) {
-        System.out.println("User constructor called" + id + " " + name + " " + email + " " + password + " " + role);
         this.id = id;
         this.name = name;
         this.email = email;

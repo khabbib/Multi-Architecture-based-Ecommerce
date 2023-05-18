@@ -22,19 +22,10 @@ public class UserController {
     private final UserService userService;
 
     /**
-     * Returns a string to check if the service is up and running.
-     * @return String
-     */
-    @GetMapping("/")
-    public String test() {
-        return "User Service is up and running!";
-    }
-
-    /**
      * Returns all users.
      * @return ResponseEntity<List<User>>
      */
-    @GetMapping("/x")
+    @GetMapping("/")
     public CompletableFuture<ResponseEntity<List<User>>> getAvailableUsers() {
         return userService.getAllUsers().thenApply(product -> ResponseEntity.ok().body(product))
                 .exceptionally(e -> ResponseEntity.notFound().build());
@@ -92,7 +83,6 @@ public class UserController {
     @GetMapping("/user-exists")
     @ResponseStatus(HttpStatus.OK)
     public String checkUserExists(@RequestParam String email, @RequestParam String password) {
-        System.out.println("[UserController] Email: " + email + " " + password);
         return userService.checkUserExists(email, password);
     }
 }

@@ -3,6 +3,7 @@ package com.example.UserService.service;
 import lombok.RequiredArgsConstructor;
 import com.example.UserService.model.User;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.UserService.repository.UserRepository;
 
@@ -26,6 +27,10 @@ public class UserService {
     }
 
     public void createUser(User user) {
+        String password = user.getPassword();
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+        user.setPassword(hashedPassword);
         userRepository.createUser(user);
     }
 
@@ -38,10 +43,11 @@ public class UserService {
     }
 
     public String checkUserExists(String email, String password) {
-        System.out.println("[UserService] Email: " + email + " Password: " + password);
-
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         for (User user : userRepository.getAllUsers().join()) {
-            if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
+            String hashedPassword = user.getPassword();
+            System.out.println("Hashed password: " + hashedPassword + " Password: " + password);
+            if (user.getEmail().equals(email) && passwordEncoder.matches(password, hashedPassword)) {
                 return user.getId();
             }
         }

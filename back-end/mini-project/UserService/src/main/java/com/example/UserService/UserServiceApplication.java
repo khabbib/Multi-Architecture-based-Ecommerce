@@ -29,8 +29,8 @@ public class UserServiceApplication {
 	public CommandLineRunner test(UserRepository repository) {
 		return (args) -> {
 			FirebaseInitializer.initializeFireBase("user");
-			repository.createUser(new User(UUID.randomUUID().toString(), "User 1", "XOUSER", "pwd", "Admin"));
-			repository.createUser(new User(UUID.randomUUID().toString(), "User 2", "XOUSER", "pwd", "User"));
+			//repository.createUser(new User(UUID.randomUUID().toString(), "User 1", "XOUSER", "pwd", "Admin"));
+			//repository.createUser(new User(UUID.randomUUID().toString(), "User 2", "XOUSER", "pwd", "User"));
 
 			// Get all users
 			CompletableFuture<List<User>> users = repository.getAllUsers();

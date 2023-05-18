@@ -15,19 +15,14 @@ public class AuthService {
 
     public String login(HashMap<String, String> emailToPwd) {
         System.out.println("Check: " + emailToPwd);
+        String result2 = webClient.get()
+                .uri("http://localhost:8084/users/user-exists?email=" + emailToPwd.get("email") + "&password=" + emailToPwd.get("password"))
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
 
-        String result = webClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("http")
-                        .host("localhost")
-                        .port(8084)
-                        .path("/users/user-exists")
-                        .queryParam("email", emailToPwd.get("email"))
-                        .queryParam("password", emailToPwd.get("password"))
-                        .build()).retrieve().bodyToMono(String.class).block();
-
-        if (result != null) {
-            return "User exists";
+        if (result2 != null) {
+            return "User exists id: " + result2;
         } else {
             return "User does not exist";
         }

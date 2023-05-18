@@ -2,6 +2,7 @@ package com.example.AuthenticationService;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class AuthenticationServiceApplication {
@@ -9,4 +10,16 @@ public class AuthenticationServiceApplication {
 		SpringApplication.run(AuthenticationServiceApplication.class, args);
 	}
 
+	@Bean
+	public String test() {
+
+
+		return "Authentication Service is up and running!";
+	}
+
+	public void hashPassword(String password) {
+
+
+
+	}
 }
