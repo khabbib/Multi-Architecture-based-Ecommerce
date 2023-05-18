@@ -22,6 +22,8 @@
         <module>UserService</module>
         <module>Utils</module>
         <module>ServerDiscovery</module>
+        <module>AuthenticationService</module>
+        <module>AuthService</module>
     </modules>
 
     <properties>

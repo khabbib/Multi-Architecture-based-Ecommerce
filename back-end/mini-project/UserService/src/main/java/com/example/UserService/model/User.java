@@ -3,16 +3,16 @@ package com.example.UserService.model;
 public class User {
     private String id;
     private String name;
-    private String username;
+    private String email;
     private String password;
-    private String type;
+    private String role;
 
-    public User(String id, String name, String username, String password, String type) {
+    public User(String id, String name, String email, String password, String role) {
         this.id = id;
         this.name = name;
-        this.username = username;
+        this.email = email;
         this.password = password;
-        this.type = type;
+        this.role = role;
     }
 
     public String getId() {
@@ -31,12 +31,12 @@ public class User {
         this.name = name;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -47,16 +47,16 @@ public class User {
         this.password = password;
     }
 
-    public String getType() {
-        return type;
+    public String getRole() {
+        return role;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
     public String toString() {
-        return "ID: " + id + ", Name: " + name + ", Username: " + username + ", Password: " + password + ", Type: " + type;
+        return "ID: " + id + ", Name: " + name + ", Username: " + email + ", Password: " + password + ", Role: " + role;
     }
 }
