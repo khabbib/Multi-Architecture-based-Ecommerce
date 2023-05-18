@@ -14,7 +14,7 @@ public class AuthService {
 
     public HashMap<String, String> login(String email, String password) {
         HashMap result = webClient.get()
-                .uri("http://localhost:8084/users/user-exists?email=" + email + "&password=" + password)
+                .uri("http://User Service/users/user-exists?email=" + email + "&password=" + password)
                 .retrieve()
                 .bodyToMono(HashMap.class)
                 .block();
