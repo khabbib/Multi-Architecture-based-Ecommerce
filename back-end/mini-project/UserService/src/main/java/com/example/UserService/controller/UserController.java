@@ -82,7 +82,7 @@ public class UserController {
      */
     @GetMapping("/user-exists")
     @ResponseStatus(HttpStatus.OK)
-    public String checkUserExists(@RequestParam String email, @RequestParam String password) {
+    public HashMap<String, String> checkUserExists(@RequestParam String email, @RequestParam String password) throws ExecutionException, InterruptedException {
         return userService.checkUserExists(email, password);
     }
 }

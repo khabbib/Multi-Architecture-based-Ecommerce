@@ -20,8 +20,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody HashMap<String, String> emailToPwd) {
-        System.out.println("Received emailToPwd in AuthController: " + emailToPwd);
+    public HashMap<String, String> login(@RequestBody HashMap<String, String> emailToPwd) {
         return authService.login(emailToPwd);
     }
 }

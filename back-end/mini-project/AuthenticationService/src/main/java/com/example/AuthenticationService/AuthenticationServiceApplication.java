@@ -9,17 +9,4 @@ public class AuthenticationServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AuthenticationServiceApplication.class, args);
 	}
-
-	@Bean
-	public String test() {
-
-
-		return "Authentication Service is up and running!";
-	}
-
-	public void hashPassword(String password) {
-
-
-
-	}
 }
