@@ -30,6 +30,8 @@ public class FirebaseInitializer {
                 return "https://mini-project-order.europe-west1.firebasedatabase.app";
             case "user":
                 return "https://mini-project-user.europe-west1.firebasedatabase.app";
+            case "subscription":
+                return "https://mini-project-subscription.europe-west1.firebasedatabase.app";
             default:
                 return "Invalid database name";
         }
