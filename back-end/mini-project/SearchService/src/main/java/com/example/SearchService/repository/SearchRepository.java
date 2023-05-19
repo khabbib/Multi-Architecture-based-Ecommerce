@@ -53,6 +53,9 @@ public class SearchRepository {
                 // Complete the future with the list of products.
                 // This allows the method that called searchProducts to retrieve the results.
                 future.complete(productList);
+                for (Product product : productList) {
+                    System.out.println("Found product: " + product.toString());
+                }
             }
 
             @Override
