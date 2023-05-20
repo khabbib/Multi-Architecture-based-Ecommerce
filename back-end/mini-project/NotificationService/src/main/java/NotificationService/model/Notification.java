@@ -7,7 +7,7 @@ public class Notification {
     private String id;
     private String pType;
     private String pName;
-    private Date date;
+    private String date;
 
     public String getId() {
         return id;
@@ -33,11 +33,11 @@ public class Notification {
         this.pName = pName;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

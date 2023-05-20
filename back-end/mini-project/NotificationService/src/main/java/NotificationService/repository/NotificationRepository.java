@@ -11,6 +11,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Repository
 public class NotificationRepository {
+
     public CompletableFuture<List<Notification>> getAllNotifications(String userId) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("notification").child(userId);
         CompletableFuture<List<Notification>> future = new CompletableFuture<>();
@@ -51,11 +52,10 @@ public class NotificationRepository {
     }
 
     public CompletableFuture<Notification> getNotificationById(String userId, String notificationId) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("notification")
-                .child(userId).child(notificationId);
+        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference("notification").child(userId).child(notificationId);
         CompletableFuture<Notification> future = new CompletableFuture<>();
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        userReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Notification notification = dataSnapshot.getValue(Notification.class);
@@ -78,17 +78,15 @@ public class NotificationRepository {
     }
 
     public CompletableFuture<ResponseEntity<String>> deleteNotification(String userId, String notificationId) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("notification")
-                .child(userId).child(notificationId);
-        databaseReference.removeValueAsync();
+        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference("notification").child(userId).child(notificationId);
+        userReference.removeValueAsync();
         return CompletableFuture.completedFuture(ResponseEntity.ok("Notification deleted successfully"));
     }
 
     public CompletableFuture<ResponseEntity<String>> updateNotification(String userId, String notificationId, Notification notification) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("notification")
-                .child(userId).child(notificationId);
+        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference("notification").child(userId).child(notificationId);
         notification.setId(notificationId);
-        databaseReference.setValueAsync(notification);
+        userReference.setValueAsync(notification);
         return CompletableFuture.completedFuture(ResponseEntity.ok("Notification updated successfully"));
     }
 }
