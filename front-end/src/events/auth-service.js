@@ -19,8 +19,8 @@ async function login(email, password) {
 
     if (data.result === 'success') {
         // Session
-        sessionStorage.setItem('user', data.user);
-        sessionStorage.setItem('token', data.token);
+        localStorage.setItem('user', data.user);
+        localStorage.setItem('token', data.token);
         // Redirect
         window.location.href = '/dashboard';
     } else {
@@ -30,5 +30,21 @@ async function login(email, password) {
     
 }
 
+/**
+ * Check if the session has expired
+ */
+function checkSessionExpiration() {
+    const expirationTime = localStorage.getItem('expirationTime');
+    if(expirationTime !== null) {
+        if(new Date().getTime() > Number(expirationTime)) {
+            // Session has expired, redirect to login page or perform necessary actions
+            // Remove session
+            localStorage.removeItem('expirationTime');
+            window.location.href = '/';
+        }
+    }
 
-export { login };
+}
+
+
+export { login, checkSessionExpiration };
