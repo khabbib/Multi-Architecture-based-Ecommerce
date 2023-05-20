@@ -11,7 +11,7 @@
 <header>
     <nav class="flex items-center justify-between px-4 py-2 bg-blue-50">
             <div>
-                <img class="h-12 w-12" src="./imgs/logo.png" alt="Image title">
+                <img class="h-12" src="./imgs/logo.png" alt="Image title">
             </div>
             <div class="text-gray flex items-center justify-between gap-10">
                 <a class="text-gray-600 hover:text-gray-700" href="/">home</a>
