@@ -39,6 +39,7 @@
         <module>Utils</module>
         <module>ServerDiscovery</module>
         <module>AuthenticationService</module>
+        <module>NotificationService</module>
     </modules>
 
     <properties>
