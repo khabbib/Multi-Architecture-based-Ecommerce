@@ -1,8 +1,9 @@
 
 
 // Login handler
-function login() {
-    console.log('login')
+function login(email, password) {
+    console.log('login', email, password);
+    
 }
 
 
