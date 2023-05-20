@@ -34,6 +34,7 @@
     <modules>
         <module>AuthenticationService</module>
         <module>SubscriptionService</module>
+        <module>NotificationService</module>
         <module>ProductService</module>
         <module>SearchService</module>
         <module>OrderService</module>
@@ -42,6 +43,7 @@
         <module>ServerDiscovery</module>
 
         <module>Utils</module>
+
     </modules>
 
     <properties>
