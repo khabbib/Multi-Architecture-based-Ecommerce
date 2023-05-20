@@ -32,13 +32,16 @@
     </dependencies>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>ProductService</module>
-        <module>OrderService</module>
-        <module>SearchService</module>
-        <module>UserService</module>
-        <module>Utils</module>
-        <module>ServerDiscovery</module>
         <module>AuthenticationService</module>
+        <module>SubscriptionService</module>
+        <module>ProductService</module>
+        <module>SearchService</module>
+        <module>OrderService</module>
+        <module>UserService</module>
+
+        <module>ServerDiscovery</module>
+
+        <module>Utils</module>
     </modules>
 
     <properties>
