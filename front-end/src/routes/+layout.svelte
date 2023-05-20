@@ -1,21 +1,19 @@
 <script>
-    import "../app.css";
-    import Header from "../components/header.svelte";
-    import Footer from "../components/footer.svelte";
+	import '../app.css';
+	import Header from '../components/header.svelte';
+	import Footer from '../components/footer.svelte';
 </script>
 
 <div class="layout">
-    <Header />
-    <main>
-        <slot />
-    </main>
-    <Footer />
+	<Header />
+	<main>
+		<slot />
+	</main>
+	<Footer />
 </div>
 
-
-
 <style>
-    .layout {
+	.layout {
 		height: 100%;
 		max-inline-size: 1440px;
 		display: grid;
@@ -24,7 +22,7 @@
 		padding-inline: 7.5%;
 	}
 
-    @media (min-width: 1440px) {
+	@media (min-width: 1440px) {
 		.layout {
 			padding-inline: 0;
 		}

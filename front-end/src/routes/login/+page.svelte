@@ -1,24 +1,12 @@
-
-
 <script>
-  import { onMount } from 'svelte';
-	import { checkSessionExpiration } from '../../events/auth-service.js';
-  let handleLogina, setSessiona;
+	import { onMount } from 'svelte';
+	let handleLogina;
 
-  
 	onMount(async () => {
-    if (typeof window !== 'undefined') {
-      const { handleLogin, setSession} = await import("./login.js");
-      handleLogina = handleLogin;
-      setSessiona = setSession;
-      console.log(window.location.href);
-      if(window.location.href.includes("/login")) {
-        console.log("login"); 
-        setInterval(() => {
-          checkSessionExpiration();
-        }, 2000);
-      }
-    }
+		if (typeof window !== 'undefined') {
+			const { handleLogin } = await import('./login.js');
+			handleLogina = handleLogin;
+		}
 	});
 </script>
 
@@ -109,11 +97,7 @@
 
 				<!-- Email input -->
 				<div class="relative mb-6" data-te-input-wrapper-init>
-          <label
-            style="color: gray;"
-            for="exampleFormControlInput2"
-            >Email address
-          </label>
+					<label style="color: gray;" for="exampleFormControlInput2">Email address </label>
 					<input
 						style="border: 1px solid #e5e5e5; color: #000;"
 						type="text"
@@ -126,11 +110,7 @@
 
 				<!-- Password input -->
 				<div class="relative mb-6" data-te-input-wrapper-init>
-          <label
-            style="color: gray;"
-            for="exampleFormControlInput22"
-            >Password
-          </label>
+					<label style="color: gray;" for="exampleFormControlInput22">Password </label>
 					<input
 						name="password"
 						style="border: 1px solid #e5e5e5; color: #000;"
@@ -171,17 +151,6 @@
 						data-te-ripple-color="light"
 					>
 						Login
-					</button>
-					<button
-						on:click={() => setSessiona()}
-						style="background-color: #07be73; color: #fff;"
-						type="button"
-						id="session"
-						class="inline-block rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-						data-te-ripple-init
-						data-te-ripple-color="light"
-					>
-						Set session
 					</button>
 
 					<!-- Register link -->

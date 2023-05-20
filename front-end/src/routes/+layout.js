@@ -1,5 +1,5 @@
 export async function load({ url }) {
-    return {
-        url: url.pathname,
-    }
-};
+	return {
+		url: url.pathname
+	};
+}

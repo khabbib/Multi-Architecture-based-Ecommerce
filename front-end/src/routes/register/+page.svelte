@@ -3,11 +3,10 @@
 
 	onMount(async () => {
 		if (typeof window !== 'undefined') {
-      // Load modules here after the window object has been created.
-      // Other wise you will get an error from svelkit server. [INTERNEL ERROR 500].
-    }
+			// Load modules here after the window object has been created.
+			// Other wise you will get an error from svelkit server. [INTERNEL ERROR 500].
+		}
 	});
-
 </script>
 
 <section class="h-[80vh]">
@@ -35,11 +34,7 @@
 
 				<!-- name input -->
 				<div class="relative mb-6" data-te-input-wrapper-init>
-          <label
-            style="color: gray;"
-            for="first_name"
-            >Name
-          </label>
+					<label style="color: gray;" for="first_name">Name </label>
 					<input
 						style="border: 1px solid #e5e5e5; color: #000;"
 						type="text"
@@ -50,11 +45,7 @@
 				</div>
 				<!-- Lastname input -->
 				<div class="relative mb-6" data-te-input-wrapper-init>
-          <label
-            style="color: gray;"
-            for="last_name"
-            >Last name
-          </label>
+					<label style="color: gray;" for="last_name">Last name </label>
 					<input
 						style="border: 1px solid #e5e5e5; color: #000;"
 						type="text"
@@ -65,11 +56,7 @@
 				</div>
 				<!-- Email input -->
 				<div class="relative mb-6" data-te-input-wrapper-init>
-          <label
-            style="color: gray;"
-            for="exampleFormControlInput2"
-            >Email address
-          </label>
+					<label style="color: gray;" for="exampleFormControlInput2">Email address </label>
 					<input
 						style="border: 1px solid #e5e5e5; color: #000;"
 						type="text"
@@ -81,11 +68,7 @@
 
 				<!-- Password input -->
 				<div class="relative mb-6" data-te-input-wrapper-init>
-          <label
-            style="color: gray;"
-            for="exampleFormControlInput22"
-            >Password
-          </label>
+					<label style="color: gray;" for="exampleFormControlInput22">Password </label>
 					<input
 						style="border: 1px solid #e5e5e5; color: #000;"
 						type="password"
