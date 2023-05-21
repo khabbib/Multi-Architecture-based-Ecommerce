@@ -2,10 +2,12 @@ package com.example.UserService.controller;
 
 import lombok.RequiredArgsConstructor;
 import com.example.UserService.model.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.UserService.service.UserService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -72,4 +74,15 @@ public class UserController {
         return userService.updateUser(id, user);
     }
 
+    /**
+     * Check for the user existance.
+     * @param email
+     * @param password
+     * @return ResponseEntity<String>
+     */
+    @GetMapping("/user-exists")
+    @ResponseStatus(HttpStatus.OK)
+    public HashMap<String, String> checkUserExists(@RequestParam String email, @RequestParam String password) throws ExecutionException, InterruptedException {
+        return userService.checkUserExists(email, password);
+    }
 }
