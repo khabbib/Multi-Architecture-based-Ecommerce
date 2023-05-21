@@ -30,19 +30,22 @@ public class AuthService {
         // Control the response
         if (result != null) {
             String issuer = (String) result.get("id");
-            long expirationTime = 10000; // 10 seconds
+            // expireation time for 20 seconds
+            long expirationTime = 20000;
+
+            System.out.println("Issuer: " + issuer);
             String secretKey = "secret";
-            Date expiration = new Date(System.currentTimeMillis() + expirationTime);
             String jwt = Jwts.builder()
                     .setSubject(issuer)
                     .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
                     .signWith(SignatureAlgorithm.HS512, secretKey)
                     .compact();
 
-
+            System.out.println("JWT: " + jwt);
             Cookie cookie = new Cookie("jwt", jwt);
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
+            System.out.println("User authorized" + cookie);
             return ResponseEntity.ok("User authorized");
         } else {
             return ResponseEntity.badRequest().body("User not authorized");

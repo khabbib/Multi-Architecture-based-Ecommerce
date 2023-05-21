@@ -5,19 +5,55 @@
 	let email = '',
 		password = '',
 		error = '';
-	const handleLogin = () => {
-		console.log('login');
-		login(email, password).then((isLogin) => {
-			if (isLogin) {
-				// Navigate to home page
-				console.log('success login');
-				navigate('dashboard');
-			} else {
-				// Show error message
-				error = 'Invalid email or password';
-				console.log('error', error);
+	onMount(() => {
+		// Check if user is authenticated
+		const token = localStorage.getItem('sessionToken'); // Retrieve the token from cookie or local storage
+		console.log('token: ', token);
+		if (token) {
+			navigate('dashboard'); // Redirect to login if token is not found
+		} else {
+			const tokenExpiration = localStorage.getItem('sessionTokenExpiration');
+			console.log('tokenExpiration: ', tokenExpiration);
+			const expirationTime = new Date(tokenExpiration).getTime();
+			const currentTime = new Date().getTime();
+			if (currentTime > expirationTime) {
+				// Token has expired, clear the token and redirect to login
+				localStorage.removeItem('sessionToken');
+				localStorage.removeItem('sessionTokenExpiration');
+				//navigate('login');
 			}
-		});
+		}
+	});
+	const handleLogin = async () => {
+		try {
+			console.log("try")
+			// const response = await axios.post('http://localhost:8086/auth/login', credentials);
+			const data = await fetch('http://localhost:8086/auth/login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ email, password })
+			}).then((res) =>
+			{
+				console.log(res)
+				return res;
+			} 
+			);
+
+			console.log('Server: ', data);
+			if (data !== null) {
+				console.log(data);
+				return true;
+			}
+			return false;
+			// Store the token in a cookie or local storage
+			// navigate('dashboard');
+		} catch (error) {
+			console.error('Login failed', error);
+			return false;
+			// Handle login error, display error message to the user, etc.
+		}
 	};
 </script>
 

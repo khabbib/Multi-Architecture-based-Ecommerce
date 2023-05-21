@@ -1,5 +1,4 @@
 import { redirect } from '@sveltejs/kit';
-import axios from 'axios';
 import { navigate } from './navigator';
 
 /**
@@ -11,13 +10,25 @@ async function login(email, password) {
 	const credentials = { email, password };
 
 	try {
-		const response = await axios.post('http://localhost:8086/auth/login', credentials);
-		console.log('Login successful', response);
-		const { token, expirationTime } = response.data;
-		console.log('Login successful', token, expirationTime);
-		localStorage.setItem('sessionToken', token);
-		localStorage.setItem('expirationTime', expirationTime);
-		return true;
+		// const response = await axios.post('http://localhost:8086/auth/login', credentials);
+		const data = await fetch('http://localhost:8086/auth/login', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ email, password })
+		}).then((res) => res.json());
+
+		console.log('Server: ', data);
+		// const { token, expirationTime } = response.data;
+		// console.log('Login successful', token, expirationTime);
+		// localStorage.setItem('sessionToken', token);
+		// localStorage.setItem('expirationTime', expirationTime);
+		if (data !== null) {
+			console.log(data);
+			return true;
+		}
+		return false;
 		// Store the token in a cookie or local storage
 		// navigate('dashboard');
 	} catch (error) {
