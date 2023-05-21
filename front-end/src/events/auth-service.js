@@ -1,6 +1,6 @@
-import { redirect } from "@sveltejs/kit";
-import axios from "axios";
-import { navigate } from "./navigator";
+import { redirect } from '@sveltejs/kit';
+import axios from 'axios';
+import { navigate } from './navigator';
 
 /**
  * Authenticate for login
@@ -9,7 +9,7 @@ import { navigate } from "./navigator";
  */
 async function login(email, password) {
 	const credentials = { email, password };
-	
+
 	try {
 		const response = await axios.post('http://localhost:8086/auth/login', credentials);
 		console.log('Login successful', response);
@@ -20,16 +20,11 @@ async function login(email, password) {
 		return true;
 		// Store the token in a cookie or local storage
 		// navigate('dashboard');
-	  } catch (error) {
-		  console.error('Login failed', error);
-		  return false;
+	} catch (error) {
+		console.error('Login failed', error);
+		return false;
 		// Handle login error, display error message to the user, etc.
-	  }
-
-
-
-
-
+	}
 
 	// const data = await fetch('http://localhost:8086/auth/login', {
 	// 	method: 'POST',
@@ -51,8 +46,7 @@ async function login(email, password) {
  * Check if the session has expired
  */
 function checkSessionExpiration() {
-	
-	if(localStorage.getItem('expirationTime') === undefined){
+	if (localStorage.getItem('expirationTime') === undefined) {
 		console.log('session expired and return to login');
 		return true;
 	}
