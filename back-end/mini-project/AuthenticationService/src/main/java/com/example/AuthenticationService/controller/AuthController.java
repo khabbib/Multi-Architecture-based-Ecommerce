@@ -1,8 +1,11 @@
 package com.example.AuthenticationService.controller;
 
+import com.example.AuthenticationService.dto.AuthRequest;
+import com.example.AuthenticationService.dto.AuthResponse;
 import com.example.AuthenticationService.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -20,9 +23,10 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public HashMap<String, String> login(@RequestBody HashMap<String, String> emailToPwd) {
-        String email = emailToPwd.get("email");
-        String password = emailToPwd.get("password");
+    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest) {
+        System.out.println("Got request to login");
+        String email = authRequest.getEmail();
+        String password = authRequest.getPassword();
         return authService.login(email, password);
     }
 }

@@ -11,5 +11,4 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("*"); // Allow requests from any origin
     }
-
 }
