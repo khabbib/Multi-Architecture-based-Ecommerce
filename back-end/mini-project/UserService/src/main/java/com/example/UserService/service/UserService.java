@@ -40,7 +40,6 @@ public class UserService {
         User user = userRepository.getUserByEmail(email);
         if (user != null) {
             if(Bcrypt.check(password, user.getPassword())) {
-                System.out.println("User exists and password is correct");
                 return new HashMap<String, String>() {{
                     put("id", user.getId());
                     put("role", user.getRole());
