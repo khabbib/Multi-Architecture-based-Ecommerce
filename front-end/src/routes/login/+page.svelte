@@ -1,21 +1,28 @@
 <script>
+	import { onMount } from 'svelte';
 	import { login } from '../../events/auth-service.js';
 	import { navigate } from '../../events/navigator.js';
 	let email = '', password = '', error = '';
+	let handleLogin;
 
-	const handleLogin = () => {
-		login(email, password).then((isLogin) => {
-			if (isLogin) {
-				// Navigate to home page
-				console.log('success login');
-				navigate('dashboard');
-			} else {
-				// Show error message
-				error = 'Invalid email or password';
-				console.log('error', error);
-			}
-		});
-	}
+	onMount(() => {
+		handleLogin = () => {
+			console.log('login');
+			login(email, password).then((isLogin) => {
+				if (isLogin) {
+					// Navigate to home page
+					console.log('success login');
+					navigate('dashboard');
+				} else {
+					// Show error message
+					error = 'Invalid email or password';
+					console.log('error', error);
+				}
+			});
+		}
+		
+	});
+
 
 </script>
 

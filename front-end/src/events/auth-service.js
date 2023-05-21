@@ -17,10 +17,12 @@ async function login(email, password) {
 		console.log('Login successful', token, expirationTime);
 		localStorage.setItem('sessionToken', token);
 		localStorage.setItem('expirationTime', expirationTime);
+		return true;
 		// Store the token in a cookie or local storage
 		// navigate('dashboard');
 	  } catch (error) {
-		console.error('Login failed', error);
+		  console.error('Login failed', error);
+		  return false;
 		// Handle login error, display error message to the user, etc.
 	  }
 
