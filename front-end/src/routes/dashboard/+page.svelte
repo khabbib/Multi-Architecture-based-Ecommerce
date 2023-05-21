@@ -1,16 +1,41 @@
 <script>
 	import { onMount } from 'svelte';
-	import { checkSessionExpiration } from '../../events/auth-service';
-	onMount(async () => {
-		if (typeof window !== 'undefined') {
-			if (window.location.href.includes('/dashboard')) {
-				console.log('Checking session expiration...');
-				setInterval(() => {
-					checkSessionExpiration();
-				}, 2000);
-			}
+	import { navigate } from '../../events/navigator';
+	import axios from 'axios';
+  
+	onMount(() => {
+	  // Check if user is authenticated
+	  const token = localStorage.getItem('sessionToken'); // Retrieve the token from cookie or local storage
+	  console.log(token);
+	  if (!token) {
+		navigate('/login'); // Redirect to login if token is not found
+	  }else {
+      	const tokenExpiration = localStorage.getItem('sessionTokenExpiration');
+		const expirationTime = new Date(tokenExpiration).getTime();
+		const currentTime = new Date().getTime();
+		if (currentTime > expirationTime) {
+			// Token has expired, clear the token and redirect to login
+			localStorage.removeItem('sessionToken');
+			localStorage.removeItem('sessionTokenExpiration');
+			navigate('/login');
+		}
 		}
 	});
-</script>
-
-<h1>You are logged in!</h1>
+  
+	async function handleLogout() {
+    try {
+      await axios.post('/api/logout');
+      localStorage.removeItem('sessionToken'); // Clear the token from cookie or local storage
+      navigate('/login'); // Redirect to the login page
+    } catch (error) {
+      console.error('Logout failed', error);
+      // Handle logout error, display error message to the user, etc.
+    }
+  }
+  </script>
+  
+  <main>
+	<h1>Dashboard</h1>
+	<!-- Dashboard content -->
+	<button on:click={handleLogout}>Logout</button>
+  </main>

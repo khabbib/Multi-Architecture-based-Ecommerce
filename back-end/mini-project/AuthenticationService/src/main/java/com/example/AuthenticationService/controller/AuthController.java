@@ -1,14 +1,12 @@
 package com.example.AuthenticationService.controller;
 
 import com.example.AuthenticationService.dto.AuthRequest;
-import com.example.AuthenticationService.dto.AuthResponse;
 import com.example.AuthenticationService.service.AuthService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 
 @RestController
 @RequestMapping("/auth")
@@ -23,10 +21,16 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<String> login(@RequestBody AuthRequest authRequest, HttpServletResponse response) {
         System.out.println("Got request to login");
         String email = authRequest.getEmail();
         String password = authRequest.getPassword();
-        return authService.login(email, password);
+        return authService.login(email, password, response);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletResponse response) {
+        System.out.println("Got request to logout");
+        return authService.logout(response);
     }
 }

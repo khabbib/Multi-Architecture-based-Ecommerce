@@ -1,25 +1,34 @@
 <script>
-	import { onMount } from 'svelte';
-	let handleLogina;
+	import { login } from '../../events/auth-service.js';
+	import { navigate } from '../../events/navigator.js';
+	let email = '', password = '', error = '';
 
-	onMount(async () => {
-		if (typeof window !== 'undefined') {
-			const { handleLogin } = await import('./login.js');
-			handleLogina = handleLogin;
-		}
-	});
+	const handleLogin = () => {
+		login(email, password).then((isLogin) => {
+			if (isLogin) {
+				// Navigate to home page
+				console.log('success login');
+				navigate('dashboard');
+			} else {
+				// Show error message
+				error = 'Invalid email or password';
+				console.log('error', error);
+			}
+		});
+	}
+
 </script>
 
 <section class="h-[80vh]">
 	<div class="h-full w-full flex flex-col md:flex-row justify-center items-center">
 		<!-- Left column container with background-->
-
+		<h1 style="height: 2rem; color: red">{error}</h1>
 		<!-- Right column container -->
 		<div
 			class="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 border rounded-md"
 			style="padding: 5rem;"
 		>
-			<form>
+			<form on:submit|preventDefault={() => handleLogin()}>
 				<!--Sign in section-->
 				<div class="flex flex-row items-center justify-around">
 					<div>
@@ -99,6 +108,7 @@
 				<div class="relative mb-6" data-te-input-wrapper-init>
 					<label style="color: gray;" for="exampleFormControlInput2">Email address </label>
 					<input
+						bind:value={email}
 						style="border: 1px solid #e5e5e5; color: #000;"
 						type="text"
 						name="email"
@@ -112,6 +122,7 @@
 				<div class="relative mb-6" data-te-input-wrapper-init>
 					<label style="color: gray;" for="exampleFormControlInput22">Password </label>
 					<input
+						bind:value={password}
 						name="password"
 						style="border: 1px solid #e5e5e5; color: #000;"
 						type="password"
@@ -142,9 +153,8 @@
 				<!-- Login button -->
 				<div class="text-center lg:text-left">
 					<button
-						on:click={() => handleLogina(event)}
 						style="background-color: #07be73; color: #fff;"
-						type="button"
+						type="submit"
 						id="login"
 						class="inline-block rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
 						data-te-ripple-init

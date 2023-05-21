@@ -9,11 +9,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebClientConfig implements WebMvcConfigurer {
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("*"); // Allow requests from any origin
+                .allowedOrigins("http://localhost:5173/") // Allow requests from any origin
+                .allowCredentials(true);// Allow cookies
     }
 
     @Bean
