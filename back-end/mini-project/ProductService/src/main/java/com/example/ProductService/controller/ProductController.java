@@ -24,10 +24,17 @@ public class ProductController {
      * Returns all products.
      * @return ResponseEntity<List<Product>>
      */
+    /*
     @GetMapping("/")
     public  CompletableFuture<ResponseEntity<List<Product>>> getAvailableProducts() {
         return productService.getAllProducts().thenApply(product -> ResponseEntity.ok().body(product))
                 .exceptionally(e -> ResponseEntity.notFound().build());
+    }
+     */
+
+    @GetMapping("/")
+    public String getAvailableProducts() {
+        return "Hello from products!";
     }
 
     /**

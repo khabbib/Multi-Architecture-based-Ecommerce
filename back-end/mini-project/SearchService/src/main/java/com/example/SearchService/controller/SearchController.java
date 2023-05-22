@@ -24,10 +24,17 @@ public class SearchController {
      * @param query The search query.
      * @return A list of products that match the query.
      */
-    @GetMapping("/")
-    public CompletableFuture<ResponseEntity<List<Product>>> search(@RequestParam String query) {
+
+    @GetMapping("/{query}")
+    public CompletableFuture<ResponseEntity<List<Product>>> search(@PathVariable String query) {
         return searchService.search(query)
                 .thenApply(products -> ResponseEntity.ok().body(products))
                 .exceptionally(e -> ResponseEntity.notFound().build());
+    }
+
+
+    @GetMapping("/")
+    public String init() {
+        return "Hello from search!";
     }
 }

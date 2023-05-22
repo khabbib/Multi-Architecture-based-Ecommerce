@@ -28,6 +28,7 @@
             <artifactId>firebase-admin</artifactId>
             <version>9.1.1</version>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -39,7 +40,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.example.Utils.FirebaseInitializer</mainClass>
+                            <mainClass>com.example.util.FirebaseInitializer</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

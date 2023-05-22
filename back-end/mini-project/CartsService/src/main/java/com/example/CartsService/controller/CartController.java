@@ -19,6 +19,7 @@ public class CartController {
 
     private final CartService cartService;
 
+
     @GetMapping("/") //Get all carts
     @ResponseStatus(HttpStatus.OK)
     public CompletableFuture<ArrayList<Cart>> getAvailableCarts(){
