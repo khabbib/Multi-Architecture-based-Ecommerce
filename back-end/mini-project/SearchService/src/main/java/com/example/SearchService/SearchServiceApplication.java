@@ -1,6 +1,7 @@
 package com.example.SearchService;
 
 import com.example.ProductService.model.Product;
+import com.example.ProductService.repository.ProductRepository;
 import com.example.SearchService.repository.SearchRepository;
 import com.example.util.FirebaseInitializer;
 import org.springframework.boot.CommandLineRunner;
@@ -8,6 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -21,18 +24,14 @@ public class SearchServiceApplication {
     @Bean
     public CommandLineRunner test(SearchRepository repository) {
         return (args) -> {
-            System.out.println("CommandLineRunner is running...");
             FirebaseInitializer.initializeFireBase("product");
+            // Search products
             CompletableFuture<List<Product>> products = repository.searchProducts("Product 1");
-            List<Product> productList = products.join();
-            if(productList.isEmpty()) {
+            if(products.get().isEmpty())
                 System.out.println("NOT FOUND");
-            } else {
-                for (Product product : productList)
+            else
+                for(Product product : products.get())
                     System.out.println("FOUND: " + product);
-            }
-            System.out.println("CommandLineRunner is finished.");
-
         };
     }
 }

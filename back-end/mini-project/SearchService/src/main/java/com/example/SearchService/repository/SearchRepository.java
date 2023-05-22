@@ -1,11 +1,11 @@
 package com.example.SearchService.repository;
 
+
 import com.example.ProductService.model.Product;
 import com.google.firebase.database.*;
 import com.google.firebase.internal.NonNull;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -13,53 +13,60 @@ import java.util.concurrent.CompletableFuture;
 @Repository
 public class SearchRepository {
 
-    public SearchRepository() {
-        System.out.println("SearchRepository created");
+    public SearchRepository () throws IOException {
+        System.out.println("Search repository created!");
     }
+
 
     /**
      * Search for products by name.
      * @param query The search query.
      * @return A CompletableFuture that will complete with the list of matching products.
      */
-    public CompletableFuture<List<Product>> searchProducts(@RequestParam String query) {
-        System.out.println("creating future...");
+    public CompletableFuture<List<Product>> searchProducts(String query) {
+        // A CompletableFuture that will be completed when the Firebase query completes.
         CompletableFuture<List<Product>> future = new CompletableFuture<>();
-        System.out.println("future created");
-        System.out.println("getting reference...");
+
+        // Get a reference to the Firebase database.
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("product");
-        System.out.println("reference gotten");
-        System.out.println("creating listener...");
-        ValueEventListener listener = new ValueEventListener() {
+
+        // Create a Firebase query that will find products with a name that starts with the query.
+        // The "\uf8ff" is a high Unicode character that ensures the query includes all names that start with the search term.
+        // This effectively makes the query a "starts with" query.
+        Query searchQuery = ref.orderByChild("name").startAt(query).endAt(query + "\uf8ff");
+
+        // Add a listener to the query. This will be called when the data is available.
+        searchQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                System.out.println("Searching for products that start with " + query + "...");
-                // create a list to hold the products
+                // Create a list to hold the products that match the search query.
                 List<Product> productList = new ArrayList<>();
-                // loop through the children of the snapshot, which represent the individual products
+
+                // Loop through the results of the query.
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    // Convert the DataSnapshot to a Product object and complete the future with the product
+                    // Convert each result into a Product object.
                     Product product = dataSnapshot.getValue(Product.class);
-                    if(product.getpName().contains(query)){
-                        productList.add(product);
-                    }
+                    // Add the product to the list.
+                    productList.add(product);
                 }
-                System.out.println("end of for loop");
-                // complete the future with the list of products
+
+                // Complete the future with the list of products.
+                // This allows the method that called searchProducts to retrieve the results.
                 future.complete(productList);
-                System.out.println("Successfully retrieved " + productList.size() + " products.");
+                for (Product product : productList) {
+                    System.out.println("Found product: " + product.toString());
+                }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println("on cancelled");
-                // if the operation is cancelled or fails, complete the future exceptionally
+                // If the query fails, complete the future exceptionally.
+                // This lets the method that called searchProducts know that something went wrong.
                 future.completeExceptionally(error.toException());
-                System.err.println("Error retrieving products: " + error.getMessage());
             }
-        };
-        // attach the listener to the reference and return the future
-        ref.addValueEventListener(listener);
-        System.out.println("Fetching products...");
+        });
+
+        // Return the future. The method that called searchProducts can use this to retrieve the results once they're available.
         return future;
     }
 }
