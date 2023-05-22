@@ -9,7 +9,7 @@
 	});
 </script>
 
-<section class="h-[80vh]">
+<section class="bg-green-50">
 	<div class="h-full w-full flex flex-col md:flex-row justify-center items-center">
 		<!-- Left column container with background-->
 
