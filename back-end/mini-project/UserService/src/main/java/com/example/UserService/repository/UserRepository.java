@@ -1,5 +1,6 @@
 package com.example.UserService.repository;
 
+import com.example.util.FirebaseInitializer;
 import com.google.firebase.database.*;
 import com.google.firebase.internal.NonNull;
 import com.example.UserService.model.User;
@@ -7,15 +8,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @Repository
 public class UserRepository {
-    public UserRepository() {
+    public UserRepository() throws IOException {
         System.out.println("UserRepository created");
+        FirebaseInitializer.initializeFireBase("user");
     }
 
     /**
@@ -32,13 +36,18 @@ public class UserRepository {
                 List<User> userList = new ArrayList<>();
 
                 // loop through the children of the snapshot, which represent the individual Users
+                //System.out.println("Retrieving users..." + snapshot.getValue());
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    // Convert the DataSnapshot to a User object and complete the future with the User
-                    User retrievedUser = dataSnapshot.getValue(User.class);
-                    // add the User to the list
-                    userList.add(retrievedUser);
-                }
+                    String id = dataSnapshot.child("id").getValue().toString();
+                    String name = dataSnapshot.child("name").getValue().toString();
+                    String email = dataSnapshot.child("email").getValue().toString();
+                    String password = dataSnapshot.child("password").getValue().toString();
+                    String role = dataSnapshot.child("role").getValue().toString();
 
+                    // Convert the DataSnapshot to a User object and complete the future with the User
+                    // add the User to the list
+                    userList.add(new User(id, name, email, password, role));
+                }
                 // complete the future with the list of Users
                 future.complete(userList);
                 System.out.println("Successfully retrieved " + userList.size() + " users.");
@@ -94,6 +103,8 @@ public class UserRepository {
      * @return String
      */
     public ResponseEntity<String> createUser(User user) {
+        // Generate a random ID for the User
+        user.setId(UUID.randomUUID().toString());
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("user");
         DatabaseReference newUserReference = databaseReference.push();
         newUserReference.setValueAsync(user);
@@ -131,5 +142,37 @@ public class UserRepository {
     public void deleteAllUsers() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("User");
         ref.removeValueAsync();
+    }
+
+    public User getUserByEmail(String email) throws ExecutionException, InterruptedException {
+        System.out.println("Getting user by email: " + email);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("user");
+        CompletableFuture<User> future = new CompletableFuture<>();
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User retrievedUser = null;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("email").getValue().toString().equals(email)) {
+                        String id = snapshot.child("id").getValue().toString();
+                        String name = snapshot.child("name").getValue().toString();
+                        String email = snapshot.child("email").getValue().toString();
+                        String password = snapshot.child("password").getValue().toString();
+                        String role = snapshot.child("role").getValue().toString();
+
+                        retrievedUser = new User(id, name, email, password, role);
+                    }
+                }
+                future.complete(retrievedUser);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                future.completeExceptionally(databaseError.toException());
+            }
+        });
+
+        return future.get();
+
     }
 }

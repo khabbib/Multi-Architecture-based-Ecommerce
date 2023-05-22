@@ -15,7 +15,7 @@ mvnw.cmd
 .idea/
 target/
 .cache/
-.serviceAccountKey.json
+serviceAccountKey.json
 
 ### STS ###
 .apt_generated
