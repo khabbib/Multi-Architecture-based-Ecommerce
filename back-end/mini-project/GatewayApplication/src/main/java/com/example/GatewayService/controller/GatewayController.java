@@ -10,4 +10,8 @@ public class GatewayController {
     public String hello() {
         return "Hello from Gateway!";
     }
+
+
+
+
 }

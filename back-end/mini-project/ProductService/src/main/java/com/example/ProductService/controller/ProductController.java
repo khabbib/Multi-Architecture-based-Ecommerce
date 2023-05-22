@@ -3,7 +3,6 @@ package com.example.ProductService.controller;
 import com.example.ProductService.model.Product;
 import com.example.ProductService.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,10 +21,11 @@ public class ProductController {
 
     /**
      * Returns all products.
-     * @return ResponseEntity<List<Product>>
+     *
+     * @return ResponseEntity<List < Product>>
      */
     @GetMapping("/")
-    public  CompletableFuture<ResponseEntity<List<Product>>> getAvailableProducts() {
+    public CompletableFuture<ResponseEntity<List<Product>>> getAvailableProducts() {
         return productService.getAllProducts().thenApply(product -> ResponseEntity.ok().body(product))
                 .exceptionally(e -> ResponseEntity.notFound().build());
     }
