@@ -1,4 +1,23 @@
-<form class="top-0">   
+<script>
+    const getProducts = async () => {
+        console.log("Getting all products...");
+
+        const data = await fetch('http://localhost:8080/products', {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then((res) =>
+			{
+				console.log(res)
+				return res;
+			} 
+			);
+
+    }
+</script>
+
+<form on:click={getProducts} class="top-0">   
     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
     <div class="relative ">
         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
