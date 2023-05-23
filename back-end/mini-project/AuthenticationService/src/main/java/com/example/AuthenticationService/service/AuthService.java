@@ -22,12 +22,13 @@ public class AuthService {
 
     public ResponseEntity<String> login(String email, String password, HttpServletResponse response) {
         HashMap result = webClientBuilder.build().get()
-                .uri("http://userservice/users/user-exists?email=" + email + "&password=" + password)
+                .uri("http://user-service/users/user-exists?email=" + email + "&password=" + password)
                 .retrieve()
                 .bodyToMono(HashMap.class)
                 .block();
 
         // Control the response
+        System.out.println("Result from user-service: " + result);
         if (result != null) {
             String issuer = (String) result.get("id");
             // expireation time for 20 seconds

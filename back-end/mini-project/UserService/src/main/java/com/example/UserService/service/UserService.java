@@ -38,6 +38,7 @@ public class UserService {
     }
     public HashMap<String, String> checkUserExists(String email, String password) throws ExecutionException, InterruptedException {
         User user = userRepository.getUserByEmail(email);
+        System.out.println("User från db: " + user);
         if (user != null) {
             if(Bcrypt.check(password, user.getPassword())) {
                 return new HashMap<String, String>() {{

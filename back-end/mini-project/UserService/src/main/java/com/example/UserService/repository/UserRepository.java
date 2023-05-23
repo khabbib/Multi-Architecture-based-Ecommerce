@@ -145,7 +145,6 @@ public class UserRepository {
     }
 
     public User getUserByEmail(String email) throws ExecutionException, InterruptedException {
-        System.out.println("Getting user by email: " + email);
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("user");
         CompletableFuture<User> future = new CompletableFuture<>();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
