@@ -1,9 +1,56 @@
+<script>
+	import jQuery from 'jquery'; // kör 'npm install jquery' i cmd
+    
+	const getProducts = async () => {
+		console.log("Getting all products...");
+
+		const data = await fetch('http://localhost:8085/products/', {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify()
+			})
+			.then((res) => {
+				console.log(res)
+				displayProducts(res)
+				return res;
+			})
+			.catch((error) => console.error("FETCH ERROR:", error));
+
+		function displayProducts(data) {
+
+			// TODO: Display all products
+			
+			// Koden nedan är ett förslag... 
+
+			/* 
+			const product = data.product;
+			console.log(data);
+			const productDiv = document.getElementById("product"); 
+			const heading = document.createElement("h1");
+			heading.innerHTML = product;
+			productDiv.appendChild(heading);
+			
+
+			console.log("Length: " + data.length);
+
+			const list = jQuery('#products');
+			for (var i = 0; data.length; i++) {
+				const html = '<h1 id="product_' + i + '">' + data[i]['name'] + '</li>';
+				list.append(html);
+			}
+			*/
+		}   
+	}
+</script>
+
 <!-- Home -->
 <div class="bg-green-50">
 	<div class="flex items-center justify-center flex-col h-[80vh] gap-10">
 		<h1 class="text-4xl font-bold">Welcome to Reshoprio</h1>
 		<h2 class="text-2xl">Reuse. Shop. Prioritize.</h2>
-		<button class="bg-black px-5 py-2 text-white rounded-sm hover:bg-gray-700"><a class="" href="/product">Explore</a></button>
+		<button on:click={getProducts} class="bg-black px-5 py-2 text-white rounded-sm hover:bg-gray-700"><a class="" href="/product">Explore</a></button>
 	</div>
 </div>
 
