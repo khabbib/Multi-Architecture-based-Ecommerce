@@ -23,31 +23,43 @@
 			}
 		}
 	});
-	
-	const handleLogin = async () => {
-		try {
-			const data = await fetch('http://localhost:8080/auth/login', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ email, password })
-			}).then((res) =>
-			{
-				return res;
-			} 
-			);
 
-			console.log('Server: ', data);
-			if (data.status === 200) {
-				//window.location.pathname = '/dashboard';
-			}
-			// Store the token in a cookie or local storage
-			// navigate('dashboard');
-		} catch (error) {
-			error = 'Username or password is incorrect';
-			// Handle login error, display error message to the user, etc.
-		}
+	const handleLogin = async () => {
+		fetch('http://localhost:8080/auth/login', {
+			method: 'POST',
+			body: JSON.stringify({ email: 'user@example.com', password: 'password123' }),
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			credentials: 'include' // Enable sending cookies with cross-origin requests
+		})
+			.then((response) => {
+				if (response.ok) {
+					return response.text(); // Extract the response body as text
+				} else {
+					throw new Error('Login failed');
+				}
+			})
+			.then((data) => {
+				// Handle the response body or perform further actions
+				console.log('Response body:', data);
+
+				// Access the cookies
+				var cookies = document.cookie; // Get all cookies as a string
+				console.log('All cookies:', cookies);
+
+				var jwtCookie = document.cookie.split('; ').find((cookie) => cookie.startsWith('jwt='));
+
+				if (jwtCookie) {
+					var jwtToken = jwtCookie.split('=')[1];
+					console.log('JWT token:', jwtToken);
+				} else {
+					console.log('JWT cookie not found');
+				}
+			})
+			.catch((error) => {
+				console.error('An error occurred:', error);
+			});
 	};
 </script>
 
