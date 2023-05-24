@@ -42,11 +42,9 @@ public class AuthService {
                     .signWith(SignatureAlgorithm.HS512, secretKey)
                     .compact();
 
-            System.out.println("JWT: " + jwt);
             Cookie cookie = new Cookie("jwt", jwt);
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
-            System.out.println("User authorized" + cookie);
             return ResponseEntity.ok("User authorized");
         } else {
             return ResponseEntity.badRequest().body("User not authorized");
