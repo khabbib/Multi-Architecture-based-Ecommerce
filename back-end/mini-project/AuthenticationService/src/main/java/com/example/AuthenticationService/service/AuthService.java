@@ -22,7 +22,7 @@ public class AuthService {
 
     public ResponseEntity<String> login(String email, String password, HttpServletResponse response) {
         HashMap result = webClientBuilder.build().get()
-                .uri("http://user-service/users/user-exists?email=" + email + "&password=" + password)
+                .uri("http://localhost:2020/users/user-exists?email=" + email + "&password=" + password)
                 .retrieve()
                 .bodyToMono(HashMap.class)
                 .block();
