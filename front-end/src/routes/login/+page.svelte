@@ -1,69 +1,41 @@
 <script>
 	import { onMount } from 'svelte';
-	import { navigate } from '../../events/navigator.js';
+	import { checkAuth } from '../../events/util.js';
+
+
 	let email = '',
 		password = '',
 		error = '';
 	onMount(() => {
-		// Check if user is authenticated
-		const token = localStorage.getItem('sessionToken'); // Retrieve the token from cookie or local storage
-		console.log('token: ', token);
-		if (token) {
-			navigate('dashboard'); // Redirect to login if token is not found
-		} else {
-			const tokenExpiration = localStorage.getItem('sessionTokenExpiration');
-			console.log('tokenExpiration: ', tokenExpiration);
-			const expirationTime = new Date(tokenExpiration).getTime();
-			const currentTime = new Date().getTime();
-			if (currentTime > expirationTime) {
-				// Token has expired, clear the token and redirect to login
-				localStorage.removeItem('sessionToken');
-				localStorage.removeItem('sessionTokenExpiration');
-				//navigate('login');
-			}
-		}
+		checkAuth();
 	});
 
 	const handleLogin = async () => {
-		fetch('http://localhost:8080/auth/login', {
-			method: 'POST',
-			body: JSON.stringify({ email: 'user@example.com', password: 'password123' }),
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			credentials: 'include' // Enable sending cookies with cross-origin requests
-		})
-			.then((response) => {
-				if (response.ok) {
-					return response.text(); // Extract the response body as text
-				} else {
-					throw new Error('Login failed');
-				}
-			})
-			.then((data) => {
-				// Handle the response body or perform further actions
-				console.log('Response body:', data);
-
-				// Access the cookies
-				var cookies = document.cookie; // Get all cookies as a string
-				console.log('All cookies:', cookies);
-
-				var jwtCookie = document.cookie.split('; ').find((cookie) => cookie.startsWith('jwt='));
-
-				if (jwtCookie) {
-					var jwtToken = jwtCookie.split('=')[1];
-					console.log('JWT token:', jwtToken);
-				} else {
-					console.log('JWT cookie not found');
-				}
-			})
-			.catch((error) => {
-				console.error('An error occurred:', error);
-			});
+		try {
+			const response = await fetch('http://localhost:8080/auth/login', {
+				method: 'POST',
+				body: JSON.stringify({ email, password }),
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				credentials: 'include' // Enable sending cookies with cross-origin requests
+			}).then((res) => res.json());
+			if (response.length > 0) {
+				console.log('response: ', response);
+				window.localStorage.setItem('sessionToken', response[0].cookie);
+				window.location.pathname = '/dashboard';
+			} else {
+				error = 'Invalid credentials';
+			}
+		} catch (error) {
+			error = 'Invalid credentials';
+		}
 	};
+
 </script>
 
 <section class="h-[80vh] bg-green-50">
+
 	<div class="h-full w-full flex flex-col md:flex-row justify-center items-center">
 		<!-- Left column container with background-->
 		<h1 style="height: 2rem; color: red">{error}</h1>
