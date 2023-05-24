@@ -1,25 +1,23 @@
 import { navigate } from "./navigator";
 
 
-function checkAuth() {
+async function checkAuth() {
     // Check if user is authenticated
 		const token = localStorage.getItem('sessionToken'); // Retrieve the token from cookie or local storage
-        if(token){
-            const checkAuth = fetch('http://localhost:8080/auth/check', {
-                method: 'GET',
+        if(token && window.location.pathname === '/login'){
+            console.log('token: ', token);
+            const checkAuth = await fetch('http://localhost:8080/auth/check', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ token }),
         })
-            .then((res) => res.json())
             .then((res) => {
+                navigate('dashboard');
                 console.log('check Response: ', res);
-            })
-            .catch((err) => {
-            });
 
-            
+            })
         }
 }
 

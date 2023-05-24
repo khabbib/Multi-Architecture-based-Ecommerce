@@ -20,7 +20,7 @@
 				},
 				credentials: 'include' // Enable sending cookies with cross-origin requests
 			}).then((res) => res.json());
-			if (response.length > 0) {
+			if (response.length > 0 && response[0].cookie) {
 				console.log('response: ', response);
 				window.localStorage.setItem('sessionToken', response[0].cookie);
 				window.location.pathname = '/dashboard';

@@ -33,9 +33,9 @@ public class AuthController {
         return output;
     }
 
-    @GetMapping("/check")
-    public ResponseEntity<String> check(@RequestParam String token) {
-        System.out.println("Got request to check");
+    @PostMapping("/check")
+    public ResponseEntity<String> check(@RequestBody String token) {
+        System.out.println("Got request to check" + token);
         return authService.check(token);
     }
 
