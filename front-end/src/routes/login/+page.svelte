@@ -1,6 +1,5 @@
 <script>
 	import { onMount } from 'svelte';
-	import { login } from '../../events/auth-service.js';
 	import { navigate } from '../../events/navigator.js';
 	let email = '',
 		password = '',
@@ -40,15 +39,13 @@
 			);
 
 			console.log('Server: ', data);
-			if (data !== null) {
-				return true;
+			if (data.status === 200) {
+				//window.location.pathname = '/dashboard';
 			}
-			return false;
 			// Store the token in a cookie or local storage
 			// navigate('dashboard');
 		} catch (error) {
-			console.error('Login failed', error);
-			return false;
+			error = 'Username or password is incorrect';
 			// Handle login error, display error message to the user, etc.
 		}
 	};

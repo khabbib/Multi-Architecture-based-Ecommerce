@@ -1,14 +1,13 @@
 <script>
 	import { onMount } from 'svelte';
 	import { navigate } from '../../events/navigator';
-	import axios from 'axios';
 
 	onMount(() => {
 		// Check if user is authenticated
 		const token = localStorage.getItem('sessionToken'); // Retrieve the token from cookie or local storage
 		console.log('Dashboard: ', token);
 		if (!token) {
-			navigate('login'); // Redirect to login if token is not found
+			//navigate('login'); // Redirect to login if token is not found
 		} else {
 			const tokenExpiration = localStorage.getItem('sessionTokenExpiration');
 			console.log('Dashboard: ', tokenExpiration);
@@ -25,7 +24,6 @@
 
 	async function handleLogout() {
 		try {
-			await axios.post('/api/logout');
 			localStorage.removeItem('sessionToken'); // Clear the token from cookie or local storage
 			navigate('login'); // Redirect to the login page
 		} catch (error) {
