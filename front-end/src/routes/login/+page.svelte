@@ -27,8 +27,6 @@
 	
 	const handleLogin = async () => {
 		try {
-			console.log("try")
-			// const response = await axios.post('http://localhost:8080/auth/login', credentials);
 			const data = await fetch('http://localhost:8080/auth/login', {
 				method: 'POST',
 				headers: {
@@ -37,14 +35,12 @@
 				body: JSON.stringify({ email, password })
 			}).then((res) =>
 			{
-				console.log(res)
 				return res;
 			} 
 			);
 
 			console.log('Server: ', data);
 			if (data !== null) {
-				console.log(data);
 				return true;
 			}
 			return false;
