@@ -1,34 +1,34 @@
 package com.example.AuthenticationService.dto;
 
 public class AuthResponse {
-    private int statusCode;
-    private String message;
+    private Long expireTime;
+    private String user;
     private String token;
 
     public AuthResponse() {
     }
 
 
-    public AuthResponse(int statusCode, String message, String token) {
-        this.statusCode = statusCode;
-        this.message = message;
+    public AuthResponse(Long expireTime, String user, String token) {
+        this.expireTime = expireTime;
+        this.user = user;
         this.token = token;
     }
 
-    public int getStatusCode() {
-        return statusCode;
+    public Long getExpireTime() {
+        return expireTime;
     }
 
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+    public void setExpireTime(Long expireTime) {
+        this.expireTime = expireTime;
     }
 
-    public String getMessage() {
-        return message;
+    public String getUser() {
+        return user;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getToken() {
@@ -42,6 +42,10 @@ public class AuthResponse {
 
     @Override
     public String toString() {
-        return "AuthResponse{" + "statusCode=" + statusCode + ", message=" + message + ", token=" + token + '}';
+        return "AuthResponse{" +
+                "expireTime='" + expireTime + '\'' +
+                ", user='" + user + '\'' +
+                ", token='" + token + '\'' +
+                '}';
     }
 }

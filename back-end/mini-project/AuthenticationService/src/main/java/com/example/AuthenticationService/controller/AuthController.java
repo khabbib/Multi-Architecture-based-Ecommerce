@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -21,12 +24,21 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody AuthRequest authRequest, HttpServletResponse response) {
+    public ResponseEntity<List<HashMap<String, String>>>  login(@RequestBody AuthRequest authRequest, HttpServletResponse response) {
         System.out.println("Got request to login");
         String email = authRequest.getEmail();
         String password = authRequest.getPassword();
-        return authService.login(email, password, response);
+        ResponseEntity<List<HashMap<String, String>>> output = authService.login(email, password, response);
+        System.out.println("Output from login: " + output);
+        return output;
     }
+
+    @GetMapping("/check")
+    public ResponseEntity<String> check(@RequestParam String token) {
+        System.out.println("Got request to check");
+        return authService.check(token);
+    }
+
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletResponse response) {
