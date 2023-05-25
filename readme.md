@@ -24,6 +24,7 @@ This is a prototype of an online marketplace. The system meets many of the funct
 **Front-End:** 
 - SvelteKit & Vite
 - TailwindCSS
+
 **Back-End:** 
 - Java Spring Boot
     - Eureka Server
