@@ -37,14 +37,14 @@ This is a prototype of an online marketplace. The system meets many of the funct
 - Clone the repository to your local machine. 
 ### Back-end
 - Navigate to folder: back-end/mini-project
-- Install the dependencies from your terminal:
-```bash
-mvn install
-```
-- Run the back-end
-```bash
-mvn spring-boot:run
-```
+- Open the folder in IntelliJ
+- Execute [Maven goals](https://www.jetbrains.com/help/idea/work-with-maven-goals.html):
+    - mvn clean
+    - mvn compile   
+- Run the back-end:
+    - Start ServerDiscovery
+    - Start GatewayApplication
+    - Start the remaining services
 ### Front-End
 - Navigate to folder: front-end/src
 - Install the dependencies from your terminal:
