@@ -1,17 +1,19 @@
 package com.example.AuthenticationService.dto;
 
+import com.example.UserService.model.User;
+
 import java.util.Date;
 
-public class AuthResponse {
+public class AuthUser {
     private Date expireTime;
-    private String user;
+    private User user;
     private String token;
 
-    public AuthResponse() {
+    public AuthUser() {
     }
 
 
-    public AuthResponse(Date expireTime, String user, String token) {
+    public AuthUser(Date expireTime, User user, String token) {
         this.expireTime = expireTime;
         this.user = user;
         this.token = token;
@@ -26,11 +28,11 @@ public class AuthResponse {
         this.expireTime = expireTime;
     }
 
-    public String getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(String user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -45,7 +47,7 @@ public class AuthResponse {
 
     @Override
     public String toString() {
-        return "AuthResponse{" +
+        return "AuthUser{" +
                 "expireTime='" + expireTime + '\'' +
                 ", user='" + user + '\'' +
                 ", token='" + token + '\'' +

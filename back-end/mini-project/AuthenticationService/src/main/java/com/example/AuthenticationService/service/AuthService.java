@@ -1,6 +1,7 @@
 package com.example.AuthenticationService.service;
 
-import com.example.AuthenticationService.dto.AuthResponse;
+import com.example.AuthenticationService.dto.AuthUser;
+import com.example.UserService.model.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -20,25 +21,24 @@ import java.util.*;
 public class AuthService {
     @Autowired
     private final WebClient.Builder webClientBuilder;
-    private List<AuthResponse> authResponse = new ArrayList<>();
+    private List<AuthUser> authUsers = new ArrayList<>();
 
     public ResponseEntity<List<HashMap<String, String>>> login(String email, String password, HttpServletResponse response) {
-        HashMap result = webClientBuilder.build().get()
+        User user = webClientBuilder.build().get()
                 .uri("http://localhost:2020/users/user-exists?email=" + email + "&password=" + password)
                 .retrieve()
-                .bodyToMono(HashMap.class)
+                .bodyToMono(User.class)
                 .block();
 
         // Control the response
-        System.out.println("Result from user-service: " + result);
-        if (result != null) {
-            String issuer = (String) result.get("id");
+        System.out.println("Result from user-service: " + user);
+        if (user != null) {
             // expireation time for 20 seconds
-            long expirationTime = 20000;
+            Date expirationTime = new Date(System.currentTimeMillis() +20000 * 4);
             String secretKey = "secret";
             String jwt = Jwts.builder()
-                    .setSubject(issuer)
-                    .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+                    .setSubject(user.getId())
+                    .setExpiration(expirationTime)
                     .signWith(SignatureAlgorithm.HS512, secretKey)
                     .compact();
 
@@ -46,8 +46,14 @@ public class AuthService {
             response.addCookie(cookie);
             cookie.setHttpOnly(true);
             cookie.setDomain("localhost:5173");
-            AuthResponse user = new AuthResponse(expirationTime, issuer, jwt);
-            authResponse.add(user);
+            for(AuthUser authUser: authUsers) {
+                if(authUser.getUser().getId().equals(user.getId())) {
+                    authUsers.remove(authUser);
+                    break;
+                }
+            }
+            AuthUser authResponse = new AuthUser(expirationTime, user, jwt);
+            authUsers.add(authResponse);
             // Send the cookies through the response body
             return ResponseEntity.ok().body(List.of(new HashMap<>(Map.of("cookie", jwt))));
         } else {
@@ -56,19 +62,41 @@ public class AuthService {
     }
 
     public ResponseEntity<String> check(String token) {
-        AuthResponse AuthResponse = authResponse.stream().filter(authResponse -> authResponse.getToken().equals(token)).findFirst().orElse(null);
-        if (AuthResponse != null) {
-            return ResponseEntity.ok("User is logged in");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not logged in");
+        for (AuthUser user: authUsers
+             ) {
+            if(user.getToken().equals(token)) {
+                if(user.getExpireTime().getTime() < System.currentTimeMillis()) {
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Session expired");
+                }else {
+                    return ResponseEntity.ok("User is logged in");
+                }
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not logged in");
+            }
         }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not logged in");
     }
 
-    public ResponseEntity<String> logout(HttpServletResponse response) {
-        Cookie cookie = new Cookie("jwt", "");
-        cookie.setHttpOnly(true);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
+    public ResponseEntity<String> logout(String token, HttpServletResponse response) {
+        for (AuthUser user: authUsers
+        ) {
+            if(user.getToken().equals(token)) {
+                authUsers.remove(user);
+                Cookie cookie = new Cookie("jwt", "");
+                cookie.setHttpOnly(true);
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+                break;
+            }
+        }
+
         return ResponseEntity.ok("User logged out");
     }
+
+    public ResponseEntity<List<User>> getOnlineUsers() {
+        ResponseEntity<List<User>> users = ResponseEntity.ok().body(List.of(authUsers.stream().map(AuthUser::getUser).toArray(User[]::new)));
+        System.out.println("Users to return: " + users);
+        return users;
+    }
+
 }
