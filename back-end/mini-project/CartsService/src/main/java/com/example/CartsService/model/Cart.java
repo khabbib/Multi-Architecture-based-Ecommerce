@@ -1,43 +1,70 @@
 package com.example.CartsService.model;
 
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 
+@NoArgsConstructor
 public class Cart {
+    private double cartId;
+    private double customerId;
+    private double orderId;
+    private ArrayList<Double> productIds;
 
-    private String cartId;
-    private String orderId;
-    private String customerId;
 
-    public Cart(String cartId, String orderId, String customerId) {
+    public Cart(double cartId, double customerId, double orderId, ArrayList<Double> productIds) {
         this.cartId = cartId;
-        this.orderId = orderId;
         this.customerId = customerId;
+        this.orderId = orderId;
+        this.productIds = productIds;
     }
 
-    public Cart() {
+    public Cart(double cartId, double customerId, double orderId){
+        this.cartId = cartId;
+        this.customerId = customerId;
+        this.orderId = orderId;
+        this.productIds = new ArrayList<>();
     }
 
-    public String getCartId() {
+    public ArrayList<Double> getProductIds() {
+        return productIds;
+    }
+
+    public void setProductIds(ArrayList<Double> productIds) {
+        this.productIds = productIds;
+    }
+
+    public double getCartId() {
         return cartId;
     }
 
-    public void setCartId(String cartId) {
+    public void setCartId(double cartId) {
         this.cartId = cartId;
     }
 
-    public String getOrderId() {
+    public double getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
+    public void setOrderId(double orderId) {
         this.orderId = orderId;
     }
 
-    public String getCustomerId() {
+    public double getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(String customerId) {
+    public void setCustomerId(double customerId) {
         this.customerId = customerId;
+    }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "cart ID='" + cartId + '\'' +
+                ", customer ID='" + customerId + '\'' +
+                ", order ID ='" + orderId + '\'' +
+                ", product ID:s ='" + productIds.toString() + '\'' +
+                '}';
     }
 }

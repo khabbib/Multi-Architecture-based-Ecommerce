@@ -4,9 +4,11 @@ package com.example.CartsService.service;
 import com.example.CartsService.model.Cart;
 import com.example.CartsService.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -15,7 +17,7 @@ public class CartService {
 
     private final CartRepository cartRepository;
 
-    public CompletableFuture<ArrayList<Cart>> getAvailableCarts() {
+    public CompletableFuture<List<Cart>> getAvailableCarts() {
         return cartRepository.getAvailableCarts();
     }
 
@@ -27,11 +29,15 @@ public class CartService {
         return cartRepository.getCartById(id);
     }
 
-    public CompletableFuture<Cart> updateExistingCart(String id, Cart cart) {
-        return cartRepository.updateExistingCart(id, cart);
+    public ResponseEntity<String> addItemToCart(String cartId, String productId) {
+        return cartRepository.addItemToCart(cartId, productId);
     }
 
     public CompletableFuture<String> deleteExistingCart(String id) {
         return cartRepository.deleteExistingCart(id);
+    }
+
+    public CompletableFuture<Cart> removeItemFromCart(String cartId, String productId) {
+        return cartRepository.removeItemFromCart(cartId, productId);
     }
 }

@@ -24,6 +24,8 @@ public class FirebaseInitializer {
 
     public static String getDatabaseUrl(String dbName) {
         switch (dbName) {
+            case "cart":
+                return "https://mini-project-cart.europe-west1.firebasedatabase.app";
             case "product":
                 return "https://mini-project-product.europe-west1.firebasedatabase.app";
             case "order":
