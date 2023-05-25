@@ -1,7 +1,9 @@
 package com.example.AuthenticationService.dto;
 
+import java.util.Date;
+
 public class AuthResponse {
-    private Long expireTime;
+    private Date expireTime;
     private String user;
     private String token;
 
@@ -9,17 +11,18 @@ public class AuthResponse {
     }
 
 
-    public AuthResponse(Long expireTime, String user, String token) {
+    public AuthResponse(Date expireTime, String user, String token) {
         this.expireTime = expireTime;
         this.user = user;
         this.token = token;
     }
 
-    public Long getExpireTime() {
+
+    public Date getExpireTime() {
         return expireTime;
     }
 
-    public void setExpireTime(Long expireTime) {
+    public void setExpireTime(Date expireTime) {
         this.expireTime = expireTime;
     }
 

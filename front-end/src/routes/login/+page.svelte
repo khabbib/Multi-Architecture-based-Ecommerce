@@ -1,13 +1,14 @@
 <script>
 	import { onMount } from 'svelte';
-	import { checkAuth } from '../../events/util.js';
+	import { checkAuthInLoginPage } from '../../events/util.js';
+	import { navigate } from '../../events/navigator.js';
 
 
 	let email = '',
 		password = '',
 		error = '';
 	onMount(() => {
-		checkAuth();
+		checkAuthInLoginPage();
 	});
 
 	const handleLogin = async () => {
@@ -23,7 +24,7 @@
 			if (response.length > 0 && response[0].cookie) {
 				console.log('response: ', response);
 				window.localStorage.setItem('sessionToken', response[0].cookie);
-				window.location.pathname = '/dashboard';
+				navigate('dashboard');
 			} else {
 				error = 'Invalid credentials';
 			}
