@@ -14,10 +14,10 @@ public class CorsConfig extends org.springframework.web.cors.CorsConfiguration{
     @Bean
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowCredentials(false);
-        configuration.setAllowedOrigins(Collections.singletonList("*")); //Eller ändra denna till localhost
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:5173")); //Eller ändra denna till localhost
         configuration.setAllowedMethods(Collections.singletonList("*"));
-        configuration.setAllowedHeaders(Collections.singletonList("content-type"));
+        configuration.setAllowedHeaders(Collections.singletonList("*"));
         CorsConfigurationSource source = exchange -> configuration;
 
         return new CorsWebFilter(source);
