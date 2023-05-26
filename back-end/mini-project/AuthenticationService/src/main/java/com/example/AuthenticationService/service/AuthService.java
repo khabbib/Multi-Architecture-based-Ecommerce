@@ -25,7 +25,7 @@ public class AuthService {
 
     public ResponseEntity<List<HashMap<String, String>>> login(String email, String password, HttpServletResponse response) {
         User user = webClientBuilder.build().get()
-                .uri("http://localhost:2020/users/user-exists?email=" + email + "&password=" + password)
+                .uri("http://localhost:1080/users/user-exists?email=" + email + "&password=" + password)
                 .retrieve()
                 .bodyToMono(User.class)
                 .block();
