@@ -91,7 +91,50 @@ async function handleLogout() {
 			console.error('Dashboard Logout failed', error);
 			// Handle logout error, display error message to the user, etc.
 		}
-	}
+}
+
+async function getAllProducts(){
+  try {
+      const response = await fetch('http://localhost:8080/products/', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        const products = await response.json();
+        return products;
+      } else {
+        console.log("Error");
+      }
+    } catch (error) {
+      console.error('Error retrieving products:', error);
+      return [];
+    }
+}
+
+async function getSearchedProduct(query){
+  try {
+      const response = await fetch('http://localhost:8080/search/' + query, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        const search = await response.json();
+        return search;
+      } else {
+        console.log("Error");
+      }
+    } catch (error) {
+      console.error('Error retrieving search:', error);
+      return [];
+    }
+}
 
 
-export { checkAuthInLoginPage, checkAuthInDashboardPage, handleLogout, getOnlineUsers };
+
+export { checkAuthInLoginPage, checkAuthInDashboardPage, handleLogout, getOnlineUsers, getAllProducts, getSearchedProduct};
