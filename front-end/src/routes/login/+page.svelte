@@ -1,57 +1,42 @@
 <script>
 	import { onMount } from 'svelte';
+	import { checkAuthInLoginPage } from '../../events/util.js';
 	import { navigate } from '../../events/navigator.js';
+
+
 	let email = '',
 		password = '',
 		error = '';
 	onMount(() => {
-		// Check if user is authenticated
-		const token = localStorage.getItem('sessionToken'); // Retrieve the token from cookie or local storage
-		console.log('token: ', token);
-		if (token) {
-			navigate('dashboard'); // Redirect to login if token is not found
-		} else {
-			const tokenExpiration = localStorage.getItem('sessionTokenExpiration');
-			console.log('tokenExpiration: ', tokenExpiration);
-			const expirationTime = new Date(tokenExpiration).getTime();
-			const currentTime = new Date().getTime();
-			if (currentTime > expirationTime) {
-				// Token has expired, clear the token and redirect to login
-				localStorage.removeItem('sessionToken');
-				localStorage.removeItem('sessionTokenExpiration');
-				//navigate('login');
-			}
-		}
+		checkAuthInLoginPage();
 	});
-	
+
 	const handleLogin = async () => {
 		try {
-			const data = await fetch('http://localhost:8080/auth/login', {
+			const response = await fetch('http://localhost:8080/auth/login', {
 				method: 'POST',
+				body: JSON.stringify({ email, password }),
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ email, password })
-			}).then((res) =>
-			{
-				return res;
-			} 
-			);
-
-			console.log('Server: ', data);
-			if (data.status === 200) {
-				//window.location.pathname = '/dashboard';
+				credentials: 'include' // Enable sending cookies with cross-origin requests
+			}).then((res) => res.json());
+			if (response.length > 0 && response[0].cookie) {
+				console.log('response: ', response);
+				window.localStorage.setItem('sessionToken', response[0].cookie);
+				navigate('dashboard');
+			} else {
+				error = 'Invalid credentials';
 			}
-			// Store the token in a cookie or local storage
-			// navigate('dashboard');
 		} catch (error) {
-			error = 'Username or password is incorrect';
-			// Handle login error, display error message to the user, etc.
+			error = 'Invalid credentials';
 		}
 	};
+
 </script>
 
 <section class="h-[80vh] bg-green-50">
+
 	<div class="h-full w-full flex flex-col md:flex-row justify-center items-center">
 		<!-- Left column container with background-->
 		<h1 style="height: 2rem; color: red">{error}</h1>
