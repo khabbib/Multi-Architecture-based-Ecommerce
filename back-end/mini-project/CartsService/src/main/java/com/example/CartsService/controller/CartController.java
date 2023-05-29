@@ -37,7 +37,7 @@ public class CartController {
      * @return cart objektet
      *
      * Exempel request i postman:
-     * localhost:8080/carts-service/cart/cartById?id=gadhf34g1j234gf
+     * localhost:8080/carts-service/cart/cartById/:id
      */
     @GetMapping("/cartById/{id}") //Get specific cart
     @ResponseStatus(HttpStatus.CREATED)
@@ -51,12 +51,16 @@ public class CartController {
      * @param cart objekt i json format.
      * @return id på carten som skapats.
      *
-     * Exempel request i databsen:
+     * Exempel request i postman:
      * {
      *     "cartId": 5.0,
      *     "customerId": 5.0,
      *     "orderId": 5.0,
-     *     "productIds" : [1.0, 2.0, 3.0]
+     *     "productList": {
+     *         "Key1": "productId1",
+     *         "Key2": "productId2",
+     *         "Key3": "productId3"
+     *     }
      * }
      */
     @PostMapping("/create") //Create a new cart
@@ -73,7 +77,7 @@ public class CartController {
      */
     @PostMapping("/addToCart{cartId}{productId}") //Put item into cart.
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> addItemToCart(@PathVariable("cartId") String cartId, @PathVariable("productId") String productId){
+    public ResponseEntity<String> addItemToCart(@RequestParam("cartId") String cartId, @RequestParam("productId") String productId){
         return cartService.addItemToCart(cartId, productId);
     }
 

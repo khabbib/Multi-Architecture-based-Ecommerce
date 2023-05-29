@@ -22,11 +22,6 @@ public class CartRepository {
         System.out.println("CartRepository created");
     }
 
-    /**
-     * Done and tested.
-     * Get all carts from the database.
-     * @return a list of carts.
-     */
     public CompletableFuture<List<Cart>> getAvailableCarts() {
         CompletableFuture<List<Cart>> future = new CompletableFuture<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("cart");
@@ -84,15 +79,8 @@ public class CartRepository {
 
     }
 
-    /**
-     * ToDo: Test method with postman.
-     * Gets a cart from the database using the specific cart id.
-     * @param cartId the id of the cart
-     * @return the cart to be returned
-     */
     public CompletableFuture<Cart> getCartById(String cartId) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("cart").child(String.valueOf(cartId));
-        DatabaseReference productListRef = FirebaseDatabase.getInstance().getReference("cart").child(String.valueOf(cartId)).child("productList");
         CompletableFuture<Cart> future = new CompletableFuture<>();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -118,33 +106,21 @@ public class CartRepository {
     }
 
     //Lägg till en ny produkt i kundvagnen.
-    //ToDo: Implementera
     public ResponseEntity<String> addItemToCart(String cartId, String productId) {
         System.out.println("Adding items");
         CompletableFuture<Cart> cart = getCartById(cartId);
-        try{
-            Cart c = cart.get();
-            System.out.println(c.getCustomerId());
-            System.out.println(c.getOrderId());
-            System.out.println(c.toString());
-            Map<String, String> productList = c.getProductList();
-            System.out.println("ProductList: " + productList.toString());
-            productList.put(productId, "1");
-            System.out.println("New product list for cart: " + productList.toString());
-            System.out.println("Sending updated list to db..");
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("cart/" + cartId).child("productList");
-            databaseReference.setValueAsync(productList);
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-
-
-        ///cart/gadhf34g1j234gf/products
-        //cart/{cartId}/products
-
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("cart").child(String.valueOf(cartId)).child("productList");
+        databaseReference.setValueAsync("productId");
         return ResponseEntity.ok().body(productId);
+        /*
+        Create product in repo
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("product");
+        DatabaseReference newProductReference = databaseReference.push();
+        newProductReference.setValueAsync(product);
+        String productId = newProductReference.getKey();
+        return ResponseEntity.ok().body(productId);
+         */
+
     }
 
     public CompletableFuture<String> deleteExistingCart(String id) {
