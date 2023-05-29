@@ -88,6 +88,19 @@
                 {#each search as product}
                     <!-- Display each product -->
                     <div class="bg-blue-200 p-4 m-2 shadow rounded text-center">
+                        {#if product.pName.includes("iphone")}
+                            <img src="./product/iphone.png" alt="">
+                        {:else if product.pName.includes("macbook")}
+                            <img src="./product/macbook.png" alt="">
+                        {:else if product.pName.includes("ipad")}
+                            <img src="./product/ipad.png" alt="">
+                        {:else if product.pName.includes("watch")}
+                            <img src="./product/watch.png" alt="">
+                        {:else if product.pName.includes("airpod")}
+                            <img src="./product/airpods.png" alt="">
+                        {:else}
+                            <img src="https://via.placeholder.com/300x200.png?text={product.pName}" alt="{product.pName}">
+                        {/if}
                         <p>Name: {product.pName}</p>
                         <p>Color: {product.pColor}</p>
                         <p>Type: {product.pType}</p>
