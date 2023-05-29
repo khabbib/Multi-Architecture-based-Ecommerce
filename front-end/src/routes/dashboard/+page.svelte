@@ -6,17 +6,14 @@
 	onMount(async () => {
 		checkAuthInDashboardPage();
 
-
 		users = await getOnlineUsers();
-  		console.log('Online Users:', users);
+		console.log('Online Users:', users);
 	});
-
 </script>
 
 <main>
 	<!-- Dashboard content -->
 	<div class="bg-cyan-100 p-10">
-
 		<h1 class="font-bold text-xl">Dashboard</h1>
 
 		<button on:click={handleLogout} class="bg-red-100 shadow m-1 p-2 rounded">Logout</button>
@@ -66,5 +63,4 @@
 			</div>
 		</div>
 	</div>
-	
 </main>
