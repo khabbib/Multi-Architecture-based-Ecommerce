@@ -13,10 +13,14 @@
 
 	
 	// Create async await and call the function register direct. No onMount needed
-	let handleRegistration;
-	onMount(async () => {
-		handleRegistration = await createUser(name, email, password);
-	})
+	const handleRegistration = async () => {
+		const isCreatedUser = await createUser(name, email, password);
+		if (isCreatedUser) {
+			navigate('dashboard');
+		} else {
+			error = 'Registration failed';
+		}
+	};
 </script>
 
 <section class="bg-green-50">
@@ -28,7 +32,7 @@
 			class="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 border rounded-md"
 			style="padding: 5rem;"
 		>
-			<form on:submit|preventDefault={handleRegistration()}>
+			<form on:submit|preventDefault={() => handleRegistration()}>
 				<!--Sign in section-->
 				<div class="flex flex-row items-center justify-around">
 					<div>

@@ -92,13 +92,13 @@ async function createUser(name, email, password) {
 
 		if (response.ok) {
 			const { token } = await response.json();
-			return token;
+			return true;
 		} else {
 			console.log('Error');
-			return 'Error';
+			return false;
 		}
 	} catch (error) {
-		return 'Error';
+		return false;
 	}
 }
 
