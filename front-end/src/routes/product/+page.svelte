@@ -86,15 +86,15 @@
 				{#each search as product}
 					<!-- Display each product -->
 					<div class="bg-blue-200 p-4 m-2 shadow rounded text-center">
-						{#if product.pName.includes('iphone')}
+						{#if product.pName.includes('Iphone')}
 							<img src="./product/iphone.png" alt="" />
-						{:else if product.pName.includes('macbook')}
+						{:else if product.pName.includes('Macbook')}
 							<img src="./product/macbook.png" alt="" />
-						{:else if product.pName.includes('ipad')}
+						{:else if product.pName.includes('Ipad')}
 							<img src="./product/ipad.png" alt="" />
-						{:else if product.pName.includes('watch')}
+						{:else if product.pName.includes('Watch')}
 							<img src="./product/watch.png" alt="" />
-						{:else if product.pName.includes('airpod')}
+						{:else if product.pName.includes('Airpod')}
 							<img src="./product/airpods.png" alt="" />
 						{:else}
 							<img

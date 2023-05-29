@@ -98,6 +98,7 @@ public class ProductRepository {
      */
     public ResponseEntity<String> createProduct(Product product) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("product");
+        System.out.println("Creating product..." + product.toString());
         DatabaseReference newProductReference = databaseReference.push();
         newProductReference.setValueAsync(product);
         String productId = newProductReference.getKey();

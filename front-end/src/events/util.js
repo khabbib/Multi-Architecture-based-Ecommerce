@@ -107,6 +107,7 @@ async function getAllProducts() {
 }
 
 async function getSearchedProduct(query) {
+  if(query === '') return [];
 	try {
 		const response = await fetch('http://localhost:8080/search/' + query, {
 			method: 'GET',
