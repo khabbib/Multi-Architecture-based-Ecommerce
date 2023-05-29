@@ -80,6 +80,28 @@ async function getOnlineUsers() {
 	}
 }
 
+async function createUser(name, email, password) {
+	try {
+		const response = await fetch('http://localhost:8080/users/create', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ name, email, password })
+		});
+
+		if (response.ok) {
+			const { token } = await response.json();
+			return token;
+		} else {
+			console.log('Error');
+			return 'Error';
+		}
+	} catch (error) {
+		return 'Error';
+	}
+}
+
 async function handleLogout() {
 	localStorage.removeItem('sessionToken'); // Clear the token from cookie or local storage
 	navigate('login'); // Redirect to the login page
@@ -135,5 +157,6 @@ export {
 	handleLogout,
 	getOnlineUsers,
 	getAllProducts,
-	getSearchedProduct
+	getSearchedProduct,
+	createUser,
 };

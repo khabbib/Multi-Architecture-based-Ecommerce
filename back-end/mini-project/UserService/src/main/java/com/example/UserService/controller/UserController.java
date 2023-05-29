@@ -37,8 +37,10 @@ public class UserController {
      * @return ResponseEntity<String>
      */
     @PostMapping("/create")
-    public void createUser(@RequestBody User user) {
-        userService.createUser(user);
+    public ResponseEntity<String> createUser(@RequestBody User user) {
+        ResponseEntity<String> res = userService.createUser(user);
+        System.out.println("Check: " + res);
+        return res;
     }
 
     /**

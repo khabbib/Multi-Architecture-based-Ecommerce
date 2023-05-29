@@ -6,9 +6,9 @@
 	let email = '',
 		password = '',
 		error = '';
-	checkAuthInLoginPage();
-	// onMount(() => {
-	// });
+	onMount(() => {
+		checkAuthInLoginPage();
+	});
 
 	const handleLogin = async () => {
 		try {

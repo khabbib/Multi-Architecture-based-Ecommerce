@@ -5,7 +5,6 @@
 	let users = [];
 	onMount(async () => {
 		checkAuthInDashboardPage();
-
 		users = await getOnlineUsers();
 		console.log('Online Users:', users);
 	});
