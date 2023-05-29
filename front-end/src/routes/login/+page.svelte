@@ -8,7 +8,16 @@
 		error = '';
 	onMount(() => {
 		checkAuthInLoginPage();
+		const url = new URL(window.location.href);
+		const params = url.searchParams;
+		if (params.has("message")) {
+			error = params.get("message");
+			params.delete("message"); // Remove the message parameter from the URL
+			window.history.replaceState({}, "", url.toString()); // Update the URL without the message parameter
+		}
 	});
+
+	
 
 	const handleLogin = async () => {
 		try {
@@ -36,12 +45,12 @@
 <section class="h-[80vh] bg-green-50">
 	<div class="h-full w-full flex flex-col md:flex-row justify-center items-center">
 		<!-- Left column container with background-->
-		<h1 style="height: 2rem; color: red">{error}</h1>
 		<!-- Right column container -->
 		<div
-			class="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 border rounded-md"
-			style="padding: 5rem;"
+		class="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 border rounded-md"
+		style="padding: 5rem;"
 		>
+			<h1 style="height: 2rem; color: red">{error}</h1>
 			<form on:submit|preventDefault={() => handleLogin()}>
 				<!--Sign in section-->
 				<div class="flex flex-row items-center justify-around">

@@ -82,23 +82,20 @@ async function getOnlineUsers() {
 
 async function createUser(name, email, password) {
 	try {
-		const response = await fetch('http://localhost:8080/users/create', {
+		await fetch('http://localhost:8080/users/create', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({ name, email, password })
+		}).then((res) => {
+			if (res.status === 200) {
+				navigate('login');
+				// Add a function to give information to user
+			}
 		});
-
-		if (response.ok) {
-			const { token } = await response.json();
-			return true;
-		} else {
-			console.log('Error');
-			return false;
-		}
 	} catch (error) {
-		return false;
+		console.log('Error creating user:', error);
 	}
 }
 
