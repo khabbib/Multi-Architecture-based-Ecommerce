@@ -19,9 +19,9 @@
 		search = await getSearchedProduct(query);
 		console.log('Search:', search);
 		if (search.length == 0) {
-			resultMessage = 'Search for "' + query + '" not found.';
+			resultMessage = 'Result for "' + query + '" not found.';
 		} else {
-			resultMessage = 'Search for "' + query + '":';
+			resultMessage = 'Result for "' + query + '":';
 		}
 		isSearching = false;
 	};
@@ -121,6 +121,22 @@
 				{#each products as product}
 					<!-- Display each product -->
 					<div class="bg-blue-200 p-4 m-2 shadow rounded text-center">
+						{#if product.pName.includes('Iphone')}
+							<img src="./product/iphone.png" alt="" />
+						{:else if product.pName.includes('Macbook')}
+							<img src="./product/macbook.png" alt="" />
+						{:else if product.pName.includes('Ipad')}
+							<img src="./product/ipad.png" alt="" />
+						{:else if product.pName.includes('Watch')}
+							<img src="./product/watch.png" alt="" />
+						{:else if product.pName.includes('Airpod')}
+							<img src="./product/airpods.png" alt="" />
+						{:else}
+							<img
+								src="https://via.placeholder.com/300x200.png?text={product.pName}"
+								alt={product.pName}
+							/>
+						{/if}
 						<p>Name: {product.pName}</p>
 						<p>Type: {product.pType}</p>
 						<p>Price: {product.pPrice} SEK</p>
