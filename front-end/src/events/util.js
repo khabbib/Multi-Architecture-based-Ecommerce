@@ -83,8 +83,8 @@ async function createUser(name, email, password) {
 		return makeErrorMessage("Email is not valid");
 	}
 
-	if(password.length < 6){
-		return makeErrorMessage("Password must be at least 6 characters long");
+	if(password.length < 5){
+		return makeErrorMessage("Password must be at least 5 characters long");
 	}
 
 	try {
@@ -111,6 +111,7 @@ async function handleLogout() {
 }
 
 async function validateLogin(email, password){
+	console.log("Validating login");
 	if(email === "" || password === ""){
 		return makeErrorMessage("Email or password cannot be empty");
 	}
@@ -128,22 +129,15 @@ async function validateLogin(email, password){
 			},
 			credentials: 'include' // Enable sending cookies with cross-origin requests
 		}).then((res) => res.json());
+		console.log("Response: ", response);
 		if (response.length > 0 && response[0].cookie) {
 			window.localStorage.setItem('sessionToken', response[0].cookie);
 			navigateTo('dashboard', "Successfully logged in");
 		} else {
-			const error = {
-				status: 'error',
-				error: 'Email or password is incorrect'
-			};
-			return error;
+			return makeErrorMessage("Email or password is incorrect");
 		}
 	} catch (er) {
-		const  error = {
-			status: 'error',
-			error: 'Something went wrong, please try again later'
-		}
-		return error;
+		return makeErrorMessage("Something went wrong, please try again later");
 	}
 
 }

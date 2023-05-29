@@ -14,7 +14,7 @@
 	});
 	
 	const handleLogin = async () => {
-		validateLogin(email, password);
+		error = await validateLogin(email, password);
 	};
 </script>
 

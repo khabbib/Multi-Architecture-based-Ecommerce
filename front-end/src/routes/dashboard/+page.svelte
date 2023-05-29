@@ -5,12 +5,12 @@
 	import Message from '../../components/message.svelte';
 
 	let users = [];
-	let error;
+	let error = null;
 	onMount(async () => {
+		error = preInitializePage();
 		checkAuthInDashboardPage();
 		users = await getOnlineUsers();
 		console.log('Online Users:', users);
-		error = preInitializePage();
 	});
 </script>
 
