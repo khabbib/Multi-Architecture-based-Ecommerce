@@ -24,7 +24,6 @@ async function checkAuthInLoginPage() {
 }
 
 async function checkAuthInDashboardPage() {
-	console.log('Check auth in dashboard page');
 	// Check if user is authenticated
 	const token = localStorage.getItem('sessionToken'); // Retrieve the token from cookie or local storage
 	if (token) {
