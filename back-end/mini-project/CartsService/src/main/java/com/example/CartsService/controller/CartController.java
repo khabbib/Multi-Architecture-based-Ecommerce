@@ -39,7 +39,7 @@ public class CartController {
      * Exempel request i postman:
      * localhost:8080/carts-service/cart/cartById?id=gadhf34g1j234gf
      */
-    @GetMapping("/cartById{id}") //Get specific cart
+    @GetMapping("/cartById/{id}") //Get specific cart
     @ResponseStatus(HttpStatus.CREATED)
     public CompletableFuture<Cart> getCartById(@PathVariable("id") String id){
         return cartService.getCartById(id);
@@ -51,11 +51,12 @@ public class CartController {
      * @param cart objekt i json format.
      * @return id på carten som skapats.
      *
-     * Exempel request i postman:
+     * Exempel request i databsen:
      * {
-     *     "cartId": 3.0,
-     *     "customerId": 3.0,
-     *     "orderId": 3.0
+     *     "cartId": 5.0,
+     *     "customerId": 5.0,
+     *     "orderId": 5.0,
+     *     "productIds" : [1.0, 2.0, 3.0]
      * }
      */
     @PostMapping("/create") //Create a new cart
@@ -66,14 +67,14 @@ public class CartController {
 
     /**
      * Lägg till en produkt i kundvagnen. Funktionen kollar så att produkten är tillgänglig innan den läggs till.
-     * @param cid cart id på kundvagnen.
-     * @param pid product id på produkten att lägga till.
+     * @param cartId cart id på kundvagnen.
+     * @param productId product id på produkten att lägga till.
      * @return productId som las till i kundvagnen.
      */
     @PostMapping("/addToCart{cartId}{productId}") //Put item into cart.
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> addItemToCart(@PathVariable("cid") String cid, @PathVariable("pid") String pid){
-        return cartService.addItemToCart(cid, pid);
+    public ResponseEntity<String> addItemToCart(@PathVariable("cartId") String cartId, @PathVariable("productId") String productId){
+        return cartService.addItemToCart(cartId, productId);
     }
 
     @DeleteMapping("/{id}") //Remove item from cart.
