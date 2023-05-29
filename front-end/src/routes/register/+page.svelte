@@ -15,7 +15,7 @@
 	});
 
 	const handleRegistration = async () => {
-		createUser(name, email, password);
+		error = await createUser(name, email, password);
 	};
 </script>
 

@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { checkAuthInLoginPage } from '../../events/util.js';
+	import { checkAuthInLoginPage, validateLogin } from '../../events/util.js';
 	import { navigateTo, preInitializePage } from '../../events/navigator.js';
 	import Message from '../../components/message.svelte';	
 	
@@ -14,31 +14,7 @@
 	});
 	
 	const handleLogin = async () => {
-		try {
-			const response = await fetch('http://localhost:8080/auth/login', {
-				method: 'POST',
-				body: JSON.stringify({ email, password }),
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				credentials: 'include' // Enable sending cookies with cross-origin requests
-			}).then((res) => res.json());
-			if (response.length > 0 && response[0].cookie) {
-				console.log('response: ', response);
-				window.localStorage.setItem('sessionToken', response[0].cookie);
-				navigateTo('dashboard', "Successfully logged in");
-			} else {
-				error = {
-					status: 'error',
-					error: 'Email or password is incorrect'
-				};
-			}
-		} catch (error) {
-			error = {
-				status: 'error',
-				error: 'Something went wrong, please try again later'
-			}
-		}
+		validateLogin(email, password);
 	};
 </script>
 
