@@ -13,10 +13,11 @@ public class Cart {
     private Map<String, String> productList;
     //Hashmapen innehåller först produktid, sedan antalet av produkten.
 
-    public Cart(double orderId, double cartId, double customerId){
+    public Cart(double orderId, double cartId, double customerId, Map<String, String> productList){
         this.cartId = cartId;
         this.customerId = customerId;
         this.orderId = orderId;
+        this.productList = productList;
     }
 
     public Cart(){

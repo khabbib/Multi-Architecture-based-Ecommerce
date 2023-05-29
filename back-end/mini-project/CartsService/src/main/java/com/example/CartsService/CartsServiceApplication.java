@@ -35,6 +35,13 @@ public class CartsServiceApplication {
                 cartRepository.createNewCart(new Cart(3.0,3.0,3.0, values));
 
                  */
+                HashMap<String, String> values = new HashMap<>();
+                values.put("Key1", "value1");
+                values.put("Key2", "value2");
+                values.put("Key3", "value3");
+
+                //CompletableFuture<String> cardCreated = cartRepository.createNewCart(new Cart(3.0, 3.0, 3.0, values));
+                //System.out.println("Card created: " + cardCreated.get());
 
                 CompletableFuture<List<Cart>> carts = cartRepository.getAvailableCarts();
                 System.out.println("All carts: " + carts.get());

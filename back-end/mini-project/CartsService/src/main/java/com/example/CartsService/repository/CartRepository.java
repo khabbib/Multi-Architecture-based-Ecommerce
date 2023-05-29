@@ -31,7 +31,6 @@ public class CartRepository {
         CompletableFuture<List<Cart>> future = new CompletableFuture<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("cart");
 
-        System.out.println("Entering on data change method!!");
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -39,21 +38,13 @@ public class CartRepository {
                 List<Cart> cartList = new ArrayList<>();
 
                 if(snapshot.exists()){
-                    System.out.println("Datasnapshot exist " + snapshot.toString());
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        System.out.println("Retriving datasnapshot to cart.");
-                        System.out.println(dataSnapshot.child("productList"));
 
-
-                        Map map = dataSnapshot.child("productList").getValue(Map.class);
-                        System.out.println("Map: " + map.toString());
 
                         // Convert the DataSnapshot to a Cart object and add the productlist to cart.
                         Cart retrievedCart = dataSnapshot.getValue(Cart.class);
                         // add the cart to the list
-                        retrievedCart.setProductList(map);
                         cartList.add(retrievedCart);
-                        System.out.println("Retrived a cart from db..");
                     }
                 }else{
                     System.out.println("Snapshot doesnt exist!");
@@ -83,7 +74,7 @@ public class CartRepository {
 
     public CompletableFuture<String> createNewCart(Cart cart) {
         CompletableFuture<String> future = new CompletableFuture<>();
-
+        System.out.println("Creating new cart..." + cart.toString());
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("cart");
         DatabaseReference newCartReference = databaseReference.push();
         newCartReference.setValueAsync(cart);
