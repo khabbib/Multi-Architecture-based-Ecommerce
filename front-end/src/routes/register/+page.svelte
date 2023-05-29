@@ -1,15 +1,24 @@
 <script>
+	import { createUser } from '../../events/util';
 	import { onMount } from 'svelte';
+	import { preInitializePage } from '../../events/navigator';
+	import Message from '../../components/message.svelte';
 
-	onMount(async () => {
-		if (typeof window !== 'undefined') {
-			// Load modules here after the window object has been created.
-			// Other wise you will get an error from svelkit server. [INTERNEL ERROR 500].
-		}
+	let name = '',
+		email = '',
+		password = '',
+		error = null;
+
+	onMount(() => {
+		error = preInitializePage();
 	});
+
+	const handleRegistration = async () => {
+		error = await createUser(name, email, password);
+	};
 </script>
 
-<section class="bg-green-50">
+<section class="h-[80vh] bg-green-50">
 	<div class="h-full w-full flex flex-col md:flex-row justify-center items-center">
 		<!-- Left column container with background-->
 
@@ -18,7 +27,8 @@
 			class="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 border rounded-md"
 			style="padding: 5rem;"
 		>
-			<form>
+			<Message {error} />
+			<form on:submit|preventDefault={() => handleRegistration()}>
 				<!--Sign in section-->
 				<div class="flex flex-row items-center justify-around">
 					<div>
@@ -36,6 +46,7 @@
 				<div class="relative mb-6" data-te-input-wrapper-init>
 					<label style="color: gray;" for="first_name">Name </label>
 					<input
+						bind:value={name}
 						style="border: 1px solid #e5e5e5; color: #000;"
 						type="text"
 						class="peer text-black min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
@@ -43,21 +54,11 @@
 						placeholder="Name"
 					/>
 				</div>
-				<!-- Lastname input -->
-				<div class="relative mb-6" data-te-input-wrapper-init>
-					<label style="color: gray;" for="last_name">Last name </label>
-					<input
-						style="border: 1px solid #e5e5e5; color: #000;"
-						type="text"
-						class="peer text-black min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-						id="last_name"
-						placeholder="Email address"
-					/>
-				</div>
 				<!-- Email input -->
 				<div class="relative mb-6" data-te-input-wrapper-init>
 					<label style="color: gray;" for="exampleFormControlInput2">Email address </label>
 					<input
+						bind:value={email}
 						style="border: 1px solid #e5e5e5; color: #000;"
 						type="text"
 						class="peer text-black min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
@@ -70,6 +71,7 @@
 				<div class="relative mb-6" data-te-input-wrapper-init>
 					<label style="color: gray;" for="exampleFormControlInput22">Password </label>
 					<input
+						bind:value={password}
 						style="border: 1px solid #e5e5e5; color: #000;"
 						type="password"
 						class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
@@ -97,7 +99,7 @@
 				<div class="text-center lg:text-left">
 					<button
 						style="background-color: #07be73; color: #fff;"
-						type="button"
+						type="submit"
 						class="inline-block rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
 						data-te-ripple-init
 						data-te-ripple-color="light"

@@ -103,8 +103,10 @@ public class UserRepository {
      * @return String
      */
     public ResponseEntity<String> createUser(User user) {
-        // Generate a random ID for the User
+        // Generate a random ID and default user as the role
         user.setId(UUID.randomUUID().toString());
+        user.setRole("user");
+
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("user");
         DatabaseReference newUserReference = databaseReference.push();
         newUserReference.setValueAsync(user);

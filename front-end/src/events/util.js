@@ -1,7 +1,6 @@
-import { navigate } from './navigator';
+import { navigateTo } from './navigator';
 
 async function checkAuthInLoginPage() {
-	console.log('Check auth in login page');
 	// Check if user is authenticated
 	const token = localStorage.getItem('sessionToken'); // Retrieve the token from cookie or local storage
 	if (token) {
@@ -16,7 +15,7 @@ async function checkAuthInLoginPage() {
 			console.log('check Response in login page: ', res);
 			if (res.status === 200) {
 				console.log('User is still logged in');
-				navigate('dashboard');
+				navigateTo('dashboard', null);
 			} else {
 				localStorage.removeItem('sessionToken');
 			}
@@ -25,7 +24,6 @@ async function checkAuthInLoginPage() {
 }
 
 async function checkAuthInDashboardPage() {
-	console.log('Check auth in dashboard page');
 	// Check if user is authenticated
 	const token = localStorage.getItem('sessionToken'); // Retrieve the token from cookie or local storage
 	if (token) {
@@ -40,22 +38,17 @@ async function checkAuthInDashboardPage() {
 			.then((res) => {
 				console.log('check Response: ', res);
 				if (res.status === 200) {
-					res.text().then((text) => {
-						console.log('Dashboard:' + text);
-					});
+					console.log('User is still logged in');
 				} else {
 					localStorage.removeItem('sessionToken');
-					res.text().then((text) => {
-						console.log('Dashboard:' + text);
-					});
-					//navigate('login');
+					navigateTo('login', "You're not logged in");
 				}
 			})
 			.catch((err) => {
 				console.error('Dashboard Authentication failed: ', err);
 			});
 	} else {
-		navigate('login');
+		navigateTo('login', "You're not logged in");
 	}
 }
 
@@ -80,9 +73,78 @@ async function getOnlineUsers() {
 	}
 }
 
+async function createUser(name, email, password) {
+	if (name === '' || email === '' || password === '') {
+		return makeErrorMessage('Name, email or password cannot be empty');
+	}
+
+	if (!email.includes('@')) {
+		return makeErrorMessage('Email is not valid');
+	}
+
+	if (password.length < 5) {
+		return makeErrorMessage('Password must be at least 5 characters long');
+	}
+
+	try {
+		await fetch('http://localhost:8080/users/create', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ name, email, password })
+		}).then((res) => {
+			if (res.status === 200) {
+				navigateTo('login', 'User created successfully');
+				// Add a function to give information to user
+			}
+		});
+	} catch (error) {
+		console.log('Error creating user:', error);
+	}
+}
+
 async function handleLogout() {
 	localStorage.removeItem('sessionToken'); // Clear the token from cookie or local storage
-	navigate('login'); // Redirect to the login page
+	navigateTo('login', 'You have been logged out');
+}
+
+async function validateLogin(email, password) {
+	console.log('Validating login');
+	if (email === '' || password === '') {
+		return makeErrorMessage('Email or password cannot be empty');
+	}
+
+	if (!email.includes('@')) {
+		return makeErrorMessage('Email is not valid');
+	}
+
+	try {
+		const response = await fetch('http://localhost:8080/auth/login', {
+			method: 'POST',
+			body: JSON.stringify({ email, password }),
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			credentials: 'include' // Enable sending cookies with cross-origin requests
+		}).then((res) => res.json());
+		console.log('Response: ', response);
+		if (response.length > 0 && response[0].cookie) {
+			window.localStorage.setItem('sessionToken', response[0].cookie);
+			navigateTo('dashboard', 'Successfully logged in');
+		} else {
+			return makeErrorMessage('Email or password is incorrect');
+		}
+	} catch (er) {
+		return makeErrorMessage('Something went wrong, please try again later');
+	}
+}
+
+function makeErrorMessage(error) {
+	return {
+		status: 'error',
+		error
+	};
 }
 
 async function getAllProducts() {
@@ -107,7 +169,7 @@ async function getAllProducts() {
 }
 
 async function getSearchedProduct(query) {
-  if(query === '') return [];
+	if (query === '') return [];
 	try {
 		const response = await fetch('http://localhost:8080/search/' + query, {
 			method: 'GET',
@@ -133,7 +195,9 @@ export {
 	checkAuthInLoginPage,
 	checkAuthInDashboardPage,
 	handleLogout,
+	validateLogin,
 	getOnlineUsers,
 	getAllProducts,
-	getSearchedProduct
+	getSearchedProduct,
+	createUser
 };

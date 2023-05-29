@@ -1,47 +1,33 @@
 <script>
 	import { onMount } from 'svelte';
-	import { checkAuthInLoginPage } from '../../events/util.js';
-	import { navigate } from '../../events/navigator.js';
+	import { checkAuthInLoginPage, validateLogin } from '../../events/util.js';
+	import { navigateTo, preInitializePage } from '../../events/navigator.js';
+	import Message from '../../components/message.svelte';
 
 	let email = '',
 		password = '',
-		error = '';
-	checkAuthInLoginPage();
-	// onMount(() => {
-	// });
+		error = null;
+
+	onMount(() => {
+		checkAuthInLoginPage();
+		error = preInitializePage();
+	});
 
 	const handleLogin = async () => {
-		try {
-			const response = await fetch('http://localhost:8080/auth/login', {
-				method: 'POST',
-				body: JSON.stringify({ email, password }),
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				credentials: 'include' // Enable sending cookies with cross-origin requests
-			}).then((res) => res.json());
-			if (response.length > 0 && response[0].cookie) {
-				console.log('response: ', response);
-				window.localStorage.setItem('sessionToken', response[0].cookie);
-				navigate('dashboard');
-			} else {
-				error = 'Invalid credentials';
-			}
-		} catch (error) {
-			error = 'Invalid credentials';
-		}
+		error = await validateLogin(email, password);
 	};
 </script>
 
 <section class="h-[80vh] bg-green-50">
 	<div class="h-full w-full flex flex-col md:flex-row justify-center items-center">
 		<!-- Left column container with background-->
-		<h1 style="height: 2rem; color: red">{error}</h1>
 		<!-- Right column container -->
 		<div
 			class="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 border rounded-md"
 			style="padding: 5rem;"
 		>
+			<Message {error} />
+
 			<form on:submit|preventDefault={() => handleLogin()}>
 				<!--Sign in section-->
 				<div class="flex flex-row items-center justify-around">

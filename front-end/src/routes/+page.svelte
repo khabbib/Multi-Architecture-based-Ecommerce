@@ -1,5 +1,4 @@
 <script>
-	import jQuery from 'jquery'; // kör 'npm install jquery' i cmd
 	import { getAllProducts } from '../events/util.js';
 </script>
 

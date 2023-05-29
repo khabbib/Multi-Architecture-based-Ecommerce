@@ -25,10 +25,11 @@ public class UserService {
     public  CompletableFuture<User> getUserById(String id) throws ExecutionException, InterruptedException {
         return userRepository.getUserById(id);
     }
-    public void createUser(User user) {
+    public ResponseEntity<String> createUser(User user) {
         String hashedPassword = Bcrypt.hash(user.getPassword());
         user.setPassword(hashedPassword);
-        userRepository.createUser(user);
+        ResponseEntity<String> response = userRepository.createUser(user);
+        return response;
     }
     public ResponseEntity<String> deleteUser(String id) {
         return userRepository.deleteUser(id);
