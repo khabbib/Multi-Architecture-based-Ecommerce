@@ -1,13 +1,26 @@
-function navigate(path) {
-	// window.history.pushState({}, null, path)
-	// document.dispatchEvent(new Event('navigation'));
-	// console.log('navigate to', path);
-	// window.location.pathname = '/' + path;
-	const message = "Registration successful! Please login.";
+function navigateTo(path, message) {
 	const url = new URL(window.location.href);
 	url.pathname = "/" + path;
-	url.searchParams.set("message", message);
+	if(message !== null){
+		url.searchParams.set("message", message);
+	}
 	window.location.href = url.toString();
 }
 
-export { navigate };
+function preInitializePage(){
+    let error;
+    const url = new URL(window.location.href);
+    const params = url.searchParams;
+    if (params.has("message")) {
+        error = params.get("message");
+        params.delete("message"); // Remove the message parameter from the URL
+        window.history.replaceState({}, "", url.toString()); // Update the URL without the message parameter
+    }
+
+    return {
+        status: "success",
+        error: error,
+    };
+}
+
+export { navigateTo, preInitializePage };

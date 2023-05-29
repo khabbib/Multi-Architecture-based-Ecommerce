@@ -1,12 +1,15 @@
 <script>
 	import { onMount } from 'svelte';
 	import { checkAuthInDashboardPage, getOnlineUsers, handleLogout } from '../../events/util';
+	import { preInitializePage } from '../../events/navigator';
 
 	let users = [];
+	let error;
 	onMount(async () => {
 		checkAuthInDashboardPage();
 		users = await getOnlineUsers();
 		console.log('Online Users:', users);
+		error = preInitializePage();
 	});
 </script>
 

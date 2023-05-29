@@ -1,7 +1,6 @@
-import { navigate } from './navigator';
+import { navigateTo } from './navigator';
 
 async function checkAuthInLoginPage() {
-	console.log('Check auth in login page');
 	// Check if user is authenticated
 	const token = localStorage.getItem('sessionToken'); // Retrieve the token from cookie or local storage
 	if (token) {
@@ -16,7 +15,7 @@ async function checkAuthInLoginPage() {
 			console.log('check Response in login page: ', res);
 			if (res.status === 200) {
 				console.log('User is still logged in');
-				navigate('dashboard');
+				navigateTo('dashboard', null);
 			} else {
 				localStorage.removeItem('sessionToken');
 			}
@@ -40,22 +39,17 @@ async function checkAuthInDashboardPage() {
 			.then((res) => {
 				console.log('check Response: ', res);
 				if (res.status === 200) {
-					res.text().then((text) => {
-						console.log('Dashboard:' + text);
-					});
+					console.log('User is still logged in');
 				} else {
 					localStorage.removeItem('sessionToken');
-					res.text().then((text) => {
-						console.log('Dashboard:' + text);
-					});
-					//navigate('login');
+					navigateTo('login', "You're not logged in");
 				}
 			})
 			.catch((err) => {
 				console.error('Dashboard Authentication failed: ', err);
 			});
 	} else {
-		navigate('login');
+		navigateTo('login', "You're not logged in");
 	}
 }
 
@@ -90,7 +84,7 @@ async function createUser(name, email, password) {
 			body: JSON.stringify({ name, email, password })
 		}).then((res) => {
 			if (res.status === 200) {
-				navigate('login');
+				navigateTo('login', 'User created successfully');
 				// Add a function to give information to user
 			}
 		});
@@ -101,7 +95,7 @@ async function createUser(name, email, password) {
 
 async function handleLogout() {
 	localStorage.removeItem('sessionToken'); // Clear the token from cookie or local storage
-	navigate('login'); // Redirect to the login page
+	navigateTo('login', 'You have been logged out');
 }
 
 async function getAllProducts() {

@@ -2,16 +2,20 @@
 	import { v4 as uuidv4} from 'uuid';
 	const randomId = uuidv4();
 	console.log('randomId: ', randomId);
-	import { navigate } from '../../events/navigator';
-	import { onMount } from 'svelte';
 	import { createUser } from '../../events/util';
+	import { onMount } from 'svelte';
+	import { preInitializePage } from '../../events/navigator';
 	let 
 		name = '',
 		email = '',
 		password = '',
 		error = '';
 
-	
+	onMount(() => {
+		console.log('onMount');
+		error = preInitializePage();
+	});
+
 	// Create async await and call the function register direct. No onMount needed
 	const handleRegistration = async () => {
 		console.log('handleRegistration');
@@ -28,6 +32,8 @@
 			class="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 border rounded-md"
 			style="padding: 5rem;"
 		>
+
+			<h1 style="height: 2rem; color: red">{error}</h1>
 			<form on:submit|preventDefault={() => handleRegistration()}>
 				<!--Sign in section-->
 				<div class="flex flex-row items-center justify-around">

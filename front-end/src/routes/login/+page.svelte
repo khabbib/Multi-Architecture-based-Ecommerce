@@ -1,20 +1,15 @@
 <script>
 	import { onMount } from 'svelte';
 	import { checkAuthInLoginPage } from '../../events/util.js';
-	import { navigate } from '../../events/navigator.js';
+	import { navigateTo, preInitializePage } from '../../events/navigator.js';
+	import Notification from '../../components/notification.svelte';
 
 	let email = '',
 		password = '',
 		error = '';
 	onMount(() => {
 		checkAuthInLoginPage();
-		const url = new URL(window.location.href);
-		const params = url.searchParams;
-		if (params.has("message")) {
-			error = params.get("message");
-			params.delete("message"); // Remove the message parameter from the URL
-			window.history.replaceState({}, "", url.toString()); // Update the URL without the message parameter
-		}
+		error = preInitializePage();
 	});
 
 	
@@ -32,7 +27,7 @@
 			if (response.length > 0 && response[0].cookie) {
 				console.log('response: ', response);
 				window.localStorage.setItem('sessionToken', response[0].cookie);
-				navigate('dashboard');
+				navigateTo('dashboard');
 			} else {
 				error = 'Invalid credentials';
 			}
@@ -41,6 +36,8 @@
 		}
 	};
 </script>
+
+<Notification />
 
 <section class="h-[80vh] bg-green-50">
 	<div class="h-full w-full flex flex-col md:flex-row justify-center items-center">
