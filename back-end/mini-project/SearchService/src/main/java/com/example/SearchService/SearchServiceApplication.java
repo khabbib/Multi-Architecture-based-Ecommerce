@@ -19,17 +19,5 @@ public class SearchServiceApplication {
         SpringApplication.run(SearchServiceApplication.class, args);
     }
 
-    @Bean
-    public CommandLineRunner test(SearchRepository repository) {
-        return (args) -> {
-            FirebaseInitializer.initializeFireBase("product");
-            // Search products
-            CompletableFuture<List<Product>> products = repository.searchProducts("Product 1");
-            if(products.get().isEmpty())
-                System.out.println("NOT FOUND");
-            else
-                for(Product product : products.get())
-                    System.out.println("FOUND: " + product);
-        };
-    }
+
 }

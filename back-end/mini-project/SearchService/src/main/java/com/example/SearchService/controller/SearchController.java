@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Controller for search.
@@ -27,8 +28,19 @@ public class SearchController {
 
     @GetMapping("/{query}")
     public CompletableFuture<ResponseEntity<List<Product>>> search(@PathVariable String query) {
+        CompletableFuture<List<Product>> searchFuture = searchService.search(query);
+        List<Product> searchResults;
+        try {
+            searchResults = searchFuture.get(); // Wait for the CompletableFuture to complete and get the results.
+            // Process the searchResults as needed.
+            System.out.println("SearchControll: " + searchResults);
+        } catch (InterruptedException | ExecutionException e) {
+            // Handle any exceptions that occurred while retrieving the results.
+            e.printStackTrace();
+        }
+
         return searchService.search(query)
-                .thenApply(products -> ResponseEntity.ok().body(products))
+                .thenApply(product -> ResponseEntity.ok().body(product))
                 .exceptionally(e -> ResponseEntity.notFound().build());
     }
 

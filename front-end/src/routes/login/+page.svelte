@@ -3,13 +3,12 @@
 	import { checkAuthInLoginPage } from '../../events/util.js';
 	import { navigate } from '../../events/navigator.js';
 
-
 	let email = '',
 		password = '',
 		error = '';
-	onMount(() => {
-		checkAuthInLoginPage();
-	});
+	checkAuthInLoginPage();
+	// onMount(() => {
+	// });
 
 	const handleLogin = async () => {
 		try {
@@ -32,11 +31,9 @@
 			error = 'Invalid credentials';
 		}
 	};
-
 </script>
 
 <section class="h-[80vh] bg-green-50">
-
 	<div class="h-full w-full flex flex-col md:flex-row justify-center items-center">
 		<!-- Left column container with background-->
 		<h1 style="height: 2rem; color: red">{error}</h1>
