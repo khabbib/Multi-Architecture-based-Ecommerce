@@ -2,8 +2,8 @@
 	import { onMount } from 'svelte';
 	import { checkAuthInLoginPage, validateLogin } from '../../events/util.js';
 	import { navigateTo, preInitializePage } from '../../events/navigator.js';
-	import Message from '../../components/message.svelte';	
-	
+	import Message from '../../components/message.svelte';
+
 	let email = '',
 		password = '',
 		error = null;
@@ -12,7 +12,7 @@
 		checkAuthInLoginPage();
 		error = preInitializePage();
 	});
-	
+
 	const handleLogin = async () => {
 		error = await validateLogin(email, password);
 	};
@@ -23,10 +23,9 @@
 		<!-- Left column container with background-->
 		<!-- Right column container -->
 		<div
-		class="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 border rounded-md"
-		style="padding: 5rem;"
+			class="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 border rounded-md"
+			style="padding: 5rem;"
 		>
-
 			<Message {error} />
 
 			<form on:submit|preventDefault={() => handleLogin()}>

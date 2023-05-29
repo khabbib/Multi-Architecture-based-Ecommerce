@@ -75,16 +75,16 @@ async function getOnlineUsers() {
 }
 
 async function createUser(name, email, password) {
-	if(name === "" || email === "" || password === ""){
-		return makeErrorMessage("Name, email or password cannot be empty");
+	if (name === '' || email === '' || password === '') {
+		return makeErrorMessage('Name, email or password cannot be empty');
 	}
 
-	if(!email.includes("@")){
-		return makeErrorMessage("Email is not valid");
+	if (!email.includes('@')) {
+		return makeErrorMessage('Email is not valid');
 	}
 
-	if(password.length < 5){
-		return makeErrorMessage("Password must be at least 5 characters long");
+	if (password.length < 5) {
+		return makeErrorMessage('Password must be at least 5 characters long');
 	}
 
 	try {
@@ -110,14 +110,14 @@ async function handleLogout() {
 	navigateTo('login', 'You have been logged out');
 }
 
-async function validateLogin(email, password){
-	console.log("Validating login");
-	if(email === "" || password === ""){
-		return makeErrorMessage("Email or password cannot be empty");
+async function validateLogin(email, password) {
+	console.log('Validating login');
+	if (email === '' || password === '') {
+		return makeErrorMessage('Email or password cannot be empty');
 	}
 
-	if(!email.includes("@")){
-		return makeErrorMessage("Email is not valid");
+	if (!email.includes('@')) {
+		return makeErrorMessage('Email is not valid');
 	}
 
 	try {
@@ -129,19 +129,17 @@ async function validateLogin(email, password){
 			},
 			credentials: 'include' // Enable sending cookies with cross-origin requests
 		}).then((res) => res.json());
-		console.log("Response: ", response);
+		console.log('Response: ', response);
 		if (response.length > 0 && response[0].cookie) {
 			window.localStorage.setItem('sessionToken', response[0].cookie);
-			navigateTo('dashboard', "Successfully logged in");
+			navigateTo('dashboard', 'Successfully logged in');
 		} else {
-			return makeErrorMessage("Email or password is incorrect");
+			return makeErrorMessage('Email or password is incorrect');
 		}
 	} catch (er) {
-		return makeErrorMessage("Something went wrong, please try again later");
+		return makeErrorMessage('Something went wrong, please try again later');
 	}
-
 }
-
 
 function makeErrorMessage(error) {
 	return {
@@ -149,7 +147,6 @@ function makeErrorMessage(error) {
 		error
 	};
 }
-
 
 async function getAllProducts() {
 	try {
@@ -173,7 +170,7 @@ async function getAllProducts() {
 }
 
 async function getSearchedProduct(query) {
-  if(query === '') return [];
+	if (query === '') return [];
 	try {
 		const response = await fetch('http://localhost:8080/search/' + query, {
 			method: 'GET',
@@ -203,5 +200,5 @@ export {
 	getOnlineUsers,
 	getAllProducts,
 	getSearchedProduct,
-	createUser,
+	createUser
 };

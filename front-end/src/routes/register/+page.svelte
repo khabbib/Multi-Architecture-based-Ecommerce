@@ -4,8 +4,7 @@
 	import { preInitializePage } from '../../events/navigator';
 	import Message from '../../components/message.svelte';
 
-	let 
-		name = '',
+	let name = '',
 		email = '',
 		password = '',
 		error = null;
@@ -28,8 +27,7 @@
 			class="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 border rounded-md"
 			style="padding: 5rem;"
 		>
-
-			<Message {error}/>
+			<Message {error} />
 			<form on:submit|preventDefault={() => handleRegistration()}>
 				<!--Sign in section-->
 				<div class="flex flex-row items-center justify-around">
@@ -48,7 +46,7 @@
 				<div class="relative mb-6" data-te-input-wrapper-init>
 					<label style="color: gray;" for="first_name">Name </label>
 					<input
-					bind:value={name}
+						bind:value={name}
 						style="border: 1px solid #e5e5e5; color: #000;"
 						type="text"
 						class="peer text-black min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
@@ -60,7 +58,7 @@
 				<div class="relative mb-6" data-te-input-wrapper-init>
 					<label style="color: gray;" for="exampleFormControlInput2">Email address </label>
 					<input
-					bind:value={email}
+						bind:value={email}
 						style="border: 1px solid #e5e5e5; color: #000;"
 						type="text"
 						class="peer text-black min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
@@ -73,7 +71,7 @@
 				<div class="relative mb-6" data-te-input-wrapper-init>
 					<label style="color: gray;" for="exampleFormControlInput22">Password </label>
 					<input
-					bind:value={password}
+						bind:value={password}
 						style="border: 1px solid #e5e5e5; color: #000;"
 						type="password"
 						class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
