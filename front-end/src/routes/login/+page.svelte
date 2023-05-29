@@ -2,18 +2,17 @@
 	import { onMount } from 'svelte';
 	import { checkAuthInLoginPage } from '../../events/util.js';
 	import { navigateTo, preInitializePage } from '../../events/navigator.js';
-	import Notification from '../../components/notification.svelte';
-
+	import Message from '../../components/message.svelte';	
+	
 	let email = '',
 		password = '',
-		error = '';
+		error = null;
+
 	onMount(() => {
 		checkAuthInLoginPage();
 		error = preInitializePage();
 	});
-
 	
-
 	const handleLogin = async () => {
 		try {
 			const response = await fetch('http://localhost:8080/auth/login', {
@@ -27,17 +26,21 @@
 			if (response.length > 0 && response[0].cookie) {
 				console.log('response: ', response);
 				window.localStorage.setItem('sessionToken', response[0].cookie);
-				navigateTo('dashboard');
+				navigateTo('dashboard', "Successfully logged in");
 			} else {
-				error = 'Invalid credentials';
+				error = {
+					status: 'error',
+					error: 'Email or password is incorrect'
+				};
 			}
 		} catch (error) {
-			error = 'Invalid credentials';
+			error = {
+				status: 'error',
+				error: 'Something went wrong, please try again later'
+			}
 		}
 	};
 </script>
-
-<Notification />
 
 <section class="h-[80vh] bg-green-50">
 	<div class="h-full w-full flex flex-col md:flex-row justify-center items-center">
@@ -47,7 +50,9 @@
 		class="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 border rounded-md"
 		style="padding: 5rem;"
 		>
-			<h1 style="height: 2rem; color: red">{error}</h1>
+
+			<Message {error} />
+
 			<form on:submit|preventDefault={() => handleLogin()}>
 				<!--Sign in section-->
 				<div class="flex flex-row items-center justify-around">

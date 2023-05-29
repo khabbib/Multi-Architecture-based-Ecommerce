@@ -5,11 +5,13 @@
 	import { createUser } from '../../events/util';
 	import { onMount } from 'svelte';
 	import { preInitializePage } from '../../events/navigator';
+	import Message from '../../components/message.svelte';
+	
 	let 
 		name = '',
 		email = '',
 		password = '',
-		error = '';
+		error = null;
 
 	onMount(() => {
 		console.log('onMount');
@@ -33,7 +35,7 @@
 			style="padding: 5rem;"
 		>
 
-			<h1 style="height: 2rem; color: red">{error}</h1>
+			<Message {error}/>
 			<form on:submit|preventDefault={() => handleRegistration()}>
 				<!--Sign in section-->
 				<div class="flex flex-row items-center justify-around">

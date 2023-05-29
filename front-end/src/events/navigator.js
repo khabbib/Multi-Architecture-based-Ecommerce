@@ -8,19 +8,20 @@ function navigateTo(path, message) {
 }
 
 function preInitializePage(){
-    let error;
     const url = new URL(window.location.href);
     const params = url.searchParams;
     if (params.has("message")) {
-        error = params.get("message");
-        params.delete("message"); // Remove the message parameter from the URL
+        const error = params.get("message");
+        //params.delete("message"); // Remove the message parameter from the URL
         window.history.replaceState({}, "", url.toString()); // Update the URL without the message parameter
+        return {
+            status: "success",
+            error: error,
+        };
     }
 
-    return {
-        status: "success",
-        error: error,
-    };
+    return null;
+
 }
 
 export { navigateTo, preInitializePage };

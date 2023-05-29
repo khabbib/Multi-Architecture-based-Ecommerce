@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { checkAuthInDashboardPage, getOnlineUsers, handleLogout } from '../../events/util';
 	import { preInitializePage } from '../../events/navigator';
+	import Message from '../../components/message.svelte';
 
 	let users = [];
 	let error;
@@ -17,7 +18,7 @@
 	<!-- Dashboard content -->
 	<div class="bg-cyan-100 p-10">
 		<h1 class="font-bold text-xl">Dashboard</h1>
-
+		<Message {error} />
 		<button on:click={handleLogout} class="bg-red-100 shadow m-1 p-2 rounded">Logout</button>
 
 		{#if users.length > 0}
