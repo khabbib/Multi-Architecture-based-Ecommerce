@@ -5,18 +5,24 @@
 	import { getSearchedProduct } from '../../events/util.js';
 
 	let products = [];
-	let query = null;
+	let query = "";
 	let search = [];
 	let isSearching = false;
+    let resultMessage = "";
 
 	onMount(async () => {
 		products = await getAllProducts();
 		console.log('Products:', products);
 	});
 	const handleSearch = async () => {
-		isSearching = true;
+        isSearching = true;
 		search = await getSearchedProduct(query);
 		console.log('Search:', search);
+        if(search.length == 0){
+            resultMessage = 'Search for "' + query + '" not found.';
+        }else {
+            resultMessage = 'Search for "' + query + '":';
+        }
 		isSearching = false;
 	};
 </script>
@@ -55,7 +61,8 @@
 				required
 			/>
 			<button
-				on:click={handleSearch}
+				on:click={handleSearch} 
+                disabled={isSearching}
 				type="submit"
 				class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
 				>Search</button
@@ -71,25 +78,42 @@
     <button on:click={getAllProducts} class="bg-blue-100 shadow m-1 p-2 rounded">Refresh</button>
     -->
 	{#if isSearching}
-		Searching...
+        <p>
+            Searching...
+        </p>
 	{:else}
-		Search
+        <p>{resultMessage}</p>
+        {#if search.length > 0}
+            <div class="grid grid-cols-3 gap-3 m-4">
+                {#each search as product}
+                    <!-- Display each product -->
+                    <div class="bg-blue-200 p-4 m-2 shadow rounded text-center">
+                        <p>Name: {product.pName}</p>
+                        <p>Color: {product.pColor}</p>
+                        <p>Type: {product.pType}</p>
+                        <p>Condition: {product.pCondition}</p>
+                        <p>Price: {product.pPrice} SEK</p>
+                        <button class="bg-blue-100 shadow m-1 p-2 rounded rounded-sm">Details</button>
+                    </div>
+                {/each}
+            </div>
+        {/if}
 	{/if}
 
-	{#if products.length > 0}
-		<p>Available Products:</p>
-		{#if search.length > 0}
-			<div class="grid grid-cols-3 gap-3 m-4">
-				{#each products as product}
-					<!-- Display each product -->
-					<div class="bg-blue-200 p-4 m-2 shadow rounded text-center">
-						<p>Name: {product.pName}</p>
-						<p>Type: {product.pType}</p>
-						<p>Price: {product.pPrice} SEK</p>
-						<button class="bg-blue-100 shadow m-1 p-2 rounded rounded-sm">Details</button>
-					</div>
-				{/each}
-			</div>
-		{/if}
-	{/if}
+    {#if products.length > 0 && search.length == 0 && query.length == 0}
+    <p>Available Products:</p>
+    {#if products.length > 0}
+        <div class="grid grid-cols-3 gap-3 m-4">
+            {#each products as product}
+                <!-- Display each product -->
+                <div class="bg-blue-200 p-4 m-2 shadow rounded text-center">
+                    <p>Name: {product.pName}</p>
+                    <p>Type: {product.pType}</p>
+                    <p>Price: {product.pPrice} SEK</p>
+                    <button class="bg-blue-100 shadow m-1 p-2 rounded rounded-sm">Details</button>
+                </div>
+            {/each}
+        </div>
+    {/if}
+{/if}
 </div>
