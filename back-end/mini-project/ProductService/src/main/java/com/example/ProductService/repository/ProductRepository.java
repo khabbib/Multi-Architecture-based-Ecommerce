@@ -1,6 +1,7 @@
 package com.example.ProductService.repository;
 
 import com.example.ProductService.model.Product;
+import com.example.util.FirebaseInitializer;
 import com.google.firebase.database.*;
 import com.google.firebase.internal.NonNull;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 @Repository
 public class ProductRepository {
     public ProductRepository() throws IOException {
+        FirebaseInitializer.initializeFireBase("product");
         System.out.println("ProductRepository created");
     }
 
