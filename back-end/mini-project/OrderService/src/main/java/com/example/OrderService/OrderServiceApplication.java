@@ -9,9 +9,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -29,18 +32,24 @@ public class OrderServiceApplication {
 		return (args) -> {
 			// Create an
 			FirebaseInitializer.initializeFireBase("order");
-			ArrayList<ItemList> itemArray = new ArrayList<>();
-			itemArray.add(new ItemList("item1", 1, 1.99));
-			itemArray.add(new ItemList("item2", 2, 2.99));
-			itemArray.add(new ItemList("item3", 3, 3.99));
+			CompletableFuture<ResponseEntity<List<Order>>> future = repository.getOrdersByCustomerId("d031b00f-322e-4518-aafe-47f7caf715a9");
 
-			repository.save(new Order(UUID.randomUUID().toString(), itemArray, "123 Main St", "12345", "PayPal", "Pendding", "2021-01-01", "2021-01-01", "PostNord", "1234567890", "Pendding", "Lund", 12345));
-			repository.save(new Order(UUID.randomUUID().toString(), itemArray, "None", "None", "Swish", "Created", "2021-01-29", "2021-02-01", "PostNord", "1234567891", "On the way", "Malmö", 10000));
-			// fetch all orders
-			System.out.println("Find all orders:");
-			for (Order order : repository.findAll()) {
-				System.out.println(order);
-			}
+			future.thenAccept(responseEntity -> {
+				if (responseEntity.getStatusCode().is2xxSuccessful()) {
+					List<Order> orders = responseEntity.getBody();
+					// Handle the retrieved orders
+					for (Order order : orders) {
+						System.out.println("Order: " + order);
+					}
+				} else {
+					System.err.println("Error retrieving orders: " + responseEntity.getStatusCode());
+				}
+			}).exceptionally(ex -> {
+				System.err.println("Error retrieving orders: " + ex.getMessage());
+				return null;
+			});
+
+			future.join(); // Wait for the CompletableFuture to complete
 		};
 	}
 }
