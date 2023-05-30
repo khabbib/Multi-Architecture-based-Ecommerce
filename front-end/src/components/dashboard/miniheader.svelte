@@ -195,6 +195,7 @@ button {
 } 
   
 
+/* Gray hover button */
 ._7KA5gD55t2lxf9Jkj20:hover { 
     --tw-bg-opacity: 1; 
     background-color: rgb(243 244 246/var(--tw-bg-opacity));
@@ -375,7 +376,7 @@ svg {
 
 .g40_g3BQzYCOX5eZADgY { 
     --tw-bg-opacity: 1; 
-    background-color: rgb(29 78 216/var(--tw-bg-opacity));
+    background-color:  #07be73;
 } 
 
 .b9aD6g2qw84oyZNsMO8j { 
@@ -409,7 +410,7 @@ svg {
 
 .YoPCmQ0E_V5W0GGmSIdm:hover { 
     --tw-bg-opacity: 1; 
-    background-color: rgb(30 64 175/var(--tw-bg-opacity));
+    background-color: #06a563;
 } 
 
 a { 

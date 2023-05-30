@@ -996,7 +996,7 @@ p {
 
 .g40_g3BQzYCOX5eZADgY { 
     --tw-bg-opacity: 1; 
-    background-color: rgb(29 78 216/var(--tw-bg-opacity));
+    background-color:  #07be73;
 } 
 
 .iPpA4AtZi__uabBE5IKW { 

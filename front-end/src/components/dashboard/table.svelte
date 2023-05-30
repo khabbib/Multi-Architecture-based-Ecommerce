@@ -373,7 +373,7 @@ a {
 
 .g40_g3BQzYCOX5eZADgY { 
     --tw-bg-opacity: 1; 
-    background-color: rgb(29 78 216/var(--tw-bg-opacity));
+    background-color: #07be73;
 } 
 
 .b9aD6g2qw84oyZNsMO8j { 
@@ -397,7 +397,7 @@ a {
 
 .YoPCmQ0E_V5W0GGmSIdm:hover { 
     --tw-bg-opacity: 1; 
-    background-color: rgb(30 64 175/var(--tw-bg-opacity));
+    background-color: #06a563;
 } 
 
 .SdPDrbResNmgnA0L4Iki { 
