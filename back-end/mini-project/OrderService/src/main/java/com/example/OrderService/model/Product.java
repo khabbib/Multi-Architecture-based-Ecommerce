@@ -1,4 +1,4 @@
-package com.example.ProductService.model;
+package com.example.OrderService.model;
 
 public class Product {
     private String pId;
@@ -8,10 +8,9 @@ public class Product {
     private String pCondition;
     private double pPrice;
     private double pQuantity;
-    private String pOwner;
 
 
-    public Product(String pId, String name, String type, String pColor, String pCondition, double pPrice, double pQuantity, String pOwner) {
+    public Product(String pId, String name, String type, String pColor, String pCondition, double pPrice, double pQuantity) {
         this.pId = pId;
         this.pName = name;
         this.pType = type;
@@ -19,11 +18,11 @@ public class Product {
         this.pCondition = pCondition;
         this.pPrice = pPrice;
         this.pQuantity = pQuantity;
-        this.pOwner = pOwner;
     }
 
-    public Product() {
 
+
+    public Product() {
     }
 
     public String getpId() {
@@ -82,14 +81,6 @@ public class Product {
         this.pQuantity = pQuantity;
     }
 
-    public String getpOwner() {
-        return pOwner;
-    }
-
-    public void setpOwner(String pOwner) {
-        this.pOwner = pOwner;
-    }
-
 
     @Override
     public String toString() {
@@ -101,7 +92,6 @@ public class Product {
                 ", pCondition='" + pCondition + '\'' +
                 ", pPrice='" + pPrice + '\'' +
                 ", pQuantity='" + pQuantity + '\'' +
-                ", pOwner ='" + pOwner + '\'' +
                 '}';
     }
 

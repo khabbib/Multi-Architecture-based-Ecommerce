@@ -155,4 +155,5 @@ public class Order {
     public String toString() {
         return "Order: " + orderId + ", Customer ID: " + customerId + ", Items: " + items + ", Shipping Address: " + shippingAddress + ", Billing Address: " + billingAddress + ", Payment Method: " + paymentMethod + ", Order Status: " + orderStatus + ", Order Date: " + orderDate + ", Delivery Date: " + deliveryDate + ", Delivery Company: " + deliveryCompany + ", Tracking Number: " + trackingNumber + ", Delivery Status: " + deliveryStatus + ", Delivery Address: " + deliveryAddress + ", Total Price Tax: " + totalPriceTax;
     }
+
 }
