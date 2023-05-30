@@ -4,12 +4,12 @@
 	import Dashheader from '../../components/dashboard/dashheader.svelte';
 	import Model from '../../components/dashboard/model.svelte';
 	import Notification from '../../components/dashboard/notification.svelte';
-    import Confirm from '../../components/confirm.svelte';
+	import Confirm from '../../components/confirm.svelte';
 </script>
 
 <div class="components">
 	<Confirm data={'ic'} />
-    <Notification data={'ic'} />
+	<Notification data={'ic'} />
 	<Model data={'ic'} />
 	<Dashheader data={'ic'} />
 	<Miniheader data={'ic'} />
