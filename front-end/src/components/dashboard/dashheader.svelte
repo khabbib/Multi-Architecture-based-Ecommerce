@@ -1,5 +1,4 @@
 <script>
-
 	export let data;
 </script>
 
@@ -63,12 +62,10 @@
 			<a href="/" class="YRrCJSr_j5nopfm4duUc YcuQRAYEep0W4L0BFDfG">
 				<img src="./imgs/logo.png" width="100px" alt="Logo" />
 			</a>
-
 		</div>
-    <!-- right panel -->
+		<!-- right panel -->
 		<div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2">
-      
-      <!--  notification -->
+			<!--  notification -->
 			<button
 				type="button"
 				data-dropdown-toggle="notification-dropdown"
@@ -87,14 +84,26 @@
 				</svg>
 			</button>
 
-      <!--  logout -->
-      <button
+			<!--  logout -->
+			<button
 				type="button"
 				class="FJRldeiG2gFGZfuKgp88 PeR2JZ9BZHYIH8Ea3F36 mveJTCIb2WII7J4sY22F ZnBoTVi7VOJdCLSSU62n _7KA5gD55t2lxf9Jkj20 XIIs8ZOri3wm8Wnj9N_y dMTOiA3mf3FTjlHu6DqW OPrb_iG5WDy_7F05BDOX"
 			>
-      <svg class="YajDCE_nRj_FDIevNpsd Z3N7I2IDDsoXK6xJ1cSW RWlOLn85L9w5_1l9GIaX bLH_DeiQ7Cp4iBqeW3kq PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+				<svg
+					class="YajDCE_nRj_FDIevNpsd Z3N7I2IDDsoXK6xJ1cSW RWlOLn85L9w5_1l9GIaX bLH_DeiQ7Cp4iBqeW3kq PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+					xmlns="http://www.w3.org/2000/svg"
+					><path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+					/></svg
+				>
 			</button>
-      
+
 			<!-- user profile -->
 			<div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 oA7zcT_42jVeFuWTXQnq">
 				<div>
@@ -119,10 +128,6 @@
 </div>
 
 <style>
-
-
-
-
 	.i8v96MUlFwGv9qJUkAx7 {
 		padding-bottom: 0.75rem;
 		padding-top: 0.75rem;
@@ -264,8 +269,6 @@
 		color: rgb(107 114 128 / var(--tw-text-opacity));
 	}
 
-
-
 	._dylIDxYTN3qgvD4U597 {
 		--tw-ring-inset: var(--tw-empty, /*!*/ /*!*/);
 		--tw-ring-offset-shadow: 0 0 #0000;
@@ -276,7 +279,6 @@
 		font-size: 0.875rem;
 		line-height: 1.25rem;
 	}
-
 
 	.oA7zcT_42jVeFuWTXQnq {
 		margin-left: 0.75rem;
@@ -318,7 +320,6 @@
 		width: 1px;
 	}
 
-
 	.RpVwy4sO7Asb86CncKJ_ {
 		border-radius: 9999px;
 	}
@@ -333,7 +334,6 @@
 		margin: 0;
 		padding: 0;
 	}
-
 
 	.YajDCE_nRj_FDIevNpsd {
 		margin-left: auto;
@@ -355,5 +355,4 @@
 	.yNvZ2JlUalNo5uPPv1sf {
 		width: 2rem;
 	}
-
 </style>
