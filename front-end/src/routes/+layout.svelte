@@ -2,6 +2,7 @@
 	import '../app.css';
 	import Header from '../components/header.svelte';
 	import Footer from '../components/footer.svelte';
+	import { onMount } from 'svelte';
 </script>
 
 <div class="layout">

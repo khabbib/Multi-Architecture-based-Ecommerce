@@ -12,12 +12,12 @@ function preInitializePage() {
 	const params = url.searchParams;
 	if (params.has('message')) {
 		const error = params.get('message');
-        if(error === "You're not logged in") {
-            return {
-                status: 'error',
-                error
-            }
-        }
+		if (error === "You're not logged in") {
+			return {
+				status: 'error',
+				error
+			};
+		}
 
 		params.delete('message'); // Remove the message parameter from the URL
 		window.history.replaceState({}, '', url.toString()); // Update the URL without the message parameter
