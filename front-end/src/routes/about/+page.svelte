@@ -1,5 +1,8 @@
 <script>
 	import Table from "../../components/table.svelte";
+	import Miniheader from "../../components/dashboard/miniheader.svelte";
+	import Header from "../../components/dashboard/header.svelte";
+	import Model from "../../components/dashboard/model.svelte";
 </script>
 
 <div class="bg-green-50">
@@ -9,4 +12,9 @@
 </div>
 
 
+<Model data={"ic"}/>
+<Header data={"ic"}/>
+<Miniheader data={"ic"}/>
+
 <Table />
+
