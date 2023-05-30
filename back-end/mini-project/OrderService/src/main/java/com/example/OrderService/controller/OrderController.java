@@ -9,6 +9,7 @@ import com.example.OrderService.model.Order;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -20,8 +21,8 @@ public class OrderController {
     // Get all orders
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
-    public ArrayList<Order> getAvailableOrders() {
-        ArrayList<Order> products = orderService.getAllOrders();
+    public CompletableFuture<ArrayList<Order>> getAvailableOrders() {
+        CompletableFuture<ArrayList<Order>> products = orderService.getAllOrders();
         return products;
     }
 
@@ -37,7 +38,7 @@ public class OrderController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String getOrderById(@PathVariable("id") String id) {
-        Order order = orderService.getOrderById(id);
+        CompletableFuture<Order> order = orderService.getOrderById(id);
         return order.toString();
     }
 
