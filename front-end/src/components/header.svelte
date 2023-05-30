@@ -7,7 +7,7 @@
 		location = window.location.pathname;
 		console.log(location);
 	});
-
+	console.log(location);
 </script>
 
 {#if location === "/dashboard"}
@@ -26,6 +26,7 @@
 		<div class="text-gray flex items-center justify-between gap-10">
 			<a class="text-gray-600 hover:text-gray-700" href="/">home</a>
 			<a class="hover:text-gray-700" href="/product">product</a>
+			<a class="hover:text-gray-700" href="/components">components</a>
 			<a class="hover:text-gray-700" href="/about">about</a>
 		</div>
 		<div class="flex items-center gap-3">

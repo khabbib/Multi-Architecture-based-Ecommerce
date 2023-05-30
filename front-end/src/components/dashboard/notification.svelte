@@ -10,7 +10,7 @@
 <div
 	class="Jq3rRDG6Hsr3eAZ0KJeH aJF41JQLhtfw_MCGt5Th ZhzOGpbwY0R4TKKYr5pG d3C8uAdJKNl1jzfE9ynq xdunzYpzbwcYs_0Tjgcz _Ybd3WwuTVljUT4vEaM3 Y3FxyuXtj2gecrGXvLEI Zy1Pypi71Xu6guex6urN z30cepEEBLSTPSvWeVPH cl0mFvgyErwMYM5aRkru PoeKYEQfG4WfmL9xM6vu jqg6J89cvxmDiFpnV56r snipcss0-3-18-25 _Vb9igHms0hI1PQcvp_S"
 	id="notification-dropdown"
-	style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(917px, 65px, 0px);"
+	style=""
 	data-popper-placement="bottom"
 >
 	<div
