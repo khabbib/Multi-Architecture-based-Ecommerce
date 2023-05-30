@@ -107,7 +107,8 @@
 						<p>Type: {product.pType}</p>
 						<p>Condition: {product.pCondition}</p>
 						<p>Price: {product.pPrice} SEK</p>
-						<button class="bg-blue-100 shadow m-1 p-2 rounded rounded-sm">Details</button>
+						<p>Owner: {product.pOwner}</p>
+						<button class="bg-blue-100 shadow m-1 p-2 rounded rounded-sm">Add to chart</button>
 					</div>
 				{/each}
 			</div>
@@ -140,7 +141,8 @@
 						<p>Name: {product.pName}</p>
 						<p>Type: {product.pType}</p>
 						<p>Price: {product.pPrice} SEK</p>
-						<button class="bg-blue-100 shadow m-1 p-2 rounded rounded-sm">Details</button>
+						<p>Owner: {product.pOwner}</p>
+						<button class="bg-blue-100 shadow m-1 p-2 rounded rounded-sm">Add to chart</button>
 					</div>
 				{/each}
 			</div>

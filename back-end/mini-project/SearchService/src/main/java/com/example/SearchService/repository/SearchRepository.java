@@ -55,7 +55,8 @@ public class SearchRepository {
                     String pCondition = dataSnapshot.child("pCondition").getValue(String.class);
                     double pPrice = dataSnapshot.child("pPrice").getValue(double.class);
                     double pQuantity = dataSnapshot.child("pQuantity").getValue(double.class);
-                    Product product = new Product(pId, pName, pType, pColor, pCondition, pPrice, pQuantity);
+                    String pOwner = dataSnapshot.child("pOwner").getValue(String.class);
+                    Product product = new Product(pId, pName, pType, pColor, pCondition, pPrice, pQuantity, pOwner);
                     // Add the product to the list.
                     System.out.println("Product: " + product.toString());
                     productList.add(product);
