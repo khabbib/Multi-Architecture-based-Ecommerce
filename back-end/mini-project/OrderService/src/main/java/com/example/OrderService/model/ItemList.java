@@ -14,6 +14,7 @@ public class ItemList {
     public String getProductId() {
         return productId;
     }
+
     public void setProductId(String productId) {
         this.productId = productId;
     }
@@ -21,6 +22,7 @@ public class ItemList {
     public int getQuantity() {
         return quantity;
     }
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
@@ -28,6 +30,7 @@ public class ItemList {
     public double getPrice() {
         return price;
     }
+
     public void setPrice(double price) {
         this.price = price;
     }

@@ -19,6 +19,9 @@ public class Order {
     private String deliveryAddress; // This will be the address of the delivery.
     private double totalPriceTax; // This will be the total price of the order including tax.
 
+    public Order() {
+    }
+
     public Order(String customerId, ArrayList<ItemList> items, String shippingAddress, String billingAddress, String paymentMethod, String orderStatus, String orderDate, String deliveryDate, String deliveryCompany, String trackingNumber, String deliveryStatus, String deliveryAddress, double totalPriceTax) {
         this.orderId = UUID.randomUUID().toString();
         this.customerId = customerId;
