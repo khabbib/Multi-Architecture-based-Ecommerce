@@ -2,6 +2,7 @@
 	import '../app.css';
 	import Header from '../components/header.svelte';
 	import Footer from '../components/footer.svelte';
+	import { onMount } from 'svelte';
 </script>
 
 <div class="layout">
@@ -19,7 +20,7 @@
 		display: grid;
 		grid-template-rows: auto 1fr auto;
 		margin-inline: auto;
-		padding-inline: 7.5%;
+		padding-inline: 5.5%;
 	}
 
 	@media (min-width: 1440px) {

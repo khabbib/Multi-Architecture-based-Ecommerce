@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { checkAuthInLoginPage, validateLogin } from '../../events/util.js';
-	import { navigateTo, preInitializePage } from '../../events/navigator.js';
+	import { preInitializePage } from '../../events/navigator.js';
 	import Message from '../../components/message.svelte';
 
 	let email = '',

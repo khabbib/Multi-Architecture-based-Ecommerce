@@ -6,7 +6,7 @@
 	onMount(() => {
 		setTimeout(() => {
 			error = null; // Clear the error after 10 seconds
-		}, 20000);
+		}, 2000);
 	});
 </script>
 

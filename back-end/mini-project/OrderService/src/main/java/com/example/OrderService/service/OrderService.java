@@ -16,11 +16,11 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    public ArrayList<Order> getAllOrders() {
+    public CompletableFuture<ArrayList<Order>> getAllOrders() {
         return orderRepository.findAll();
     }
 
-    public Order getOrderById(String id) {
+    public CompletableFuture<Order> getOrderById(String id) {
         return orderRepository.findById(id);
     }
 

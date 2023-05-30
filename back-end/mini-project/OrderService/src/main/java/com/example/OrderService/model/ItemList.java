@@ -5,6 +5,8 @@ public class ItemList {
     private int quantity;
     private double price;
 
+    public ItemList() {
+    }
     public ItemList(String productId, int quantity, double price) {
         this.productId = productId;
         this.quantity = quantity;
