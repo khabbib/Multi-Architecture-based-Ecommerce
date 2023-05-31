@@ -108,7 +108,7 @@
 						<p>Condition: {product.pCondition}</p>
 						<p>Price: {product.pPrice} SEK</p>
 						<p>Owner: {product.pOwner}</p>
-						<button class="bg-blue-100 shadow m-1 p-2 rounded rounded-sm">Add to chart</button>
+						<button class="bg-blue-100 shadow m-1 p-2 rounded rounded-sm">Add to cart</button>
 					</div>
 				{/each}
 			</div>
@@ -142,7 +142,7 @@
 						<p>Type: {product.pType}</p>
 						<p>Price: {product.pPrice} SEK</p>
 						<p>Owner: {product.pOwner}</p>
-						<button class="bg-blue-100 shadow m-1 p-2 rounded rounded-sm">Add to chart</button>
+						<button class="bg-blue-100 shadow m-1 p-2 rounded rounded-sm">Add to cart</button>
 					</div>
 				{/each}
 			</div>

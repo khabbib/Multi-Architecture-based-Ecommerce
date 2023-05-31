@@ -3,6 +3,7 @@
 	import { checkAuthInDashboardPage, getOnlineUsers, handleLogout } from '../../events/util';
 	import { preInitializePage } from '../../events/navigator';
 	import Message from '../../components/message.svelte';
+	import Product from '../product/+page.svelte';
 
 	let users = [];
 	let error = null;
@@ -23,6 +24,7 @@
 	let border4 = '';
 	let border5 = '';
 	let border6 = '';
+	let border7 = '';
 
 	// functions to switch menu and display current status with border.
 	function navOverview() {
@@ -33,6 +35,7 @@
 		border4 = '';
 		border5 = '';
 		border6 = '';
+		border7 = '';
 	}
 	function navAddProd() {
 		state = 'addprod';
@@ -42,6 +45,7 @@
 		border4 = '';
 		border5 = '';
 		border6 = '';
+		border7 = '';
 	}
 	function navOrders() {
 		state = 'orders';
@@ -51,6 +55,7 @@
 		border4 = '';
 		border5 = '';
 		border6 = '';
+		border7 = '';
 	}
 	function navOrderHistory() {
 		state = 'orderhistory';
@@ -60,6 +65,7 @@
 		border4 = 'solid';
 		border5 = '';
 		border6 = '';
+		border7 = '';
 	}
 	function navChart() {
 		state = 'chart';
@@ -69,6 +75,7 @@
 		border4 = '';
 		border5 = 'solid';
 		border6 = '';
+		border7 = '';
 	}
 	function navSettings() {
 		state = 'settings';
@@ -78,6 +85,17 @@
 		border4 = '';
 		border5 = '';
 		border6 = 'solid';
+		border7 = '';
+	}
+	function navProducts() {
+		state = 'product';
+		border1 = '';
+		border2 = '';
+		border3 = '';
+		border4 = '';
+		border5 = '';
+		border6 = '';
+		border7 = 'solid';
 	}
 </script>
 
@@ -117,12 +135,17 @@
 							<button
 								on:click={navChart}
 								style="border-bottom: {border5}"
-								class="bg-teal-200 p-2 rounded hover:opacity-70">Chart</button
+								class="bg-teal-200 p-2 rounded hover:opacity-70">Cart</button
 							>
 							<button
 								on:click={navSettings}
 								style="border-bottom: {border6}"
 								class="bg-teal-200 p-2 rounded hover:opacity-70">Settings</button
+							>
+							<button
+								on:click={navProducts}
+								style="border-bottom: {border7}"
+								class="bg-teal-200 p-2 rounded hover:opacity-70">Products</button
 							>
 							<button on:click={handleLogout} class="bg-red-300 p-2 rounded">Logout</button>
 						</div>
@@ -158,9 +181,12 @@
 			{:else if state == 'orderhistory'}
 				<p>orderhistory page!</p>
 			{:else if state == 'chart'}
-				<p>chart page!</p>
+				<p>cart page!</p>
 			{:else if state == 'settings'}
 				<p>setting page!</p>
+			{:else if state == 'product'}
+				<p>setting page!</p>
+				<Product/>
 			{/if}
 		</div>
 	</div>
