@@ -17,10 +17,7 @@
 				{:else if product.pName.includes('Airpod')}
 					<img src="./product/airpods.png" alt="" />
 				{:else}
-					<img
-						src="./product/diff.png"
-						alt={product.pName}
-					/>
+					<img src="./product/diff.png" alt={product.pName} />
 				{/if}
 			</div>
 			<div class="product-details">
