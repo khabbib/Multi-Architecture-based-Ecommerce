@@ -11,8 +11,10 @@
 	let resultMessage = '';
 
 	onMount(async () => {
-		products = await getAllProducts();
-		console.log('Products:', products);
+		const result = await getAllProducts();
+		if(result){
+			products = result;
+		}
 	});
 	const handleSearch = async () => {
 		isSearching = true;

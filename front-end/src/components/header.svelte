@@ -10,9 +10,6 @@
 	console.log(location);
 </script>
 
-{#if location === '/dashboard'}
-	<Dashheader data={'ic'} />
-{:else}
 	<header class="bg-green-200">
 		<nav class="flex items-center justify-between px-4 py-2 border-b-2 border-gray-200">
 			<div>
@@ -45,4 +42,3 @@
 			</div>
 		</nav>
 	</header>
-{/if}
