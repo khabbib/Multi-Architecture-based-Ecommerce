@@ -88,4 +88,12 @@ public class UserController {
         User response = userService.checkUserExists(email, password);
         return response;
     }
+
+    @GetMapping("/useremail")
+    @ResponseStatus(HttpStatus.OK)
+    public String getUserByEmail(@RequestParam String email) throws ExecutionException, InterruptedException {
+        User response = userService.getUserByEmail(email);
+        System.out.println(response.getId());
+        return response.getId();
+    }
 }

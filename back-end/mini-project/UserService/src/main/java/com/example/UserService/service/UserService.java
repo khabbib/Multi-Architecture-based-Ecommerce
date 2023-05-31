@@ -48,4 +48,17 @@ public class UserService {
         }
         return null;
     }
+
+    public User getUserByEmail(String email) {
+        System.out.println("GETING USER BY EMAIL BBY");
+        try {
+            User user = userRepository.getUserByEmail(email);
+            System.out.println(user.getId() + " OODODID");
+            return user;
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

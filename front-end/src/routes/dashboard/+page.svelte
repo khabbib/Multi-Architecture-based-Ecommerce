@@ -1,18 +1,24 @@
 <script>
 	import { onMount } from 'svelte';
-	import { checkAuthInDashboardPage, getOnlineUsers, handleLogout } from '../../events/util';
+	import { checkAuthInDashboardPage, getOnlineUsers, handleLogout, getOrderHistory } from '../../events/util';
 	import { preInitializePage } from '../../events/navigator';
 	import Message from '../../components/message.svelte';
 	import Product from '../product/+page.svelte';
 
 	let users = [];
 	let error = null;
+	let orderHistory = []
+
 	onMount(async () => {
 		error = preInitializePage();
 		checkAuthInDashboardPage();
 		users = await getOnlineUsers();
 		console.log('Online Users:', users);
 	});
+
+	async function setOrderHistory() {
+		orderHistory = await getOrderHistory();
+	}
 
 	// ********** NAVIGATION DASHBOARD ********** //
 
@@ -129,6 +135,7 @@
 							>
 							<button
 								on:click={navOrderHistory}
+								on:click={setOrderHistory}
 								style="border-bottom: {border4}"
 								class="bg-teal-200 p-2 rounded hover:opacity-70">Order History</button
 							>
@@ -154,7 +161,7 @@
 			</div>
 		</div>
 
-		<div class="bg-teal-50 p-4 rounded w-auto h-[38.2rem]">
+		<div class="bg-teal-50 p-4 rounded w-auto">
 			{#if state == 'overview'}
 				<h1 class="underline">Notifications:</h1>
 				<p>You have 0 notifications!</p>
@@ -189,7 +196,34 @@
 			{:else if state == 'orders'}
 				<p>You have 0 orders.</p>
 			{:else if state == 'orderhistory'}
-				<p>You have 0 order history.</p>
+			<h1 class="underline">Order History:</h1>
+			{#if orderHistory.length > 0}
+			{#each Object.values(orderHistory) as order}
+			<div class="border-2 border-gray-400 p-2 mb-4">
+			  <p>Order ID: {order.orderId}</p>
+			  <p>Billing Address: {order.billingAddress}</p>
+			  <p>Customer ID: {order.customerId}</p>
+			  <p>Delivery Address: {order.deliveryAddress}</p>
+			  <p>Delivery Company: {order.deliveryCompany}</p>
+			  <p>Delivery Date: {order.deliveryDate}</p>
+			  <p>Delivery Status: {order.deliveryStatus}</p>
+			  <p>Payment Method: {order.paymentMethod}</p>
+			  <p>Shipping Address: {order.shippingAddress}</p>
+			  <p>Total Price (Tax): {order.totalPriceTax}</p>
+			  <p>Tracking Number: {order.trackingNumber}</p>
+			  <h2>Items:</h2>
+			  {#each order.items as item}
+				<div class="border-2 border-gray-300 p-2 mb-2">
+				  <p>Product ID: {item.productId}</p>
+				  <p>Quantity: {item.quantity}</p>
+				  <p>Price: {item.price}</p>
+				</div>
+			  {/each}
+			</div>
+		  {/each}
+			{:else}
+			  <p>No order history available.</p>
+			{/if}
 			{:else if state == 'chart'}
 				<p>You have 0 items in cart.</p>
 			{:else if state == 'settings'}

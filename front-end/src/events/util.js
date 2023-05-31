@@ -131,6 +131,7 @@ async function validateLogin(email, password) {
 		console.log('Response: ', response);
 		if (response.length > 0 && response[0].cookie) {
 			window.localStorage.setItem('sessionToken', response[0].cookie);
+			window.localStorage.setItem('userEmail', email); // Store the email in local storage
 			navigateTo('dashboard', 'Successfully logged in');
 		} else {
 			return makeErrorMessage('Email or password is incorrect');
@@ -191,13 +192,31 @@ async function getSearchedProduct(query) {
 	}
 }
 
-export {
-	checkAuthInLoginPage,
-	checkAuthInDashboardPage,
-	handleLogout,
-	validateLogin,
-	getOnlineUsers,
-	getAllProducts,
-	getSearchedProduct,
-	createUser
-};
+async function getUserId(email) {
+	console.log(email + " THIS IS EMAIL");
+	console.log("THIS IS QUERY: " + "http://localhost:8080/users/useremail?email=" + email );
+	const response = await fetch(`http://localhost:8080/users/useremail?email=` + email);
+	const userId = await response.text();
+	console.log("USERID: " + userId);
+	return userId;
+}
+	
+async function getOrderHistory(email) {
+	const userId = await getUserId(localStorage.getItem('userEmail'));
+	const response = await fetch(`http://localhost:8080/order/customer?id=` + userId);
+	const orderHistory = await response.json();
+	console.log(orderHistory);
+	return orderHistory;
+}
+	
+	export {
+		getOrderHistory,
+		checkAuthInLoginPage,
+		checkAuthInDashboardPage,
+		handleLogout,
+		validateLogin,
+		getOnlineUsers,
+		getAllProducts,
+		getSearchedProduct,
+		createUser
+	};

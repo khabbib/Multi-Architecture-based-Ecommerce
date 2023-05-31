@@ -42,9 +42,10 @@ public class OrderController {
         return order.toString();
     }
 
-    @GetMapping("/customer/{id}")
+    @GetMapping("/customer")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<Order>> getOrderByCustomerId(@PathVariable("id") String id) {
+    public ResponseEntity<List<Order>> getOrderByCustomerId(@RequestParam String id) {
+        System.out.println("SEARCHING FOR CUSTOMER");
         try {
             return orderService.getOrdersByCustomerId(id).get();
         } catch (InterruptedException e) {

@@ -155,6 +155,7 @@ public class UserRepository {
                 User retrievedUser = null;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if (snapshot.child("email").getValue().toString().equals(email)) {
+                        System.out.println("User found");
                         String id = snapshot.child("id").getValue().toString();
                         String name = snapshot.child("name").getValue().toString();
                         String email = snapshot.child("email").getValue().toString();
@@ -172,8 +173,6 @@ public class UserRepository {
                 future.completeExceptionally(databaseError.toException());
             }
         });
-
         return future.get();
-
     }
 }
