@@ -166,7 +166,7 @@
 			</div>
 		</div>
 
-		<div class="bg-teal-50 p-4 rounded w-auto">
+		<div class="bg-teal-50 p-4 rounded w-auto h-[80%]">
 			{#if state == 'overview'}
 				<h1 class="underline">Notifications:</h1>
 				<p>You have 0 notifications!</p>

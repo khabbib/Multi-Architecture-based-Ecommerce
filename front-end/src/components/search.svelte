@@ -1,8 +1,19 @@
 <script>
-	export let data;
+
+import { createEventDispatcher } from 'svelte';
+  
+  const dispatch = createEventDispatcher();
+  
+  let search = '';
+
+  function handleSearch() {
+    console.log('Search com:', search);
+    dispatch('search', search);
+  }
+
 </script>
 
-<form action="#" method="GET" class="user-list-form">
+<form class="user-list-form" on:submit|preventDefault={handleSearch}>
 	<div class="search-input-wrapper">
 		<div class="search-icon">
 			<svg
@@ -19,15 +30,18 @@
 			</svg>
 		</div>
 		<label for="topbar-search" class="sr-only">Search</label>
-		<input type="text" name="email" id="topbar-search" class="search-input" placeholder="Search" />
+		<input type="text" bind:value={search} name="text" id="topbar-search" class="search-input" placeholder="Search" />
+
 	</div>
 </form>
 
 <style>
 	.user-list-form .search-input {
+		width: 100%;
 		--tw-bg-opacity: 1;
-		background-color: rgb(249 250 251 / var(--tw-bg-opacity));
-		border: 1px solid rgba(229, 231, 235, var(--tw-border-opacity));
+		background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+		border: 1px solid #e5e7eb;
+		
 		border-radius: 0.5rem;
 		padding: 0.5rem 1rem 0.5rem 2.75rem; /* Adjust the padding to accommodate the icon */
 		font-size: 1rem;

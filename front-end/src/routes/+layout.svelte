@@ -23,6 +23,11 @@
 		padding-inline: 5.5%;
 	}
 
+	main {
+		height: 80vh;
+		overflow: scroll;
+	}
+
 	@media (min-width: 1440px) {
 		.layout {
 			padding-inline: 0;
