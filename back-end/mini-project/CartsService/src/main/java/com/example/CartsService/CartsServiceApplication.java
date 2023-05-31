@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -25,6 +26,16 @@ public class CartsServiceApplication {
             return (args) -> {
                 FirebaseInitializer.initializeFireBase("cart");
                 // Search carts
+                /*
+                HashMap<String, String> values = new HashMap<>();
+                values.put("product1", "1");
+                values.put("product2", "2");
+                values.put("product3", "1");
+
+                CompletableFuture<String> cardCreated = cartRepository.createNewCart(new Cart(3.0, 3.0, 3.0, values));
+                System.out.println("Card created: " + cardCreated.get());
+
+                 */
 
                 CompletableFuture<List<Cart>> carts = cartRepository.getAvailableCarts();
                 System.out.println("All carts: " + carts.get());

@@ -3,35 +3,33 @@ package com.example.CartsService.model;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-@NoArgsConstructor
 public class Cart {
     private double cartId;
     private double customerId;
     private double orderId;
-    private ArrayList<Double> productIds;
+    private Map<String, String> productList;
+    //Hashmapen innehåller först produktid, sedan antalet av produkten.
 
-
-    public Cart(double cartId, double customerId, double orderId, ArrayList<Double> productIds) {
+    public Cart(double orderId, double cartId, double customerId, Map<String, String> productList){
         this.cartId = cartId;
         this.customerId = customerId;
         this.orderId = orderId;
-        this.productIds = productIds;
+        this.productList = productList;
     }
 
-    public Cart(double cartId, double customerId, double orderId){
-        this.cartId = cartId;
-        this.customerId = customerId;
-        this.orderId = orderId;
-        this.productIds = new ArrayList<>();
+    public Cart(){
+
     }
 
-    public ArrayList<Double> getProductIds() {
-        return productIds;
+    public Map<String, String> getProductList() {
+        return productList;
     }
 
-    public void setProductIds(ArrayList<Double> productIds) {
-        this.productIds = productIds;
+    public void setProductList(Map<String, String> productList) {
+        this.productList = productList;
     }
 
     public double getCartId() {
@@ -64,7 +62,7 @@ public class Cart {
                 "cart ID='" + cartId + '\'' +
                 ", customer ID='" + customerId + '\'' +
                 ", order ID ='" + orderId + '\'' +
-                ", product ID:s ='" + productIds.toString() + '\'' +
+                ", product list ='" + productList.toString() + '\'' +
                 '}';
     }
 }

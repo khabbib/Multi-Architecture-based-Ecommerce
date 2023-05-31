@@ -37,9 +37,9 @@ public class CartController {
      * @return cart objektet
      *
      * Exempel request i postman:
-     * localhost:8080/carts-service/cart/cartById?id=gadhf34g1j234gf
+     * localhost:8080/carts-service/cart/cartById/:id
      */
-    @GetMapping("/cartById{id}") //Get specific cart
+    @GetMapping("/cartById/{id}") //Get specific cart
     @ResponseStatus(HttpStatus.CREATED)
     public CompletableFuture<Cart> getCartById(@PathVariable("id") String id){
         return cartService.getCartById(id);
@@ -53,9 +53,14 @@ public class CartController {
      *
      * Exempel request i postman:
      * {
-     *     "cartId": 3.0,
-     *     "customerId": 3.0,
-     *     "orderId": 3.0
+     *     "cartId": 5.0,
+     *     "customerId": 5.0,
+     *     "orderId": 5.0,
+     *     "productList": {
+     *         "productId1": "1",
+     *         "productId2": "2",
+     *         "productId3": "1"
+     *     }
      * }
      */
     @PostMapping("/create") //Create a new cart
@@ -66,19 +71,25 @@ public class CartController {
 
     /**
      * Lägg till en produkt i kundvagnen. Funktionen kollar så att produkten är tillgänglig innan den läggs till.
-     * @param cid cart id på kundvagnen.
-     * @param pid product id på produkten att lägga till.
+     * @param cartId cart id på kundvagnen.
+     * @param productId product id på produkten att lägga till.
      * @return productId som las till i kundvagnen.
      */
     @PostMapping("/addToCart{cartId}{productId}") //Put item into cart.
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> addItemToCart(@PathVariable("cid") String cid, @PathVariable("pid") String pid){
-        return cartService.addItemToCart(cid, pid);
+    public ResponseEntity<String> addItemToCart(@RequestParam("cartId") String cartId, @RequestParam("productId") String productId){
+        return cartService.addItemToCart(cartId, productId);
     }
 
-    @DeleteMapping("/{id}") //Remove item from cart.
+    @DeleteMapping("/removeFromCart{cartId}{productId}") //Remove item from cart.
     @ResponseStatus(HttpStatus.OK)
-    public CompletableFuture<Cart> removeItemFromCart(@RequestParam String cartId, @RequestParam String productId){
+    public ResponseEntity<String> removeItemFromCart(@RequestParam("cartId") String cartId, @RequestParam("productId") String productId){
         return cartService.removeItemFromCart(cartId, productId);
+    }
+
+    @DeleteMapping("/deleteCart{cartId}") //Delete a whole cart.
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> deleteCart(@RequestParam("cartId") String cartId){
+        return cartService.deleteExistingCart(cartId);
     }
 }
