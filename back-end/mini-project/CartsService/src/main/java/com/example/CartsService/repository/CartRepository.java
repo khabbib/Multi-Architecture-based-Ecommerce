@@ -3,6 +3,7 @@ package com.example.CartsService.repository;
 import com.example.CartsService.model.Cart;
 import com.google.firebase.database.*;
 import com.google.firebase.internal.NonNull;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import static com.fasterxml.jackson.core.io.NumberInput.parseDouble;
 
@@ -105,33 +107,75 @@ public class CartRepository {
         return future;
     }
 
-    //Lägg till en ny produkt i kundvagnen.
     public ResponseEntity<String> addItemToCart(String cartId, String productId) {
-        System.out.println("Adding items");
         CompletableFuture<Cart> cart = getCartById(cartId);
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("cart").child(String.valueOf(cartId)).child("productList");
-        databaseReference.setValueAsync("productId");
-        return ResponseEntity.ok().body(productId);
-        /*
-        Create product in repo
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("product");
-        DatabaseReference newProductReference = databaseReference.push();
-        newProductReference.setValueAsync(product);
-        String productId = newProductReference.getKey();
-        return ResponseEntity.ok().body(productId);
-         */
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("cart").child(cartId).child("productList");;
 
+        try{
+            Map<String, String> map = cart.get().getProductList();
+
+            if(map != null){
+                if(map.containsKey(productId)){
+                    int amount = Integer.parseInt(map.get(productId));
+                    amount++;
+                    map.put(productId, Integer.toString(amount));
+                }else{
+                    map.put(productId, "1");
+                }
+                databaseReference.setValueAsync(map);
+
+            }else{
+                Map<String, String> newProductList = new HashMap<>();
+                newProductList.put(productId, "1");
+                databaseReference.setValueAsync(newProductList);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.ok().body("Added to productlist: " + productId);
     }
 
-    public CompletableFuture<String> deleteExistingCart(String id) {
-        CompletableFuture<String> future = new CompletableFuture<>();
-
-        return future;
+    public ResponseEntity<String> deleteExistingCart(String cartId) {
+        try {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("cart").child(cartId);
+            databaseReference.removeValueAsync().get();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (InterruptedException | ExecutionException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
-    public CompletableFuture<Cart> removeItemFromCart(String cartId, String productId) {
-        CompletableFuture<Cart> future = new CompletableFuture<>();
+    public ResponseEntity<String> removeItemFromCart(String cartId, String productId) {
+        CompletableFuture<Cart> cart = getCartById(cartId);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("cart").child(cartId).child("productList");
 
-        return future;
+        try{
+            Map<String, String> map = cart.get().getProductList();
+
+            if(map != null){
+                if(map.containsKey(productId)){
+                    int amount = Integer.parseInt(map.get(productId));
+                    if(amount > 1){
+                        amount--;
+                        map.put(productId, Integer.toString(amount));
+                    }else{
+                        map.remove(productId);
+                    }
+                    databaseReference.setValueAsync(map);
+                }else{
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+                }
+
+            }else{
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.ok().body("Removed item: " + productId);
     }
 }

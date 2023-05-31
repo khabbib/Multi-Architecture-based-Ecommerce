@@ -26,25 +26,16 @@ public class CartsServiceApplication {
             return (args) -> {
                 FirebaseInitializer.initializeFireBase("cart");
                 // Search carts
-
                 /*
                 HashMap<String, String> values = new HashMap<>();
-                values.put("1", "1");
-                values.put("2", "2");
-                values.put("3", "3");
-                cartRepository.createNewCart(new Cart(3.0,3.0,3.0, values));
+                values.put("product1", "1");
+                values.put("product2", "2");
+                values.put("product3", "1");
+
+                CompletableFuture<String> cardCreated = cartRepository.createNewCart(new Cart(3.0, 3.0, 3.0, values));
+                System.out.println("Card created: " + cardCreated.get());
 
                  */
-                /*
-                HashMap<String, String> values = new HashMap<>();
-                values.put("Key1", "value1");
-                values.put("Key2", "value2");
-                values.put("Key3", "value3");
-
-                 */
-
-                //CompletableFuture<String> cardCreated = cartRepository.createNewCart(new Cart(3.0, 3.0, 3.0, values));
-                //System.out.println("Card created: " + cardCreated.get());
 
                 CompletableFuture<List<Cart>> carts = cartRepository.getAvailableCarts();
                 System.out.println("All carts: " + carts.get());

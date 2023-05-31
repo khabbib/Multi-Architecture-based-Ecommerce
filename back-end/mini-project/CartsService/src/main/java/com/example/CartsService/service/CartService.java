@@ -33,11 +33,11 @@ public class CartService {
         return cartRepository.addItemToCart(cartId, productId);
     }
 
-    public CompletableFuture<String> deleteExistingCart(String id) {
+    public ResponseEntity<String> deleteExistingCart(String id) {
         return cartRepository.deleteExistingCart(id);
     }
 
-    public CompletableFuture<Cart> removeItemFromCart(String cartId, String productId) {
+    public ResponseEntity<String> removeItemFromCart(String cartId, String productId) {
         return cartRepository.removeItemFromCart(cartId, productId);
     }
 }

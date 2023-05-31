@@ -57,9 +57,9 @@ public class CartController {
      *     "customerId": 5.0,
      *     "orderId": 5.0,
      *     "productList": {
-     *         "Key1": "productId1",
-     *         "Key2": "productId2",
-     *         "Key3": "productId3"
+     *         "productId1": "1",
+     *         "productId2": "2",
+     *         "productId3": "1"
      *     }
      * }
      */
@@ -81,9 +81,15 @@ public class CartController {
         return cartService.addItemToCart(cartId, productId);
     }
 
-    @DeleteMapping("/{id}") //Remove item from cart.
+    @DeleteMapping("/removeFromCart{cartId}{productId}") //Remove item from cart.
     @ResponseStatus(HttpStatus.OK)
-    public CompletableFuture<Cart> removeItemFromCart(@RequestParam String cartId, @RequestParam String productId){
+    public ResponseEntity<String> removeItemFromCart(@RequestParam("cartId") String cartId, @RequestParam("productId") String productId){
         return cartService.removeItemFromCart(cartId, productId);
+    }
+
+    @DeleteMapping("/deleteCart{cartId}") //Delete a whole cart.
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> deleteCart(@RequestParam("cartId") String cartId){
+        return cartService.deleteExistingCart(cartId);
     }
 }
