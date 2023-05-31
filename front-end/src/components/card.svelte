@@ -2,11 +2,11 @@
 	export let products;
 </script>
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr))">
 	{#each products as product}
 		<div class="product-card">
 			<div class="product-tumb">
-				{#if product.pName.includes('Iphone')}
+				{#if product.pName.includes('iPhone')}
 					<img src="./product/iphone.png" alt="" />
 				{:else if product.pName.includes('Macbook')}
 					<img src="./product/macbook.png" alt="" />
@@ -18,7 +18,7 @@
 					<img src="./product/airpods.png" alt="" />
 				{:else}
 					<img
-						src="https://via.placeholder.com/300x200.png?text={product.pName}"
+						src="./product/diff.png"
 						alt={product.pName}
 					/>
 				{/if}

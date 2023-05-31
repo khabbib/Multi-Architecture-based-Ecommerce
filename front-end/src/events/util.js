@@ -106,8 +106,26 @@ async function createUser(name, email, password) {
 }
 
 async function handleLogout() {
-	localStorage.removeItem('sessionToken'); // Clear the token from cookie or local storage
-	navigateTo('login', 'You have been logged out');
+	//localStorage.removeItem('sessionToken'); // Clear the token from cookie or local storage
+	// navigateTo('login', 'You have been logged out');
+	const token = localStorage.getItem('sessionToken'); // Retrieve the token from cookie or local storage
+	if (token) {
+		console.log('token: ', token);
+		await fetch('http://localhost:8080/auth/logout', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ token })
+		}).then((res) => {
+			console.log('Logout response: ', res);
+			if (res.status === 200) {
+				console.log('User is still logged in');
+				navigateTo('login', 'You have been logged out');
+				localStorage.removeItem('sessionToken');
+			}
+		});
+	}
 }
 
 async function validateLogin(email, password) {

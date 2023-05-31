@@ -181,9 +181,16 @@
 				{#if users.length > 0}
 					<h1 class="underline">Online users:</h1>
 					{#each users as user}
-						<p>Email: {user.email}</p>
-						<p>Name: {user.name}</p>
-						<p>Role: {user.role}</p>
+					
+					<div class="p-2 rounded border-2 border-gray-100 flex gap-2">
+							<div class="rounded radius-2 border-2 border-gray-100 p-2 bg-teal-400" style="border-radius: 50%; width: 20px; height:20px;"></div>
+							<div>
+								<div style="width: 90%; heigth:1px; background: gray;"></div>
+								<p>Email: {user.email}</p>
+								<p>Name: {user.name}</p>
+								<p>Role: {user.role}</p>
+							</div>
+						</div>
 					{/each}
 				{/if}
 			{:else if state == 'addprod'}
