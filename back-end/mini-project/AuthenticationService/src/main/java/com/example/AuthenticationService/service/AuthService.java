@@ -23,6 +23,13 @@ public class AuthService {
     private final WebClient.Builder webClientBuilder;
     private List<AuthUser> authUsers = new ArrayList<>();
 
+    /**
+     * Authenticate the user
+     * @param email
+     * @param password
+     * @param response
+     * @return
+     */
     public ResponseEntity<List<HashMap<String, String>>> login(String email, String password, HttpServletResponse response) {
         User user = webClientBuilder.build().get()
                 .uri("http://localhost:1080/users/user-exists?email=" + email + "&password=" + password)
@@ -34,7 +41,11 @@ public class AuthService {
         System.out.println("Result from user-service: " + user);
         if (user != null) {
             // expireation time for 20 seconds
-            Date expirationTime = new Date(System.currentTimeMillis() +20000 * 4);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            calendar.add(Calendar.HOUR_OF_DAY, 24);
+
+            Date expirationTime = calendar.getTime();
             String secretKey = "secret";
             String jwt = Jwts.builder()
                     .setSubject(user.getId())
@@ -61,6 +72,11 @@ public class AuthService {
         }
     }
 
+    /**
+     * Check if the user is logged in
+     * @param token
+     * @return
+     */
     public ResponseEntity<String> check(String token) {
         for (AuthUser user: authUsers
              ) {
@@ -77,6 +93,12 @@ public class AuthService {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not logged in");
     }
 
+    /**
+     * Logout the user
+     * @param token
+     * @param response
+     * @return
+     */
     public ResponseEntity<String> logout(String token, HttpServletResponse response) {
         for (AuthUser user: authUsers
         ) {
@@ -93,6 +115,10 @@ public class AuthService {
         return ResponseEntity.ok("User logged out");
     }
 
+    /**
+     * Get all the online users
+     * @return
+     */
     public ResponseEntity<List<User>> getOnlineUsers() {
         ResponseEntity<List<User>> users = ResponseEntity.ok().body(List.of(authUsers.stream().map(AuthUser::getUser).toArray(User[]::new)));
         System.out.println("Users to return: " + users);
