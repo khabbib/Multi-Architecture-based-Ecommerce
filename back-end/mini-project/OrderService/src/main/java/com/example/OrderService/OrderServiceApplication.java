@@ -37,17 +37,17 @@ public class OrderServiceApplication {
 			CompletableFuture<Order> orderFuture = repository.findById("e7665aaf-8d93-4a19-81c1-ecbe84a681b2");
 
 
-			//create items list
-			ArrayList<ItemList> items = new ArrayList<>();
-			items.add(new ItemList("product1", 1, 10));
-			items.add(new ItemList("product2", 2, 20));
-			items.add(new ItemList("product3", 3, 30));
-			// Create an order String customerId, ArrayList<ItemList> items, String shippingAddress, String billingAddress, String paymentMethod, String orderStatus, String orderDate, String deliveryDate, String deliveryCompany, String trackingNumber, String deliveryStatus, String deliveryAddress, double totalPriceTax);
-			Order order1 = new Order("c1a2635d-3301-4894-9ca8-9e61b33c6555", items, "shippingAddress", "billingAddress", "paymentMethod", "orderStatus", "orderDate", "deliveryDate", "deliveryCompany", "trackingNumber", "deliveryStatus", "deliveryAddress", 100);
-			Order order2 = new Order("c1a2635d-3301-4894-9ca8-9e61b33c6555", items, "shippingAddress", "billingAddress", "paymentMethod", "orderStatus", "orderDate", "deliveryDate", "deliveryCompany", "trackingNumber", "deliveryStatus", "deliveryAddress", 200);
-			// Add the order to the database
-			repository.save(order1);
-			repository.save(order2);
+//			//create items list
+//			ArrayList<ItemList> items = new ArrayList<>();
+//			items.add(new ItemList("product1", 1, 10));
+//			items.add(new ItemList("product2", 2, 20));
+//			items.add(new ItemList("product3", 3, 30));
+//			// Create an order String customerId, ArrayList<ItemList> items, String shippingAddress, String billingAddress, String paymentMethod, String orderStatus, String orderDate, String deliveryDate, String deliveryCompany, String trackingNumber, String deliveryStatus, String deliveryAddress, double totalPriceTax);
+//			Order order1 = new Order("c1a2635d-3301-4894-9ca8-9e61b33c6555", items, "shippingAddress", "billingAddress", "paymentMethod", "orderStatus", "orderDate", "deliveryDate", "deliveryCompany", "trackingNumber", "deliveryStatus", "deliveryAddress", 100);
+//			Order order2 = new Order("c1a2635d-3301-4894-9ca8-9e61b33c6555", items, "shippingAddress", "billingAddress", "paymentMethod", "orderStatus", "orderDate", "deliveryDate", "deliveryCompany", "trackingNumber", "deliveryStatus", "deliveryAddress", 200);
+//			// Add the order to the database
+//			repository.save(order1);
+//			repository.save(order2);
 
 			customerFuture.thenAccept(responseEntity -> {
 				if (responseEntity.getStatusCode().is2xxSuccessful()) {
