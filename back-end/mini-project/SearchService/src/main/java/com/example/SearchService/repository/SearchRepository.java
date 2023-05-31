@@ -36,6 +36,7 @@ public class SearchRepository {
         // Create a Firebase query that will find products with a name that starts with the query.
         // The "\uf8ff" is a high Unicode character that ensures the query includes all names that start with the search term.
         // This effectively makes the query a "starts with" query.
+        // To lower and upper case check
         Query searchQuery = ref.orderByChild("pName").startAt(query).endAt(query + "\uf8ff");
 
         // Add a listener to the query. This will be called when the data is available.
