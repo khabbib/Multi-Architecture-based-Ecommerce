@@ -175,17 +175,35 @@
 					{/each}
 				{/if}
 			{:else if state == 'addprod'}
-				<p>Add product</p>
+				<div class="p-2">
+					<form action="">
+						<input class="p-2" type="text" placeholder="Product Name">
+						<br><br>
+						<input class="p-2" type="text" placeholder="Product Price">
+						<br><br>
+						<input class="p-2" type="text" placeholder="Product Owner">
+						<br><br>
+						<button class="bg-green-200 p-2 rounded hover:opacity-70">Add product</button>
+					</form>
+				</div>
 			{:else if state == 'orders'}
-				<p>orders page!</p>
+				<p>You have 0 orders.</p>
 			{:else if state == 'orderhistory'}
-				<p>orderhistory page!</p>
+				<p>You have 0 order history.</p>
 			{:else if state == 'chart'}
-				<p>cart page!</p>
+				<p>You have 0 items in cart.</p>
 			{:else if state == 'settings'}
-				<p>setting page!</p>
+				<form action="">
+					<input class="p-2" type="text" placeholder="First Name" value="Admin" disabled>
+					<br><br>
+					<input class="p-2" type="text" placeholder="Last Name" value="Sample" disabled>
+					<br><br>
+					<input class="p-2" type="text" placeholder="Email" value="admin@sample.com" disabled>
+					<br><br>
+					<button class="bg-blue-200 p-2 rounded hover:opacity-70">Change profile</button>
+				</form>
+
 			{:else if state == 'product'}
-				<p>setting page!</p>
 				<Product/>
 			{/if}
 		</div>
