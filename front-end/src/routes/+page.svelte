@@ -5,7 +5,7 @@
 
 <!-- Home -->
 <div class="bg-green-50">
-	<div class="flex items-center justify-center flex-col h-[80vh] gap-10">
+	<div class="flex items-center justify-center flex-col h-[80vh] gap-10" style="overflow: scroll;">
 		<h1 class="text-4xl font-bold">Welcome to Reshoprio</h1>
 		<h2 class="text-2xl">Reuse. Shop. Prioritize.</h2>
 		<button

@@ -194,14 +194,14 @@ async function getSearchedProduct(query) {
 }
 
 async function getUserId(email) {
-	console.log(email + " THIS IS EMAIL");
-	console.log("THIS IS QUERY: " + "http://localhost:8080/users/useremail?email=" + email );
+	console.log(email + ' THIS IS EMAIL');
+	console.log('THIS IS QUERY: ' + 'http://localhost:8080/users/useremail?email=' + email);
 	const response = await fetch(`http://localhost:8080/users/useremail?email=` + email);
 	const userId = await response.text();
-	console.log("USERID: " + userId);
+	console.log('USERID: ' + userId);
 	return userId;
 }
-	
+
 async function getOrderHistory(email) {
 	const userId = await getUserId(localStorage.getItem('userEmail'));
 	const response = await fetch(`http://localhost:8080/order/customer?id=` + userId);
@@ -209,15 +209,15 @@ async function getOrderHistory(email) {
 	console.log(orderHistory);
 	return orderHistory;
 }
-	
-	export {
-		getOrderHistory,
-		checkAuthInLoginPage,
-		checkAuthInDashboardPage,
-		handleLogout,
-		validateLogin,
-		getOnlineUsers,
-		getAllProducts,
-		getSearchedProduct,
-		createUser
-	};
+
+export {
+	getOrderHistory,
+	checkAuthInLoginPage,
+	checkAuthInDashboardPage,
+	handleLogout,
+	validateLogin,
+	getOnlineUsers,
+	getAllProducts,
+	getSearchedProduct,
+	createUser
+};

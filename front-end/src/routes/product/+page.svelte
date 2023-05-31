@@ -12,7 +12,7 @@
 
 	onMount(async () => {
 		const result = await getAllProducts();
-		if(result){
+		if (result) {
 			products = result;
 		}
 	});
