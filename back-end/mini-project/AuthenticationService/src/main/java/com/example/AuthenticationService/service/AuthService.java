@@ -78,19 +78,27 @@ public class AuthService {
      * @return
      */
     public ResponseEntity<String> check(String token) {
+        System.out.println("Got request to check token: " + token);
+        System.out.println("Users: " + authUsers);
+        Boolean isLogged = false;
         for (AuthUser user: authUsers
              ) {
             if(user.getToken().equals(token)) {
                 if(user.getExpireTime().getTime() < System.currentTimeMillis()) {
-                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Session expired");
+
                 }else {
-                    return ResponseEntity.ok("User is logged in");
+                    isLogged = true;
                 }
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not logged in");
             }
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not logged in");
+
+        System.out.println("Is logged: " + isLogged);
+        if (!isLogged) {
+            deleteAuthUser(token);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not logged in");
+        } else {
+            return ResponseEntity.ok("User is logged in");
+        }
     }
 
     /**
@@ -100,19 +108,25 @@ public class AuthService {
      * @return
      */
     public ResponseEntity<String> logout(String token, HttpServletResponse response) {
+        deleteAuthUser(token);
+        return ResponseEntity.ok("User logged out");
+    }
+
+    public void deleteAuthUser(String token) {
+        System.out.println("Delete token: " + token);
         for (AuthUser user: authUsers
         ) {
             if(user.getToken().equals(token)) {
+                System.out.println("User to delete: " + user);
                 authUsers.remove(user);
                 Cookie cookie = new Cookie("jwt", "");
                 cookie.setHttpOnly(true);
                 cookie.setMaxAge(0);
-                response.addCookie(cookie);
                 break;
             }
         }
+        System.out.println("Users: " + authUsers);
 
-        return ResponseEntity.ok("User logged out");
     }
 
     /**
@@ -121,7 +135,6 @@ public class AuthService {
      */
     public ResponseEntity<List<User>> getOnlineUsers() {
         ResponseEntity<List<User>> users = ResponseEntity.ok().body(List.of(authUsers.stream().map(AuthUser::getUser).toArray(User[]::new)));
-        System.out.println("Users to return: " + users);
         return users;
     }
 

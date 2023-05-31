@@ -52,9 +52,7 @@ public class AuthController {
      */
     @PostMapping("/check")
     public ResponseEntity<String> check(@RequestBody CheckAuthRequest token) {
-        System.out.println("Got request to check" + token.getToken());
         ResponseEntity<String> output = authService.check(token.getToken());
-        System.out.println("Output from check: " + output);
         return output;
     }
 
