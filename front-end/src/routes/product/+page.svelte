@@ -33,12 +33,10 @@
 </script>
 
 <div class="bg-green-50 p-5 h-[80vh]" style="overflow: scroll;">
-	
-
 	<!-- Search component -->
 	<Search on:search={handleSearch} />
 
-	<div style="width: 100%; height: 1px; background: gray; margin: 2rem 0;"></div>
+	<div style="width: 100%; height: 1px; background: gray; margin: 2rem 0;" />
 	{#if isSearching}
 		<p>Searching...</p>
 	{:else}
@@ -46,14 +44,14 @@
 		{#if search.length > 0}
 			<!-- Product card comp -->
 			<Card products={search} />
-			{/if}
+		{/if}
 	{/if}
 
 	{#if products.length > 0 && search.length == 0 && query.length == 0}
 		<h1>Available Products:</h1>
 		{#if products.length > 0}
 			<!-- Product card comp -->
-			<Card products={products} />
+			<Card {products} />
 		{/if}
 	{/if}
 </div>

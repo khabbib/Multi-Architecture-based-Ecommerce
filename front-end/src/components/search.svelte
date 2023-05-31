@@ -1,16 +1,14 @@
 <script>
+	import { createEventDispatcher } from 'svelte';
 
-import { createEventDispatcher } from 'svelte';
-  
-  const dispatch = createEventDispatcher();
-  
-  let search = '';
+	const dispatch = createEventDispatcher();
 
-  function handleSearch() {
-    console.log('Search com:', search);
-    dispatch('search', search);
-  }
+	let search = '';
 
+	function handleSearch() {
+		console.log('Search com:', search);
+		dispatch('search', search);
+	}
 </script>
 
 <form class="user-list-form" on:submit|preventDefault={handleSearch}>
@@ -30,8 +28,14 @@ import { createEventDispatcher } from 'svelte';
 			</svg>
 		</div>
 		<label for="topbar-search" class="sr-only">Search</label>
-		<input type="text" bind:value={search} name="text" id="topbar-search" class="search-input" placeholder="Search" />
-
+		<input
+			type="text"
+			bind:value={search}
+			name="text"
+			id="topbar-search"
+			class="search-input"
+			placeholder="Search"
+		/>
 	</div>
 </form>
 
@@ -41,7 +45,7 @@ import { createEventDispatcher } from 'svelte';
 		--tw-bg-opacity: 1;
 		background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 		border: 1px solid #e5e7eb;
-		
+
 		border-radius: 0.5rem;
 		padding: 0.5rem 1rem 0.5rem 2.75rem; /* Adjust the padding to accommodate the icon */
 		font-size: 1rem;
