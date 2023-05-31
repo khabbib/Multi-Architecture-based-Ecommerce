@@ -1,13 +1,18 @@
 <script>
 	import { onMount } from 'svelte';
-	import { checkAuthInDashboardPage, getOnlineUsers, handleLogout, getOrderHistory } from '../../events/util';
+	import {
+		checkAuthInDashboardPage,
+		getOnlineUsers,
+		handleLogout,
+		getOrderHistory
+	} from '../../events/util';
 	import { preInitializePage } from '../../events/navigator';
 	import Message from '../../components/message.svelte';
 	import Product from '../product/+page.svelte';
 
 	let users = [];
 	let error = null;
-	let orderHistory = []
+	let orderHistory = [];
 
 	onMount(async () => {
 		error = preInitializePage();
@@ -161,7 +166,7 @@
 			</div>
 		</div>
 
-		<div class="bg-teal-50 p-4 rounded w-auto">
+		<div class="bg-teal-50 p-4 rounded w-auto h-[80%]">
 			{#if state == 'overview'}
 				<h1 class="underline">Notifications:</h1>
 				<p>You have 0 notifications!</p>
@@ -176,69 +181,77 @@
 				{#if users.length > 0}
 					<h1 class="underline">Online users:</h1>
 					{#each users as user}
-						<p>Email: {user.email}</p>
-						<p>Name: {user.name}</p>
-						<p>Role: {user.role}</p>
+						<div class="p-2 rounded border-2 border-gray-100 flex gap-2">
+							<div
+								class="rounded radius-2 border-2 border-gray-100 p-2 bg-teal-400"
+								style="border-radius: 50%; width: 20px; height:20px;"
+							/>
+							<div>
+								<div style="width: 90%; heigth:1px; background: gray;" />
+								<p>Email: {user.email}</p>
+								<p>Name: {user.name}</p>
+								<p>Role: {user.role}</p>
+							</div>
+						</div>
 					{/each}
 				{/if}
 			{:else if state == 'addprod'}
 				<div class="p-2">
 					<form action="">
-						<input class="p-2" type="text" placeholder="Product Name">
-						<br><br>
-						<input class="p-2" type="text" placeholder="Product Price">
-						<br><br>
-						<input class="p-2" type="text" placeholder="Product Owner">
-						<br><br>
+						<input class="p-2" type="text" placeholder="Product Name" />
+						<br /><br />
+						<input class="p-2" type="text" placeholder="Product Price" />
+						<br /><br />
+						<input class="p-2" type="text" placeholder="Product Owner" />
+						<br /><br />
 						<button class="bg-green-200 p-2 rounded hover:opacity-70">Add product</button>
 					</form>
 				</div>
 			{:else if state == 'orders'}
 				<p>You have 0 orders.</p>
 			{:else if state == 'orderhistory'}
-			<h1 class="underline">Order History:</h1>
-			{#if orderHistory.length > 0}
-			{#each Object.values(orderHistory) as order}
-			<div class="border-2 border-gray-400 p-2 mb-4">
-			  <p>Order ID: {order.orderId}</p>
-			  <p>Billing Address: {order.billingAddress}</p>
-			  <p>Customer ID: {order.customerId}</p>
-			  <p>Delivery Address: {order.deliveryAddress}</p>
-			  <p>Delivery Company: {order.deliveryCompany}</p>
-			  <p>Delivery Date: {order.deliveryDate}</p>
-			  <p>Delivery Status: {order.deliveryStatus}</p>
-			  <p>Payment Method: {order.paymentMethod}</p>
-			  <p>Shipping Address: {order.shippingAddress}</p>
-			  <p>Total Price (Tax): {order.totalPriceTax}</p>
-			  <p>Tracking Number: {order.trackingNumber}</p>
-			  <h2>Items:</h2>
-			  {#each order.items as item}
-				<div class="border-2 border-gray-300 p-2 mb-2">
-				  <p>Product ID: {item.productId}</p>
-				  <p>Quantity: {item.quantity}</p>
-				  <p>Price: {item.price}</p>
-				</div>
-			  {/each}
-			</div>
-		  {/each}
-			{:else}
-			  <p>No order history available.</p>
-			{/if}
+				<h1 class="underline">Order History:</h1>
+				{#if orderHistory.length > 0}
+					{#each Object.values(orderHistory) as order}
+						<div class="border-2 border-gray-400 p-2 mb-4">
+							<p>Order ID: {order.orderId}</p>
+							<p>Billing Address: {order.billingAddress}</p>
+							<p>Customer ID: {order.customerId}</p>
+							<p>Delivery Address: {order.deliveryAddress}</p>
+							<p>Delivery Company: {order.deliveryCompany}</p>
+							<p>Delivery Date: {order.deliveryDate}</p>
+							<p>Delivery Status: {order.deliveryStatus}</p>
+							<p>Payment Method: {order.paymentMethod}</p>
+							<p>Shipping Address: {order.shippingAddress}</p>
+							<p>Total Price (Tax): {order.totalPriceTax}</p>
+							<p>Tracking Number: {order.trackingNumber}</p>
+							<h2>Items:</h2>
+							{#each order.items as item}
+								<div class="border-2 border-gray-300 p-2 mb-2">
+									<p>Product ID: {item.productId}</p>
+									<p>Quantity: {item.quantity}</p>
+									<p>Price: {item.price}</p>
+								</div>
+							{/each}
+						</div>
+					{/each}
+				{:else}
+					<p>No order history available.</p>
+				{/if}
 			{:else if state == 'chart'}
 				<p>You have 0 items in cart.</p>
 			{:else if state == 'settings'}
 				<form action="">
-					<input class="p-2" type="text" placeholder="First Name" value="Admin" disabled>
-					<br><br>
-					<input class="p-2" type="text" placeholder="Last Name" value="Sample" disabled>
-					<br><br>
-					<input class="p-2" type="text" placeholder="Email" value="admin@sample.com" disabled>
-					<br><br>
+					<input class="p-2" type="text" placeholder="First Name" value="Admin" disabled />
+					<br /><br />
+					<input class="p-2" type="text" placeholder="Last Name" value="Sample" disabled />
+					<br /><br />
+					<input class="p-2" type="text" placeholder="Email" value="admin@sample.com" disabled />
+					<br /><br />
 					<button class="bg-blue-200 p-2 rounded hover:opacity-70">Change profile</button>
 				</form>
-
 			{:else if state == 'product'}
-				<Product/>
+				<Product />
 			{/if}
 		</div>
 	</div>

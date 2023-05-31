@@ -24,6 +24,7 @@ async function checkAuthInLoginPage() {
 }
 
 async function checkAuthInDashboardPage() {
+	console.log('Checking auth in dashboard page');
 	// Check if user is authenticated
 	const token = localStorage.getItem('sessionToken'); // Retrieve the token from cookie or local storage
 	if (token) {
@@ -105,8 +106,26 @@ async function createUser(name, email, password) {
 }
 
 async function handleLogout() {
-	localStorage.removeItem('sessionToken'); // Clear the token from cookie or local storage
-	navigateTo('login', 'You have been logged out');
+	//localStorage.removeItem('sessionToken'); // Clear the token from cookie or local storage
+	// navigateTo('login', 'You have been logged out');
+	const token = localStorage.getItem('sessionToken'); // Retrieve the token from cookie or local storage
+	if (token) {
+		console.log('token: ', token);
+		await fetch('http://localhost:8080/auth/logout', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ token })
+		}).then((res) => {
+			console.log('Logout response: ', res);
+			if (res.status === 200) {
+				console.log('User is still logged in');
+				navigateTo('login', 'You have been logged out');
+				localStorage.removeItem('sessionToken');
+			}
+		});
+	}
 }
 
 async function validateLogin(email, password) {
@@ -193,14 +212,14 @@ async function getSearchedProduct(query) {
 }
 
 async function getUserId(email) {
-	console.log(email + " THIS IS EMAIL");
-	console.log("THIS IS QUERY: " + "http://localhost:8080/users/useremail?email=" + email );
+	console.log(email + ' THIS IS EMAIL');
+	console.log('THIS IS QUERY: ' + 'http://localhost:8080/users/useremail?email=' + email);
 	const response = await fetch(`http://localhost:8080/users/useremail?email=` + email);
 	const userId = await response.text();
-	console.log("USERID: " + userId);
+	console.log('USERID: ' + userId);
 	return userId;
 }
-	
+
 async function getOrderHistory(email) {
 	const userId = await getUserId(localStorage.getItem('userEmail'));
 	const response = await fetch(`http://localhost:8080/order/customer?id=` + userId);
@@ -208,15 +227,15 @@ async function getOrderHistory(email) {
 	console.log(orderHistory);
 	return orderHistory;
 }
-	
-	export {
-		getOrderHistory,
-		checkAuthInLoginPage,
-		checkAuthInDashboardPage,
-		handleLogout,
-		validateLogin,
-		getOnlineUsers,
-		getAllProducts,
-		getSearchedProduct,
-		createUser
-	};
+
+export {
+	getOrderHistory,
+	checkAuthInLoginPage,
+	checkAuthInDashboardPage,
+	handleLogout,
+	validateLogin,
+	getOnlineUsers,
+	getAllProducts,
+	getSearchedProduct,
+	createUser
+};
