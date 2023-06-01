@@ -174,7 +174,9 @@
 <main>
 	<!-- Dashboard content -->
 	<div class="bg-cyan-100 p-10">
-		<Message {error} />
+		<div style="padding: 1rem 0;">
+			<Message {error} />
+		</div>
 
 		<div class="bg-teal-300 p- rounded grid-cols-1">
 			<div class="grid grid-cols-[200px_minmax(400px,_1fr)_50px]">

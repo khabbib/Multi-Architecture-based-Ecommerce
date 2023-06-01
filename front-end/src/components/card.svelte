@@ -1,4 +1,5 @@
 <script>
+	import { navigateTo } from '../events/navigator';
 	import { getUserId } from '../events/util';
 
 	const addToCart = async (pId, pName) => {
@@ -35,8 +36,9 @@
 				body: JSON.stringify({ cart })
 			}).then((res) => {
 				console.log(res);
-				if (res.status === 200) {
+				if (res.status === 201) {
 					console.log('Added to cart successfully');
+					navigateTo('dashboard', "Added to cart successfully");
 					// Add a function to give information to user
 				}
 			});
