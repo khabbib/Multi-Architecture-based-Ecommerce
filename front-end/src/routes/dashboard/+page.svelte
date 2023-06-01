@@ -8,7 +8,7 @@
 		getCart,
 		getUserId
 	} from '../../events/util';
-	import { preInitializePage } from '../../events/navigator';
+	import { navigateTo, preInitializePage } from '../../events/navigator';
 	import Message from '../../components/message.svelte';
 	import Product from '../product/+page.svelte';
 
@@ -52,6 +52,38 @@
 
 	async function setOrderHistory() {
 		orderHistory = await getOrderHistory();
+	}
+	
+	let addPName = '';
+	let addPOwner = '';
+	let addPDesc = '';
+	async function addProduct(){
+
+		const product = {
+			pId: 0,
+			pName: addPName,
+			pType: 'Electronic',
+			pColor: 'Black',
+			pCondition: addPDesc,
+			pPrice: 99.95,
+			pQuantity: 3,
+			pOwner: addPOwner,
+		}
+		const createUser = await fetch('http://localhost:8080/products/create', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(product)
+		}).then((res) => {	
+			console.log(res);
+			if (res.status === 200) {
+				console.log('Product added successfully');
+				navigateTo('dashboard', "Product added successfully");
+
+				// Add a function to give information to user
+			}
+		});
 	}
 
 	// ********** NAVIGATION DASHBOARD ********** //
@@ -227,13 +259,20 @@
 			{:else if state == 'addprod'}
 				<div class="p-2">
 					<form action="">
-						<input class="p-2" type="text" placeholder="Product Name" />
+						<input
+							bind:value={addPName}
+						class="p-2" type="text" placeholder="Product Name" />
 						<br /><br />
-						<input class="p-2" type="text" placeholder="Product Price" />
+						<input
+							bind:value={addPDesc}
+
+						class="p-2" type="text" placeholder="Product Price" />
 						<br /><br />
-						<input class="p-2" type="text" placeholder="Product Owner" />
+						<input
+							bind:value={addPOwner}
+						class="p-2" type="text" placeholder="Product Owner" />
 						<br /><br />
-						<button class="bg-green-200 p-2 rounded hover:opacity-70">Add product</button>
+						<button class="bg-green-200 p-2 rounded hover:opacity-70" on:click={() => addProduct()}>Add product</button>
 					</form>
 				</div>
 			{:else if state == 'orders'}
