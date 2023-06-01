@@ -37,8 +37,6 @@ public class CartsServiceApplication {
 
                  */
 
-                CompletableFuture<List<Cart>> carts = cartRepository.getAvailableCarts();
-                System.out.println("All carts: " + carts.get());
             };
     }
 }

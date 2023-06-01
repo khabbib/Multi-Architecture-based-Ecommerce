@@ -50,10 +50,10 @@ public class UserService {
     }
 
     public User getUserByEmail(String email) {
-        System.out.println("GETING USER BY EMAIL BBY");
+
+        System.out.println("GETING USER BY EMAIL BBY" + email);
         try {
             User user = userRepository.getUserByEmail(email);
-            System.out.println(user.getId() + " OODODID");
             return user;
         } catch (ExecutionException e) {
             throw new RuntimeException(e);

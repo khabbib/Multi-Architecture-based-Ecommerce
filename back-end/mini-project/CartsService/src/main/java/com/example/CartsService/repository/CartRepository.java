@@ -71,7 +71,6 @@ public class CartRepository {
 
     public CompletableFuture<String> createNewCart(Cart cart) {
         CompletableFuture<String> future = new CompletableFuture<>();
-        System.out.println("Creating new cart..." + cart.toString());
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("cart");
         DatabaseReference newCartReference = databaseReference.push();
         newCartReference.setValueAsync(cart);

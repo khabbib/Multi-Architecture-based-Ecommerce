@@ -42,6 +42,7 @@ public class CartController {
     @GetMapping("/cartById/{id}") //Get specific cart
     @ResponseStatus(HttpStatus.CREATED)
     public CompletableFuture<Cart> getCartById(@PathVariable("id") String id){
+        System.out.println("CartController: " + id);
         return cartService.getCartById(id);
     }
 
@@ -66,6 +67,7 @@ public class CartController {
     @PostMapping("/create") //Create a new cart
     @ResponseStatus(HttpStatus.CREATED)
     public CompletableFuture<String> createNewCart(@RequestBody Cart cart){
+        System.out.println("CartController: ");
         return cartService.createNewCart(cart);
     }
 

@@ -172,13 +172,19 @@ public class OrderRepository {
 
     public ResponseEntity<String> save(Order order) {
         order.setOrderId(UUID.randomUUID().toString());
-        setTotalPrice(order);
-        updateStock(order);
+        //setTotalPrice(order);
+        //updateStock(order);
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("order");
         DatabaseReference newOrderReference = databaseReference.push();
         newOrderReference.setValueAsync(order);
         String orderId = newOrderReference.getKey();
+        deleteCart(order.getCustomerId());
         return ResponseEntity.ok().body(orderId);
+    }
+
+    public void deleteCart(String userId) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("cart");
+        databaseReference.child(userId).removeValueAsync();
     }
 
     // FIXME - This method is not tested yet
