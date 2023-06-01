@@ -123,6 +123,7 @@ async function handleLogout() {
 				console.log('User is still logged in');
 				navigateTo('login', 'You have been logged out');
 				localStorage.removeItem('sessionToken');
+				localStorage.removeItem('userEmail');
 			}
 		});
 	}
@@ -228,6 +229,31 @@ async function getOrderHistory(email) {
 	return orderHistory;
 }
 
+async function getCart() {
+	const userId = await getUserId(localStorage.getItem('userEmail'));
+
+	console.log('USERID: ' + userId);
+	// const response = await fetch(`http://localhost:8080/cart/cartById?id=` + userId);
+	// const cart = await response.json();
+	// console.log(cart);
+	// return cart;
+
+	try {
+		const response = await fetch('http://localhost:8080/cart/?id=' + userId, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then(async (res) => {
+			const search = await res.json();
+			console.log('Cart', search);
+			return search;
+		});
+	} catch (error) {
+		console.error('Error retrieving search:', error);
+		return [];
+	}
+}
 export {
 	getOrderHistory,
 	checkAuthInLoginPage,
@@ -237,5 +263,7 @@ export {
 	getOnlineUsers,
 	getAllProducts,
 	getSearchedProduct,
-	createUser
+	createUser,
+	getUserId,
+	getCart
 };

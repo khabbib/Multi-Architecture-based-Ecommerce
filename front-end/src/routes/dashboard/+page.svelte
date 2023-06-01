@@ -4,7 +4,9 @@
 		checkAuthInDashboardPage,
 		getOnlineUsers,
 		handleLogout,
-		getOrderHistory
+		getOrderHistory,
+		getCart,
+		getUserId
 	} from '../../events/util';
 	import { preInitializePage } from '../../events/navigator';
 	import Message from '../../components/message.svelte';
@@ -13,13 +15,40 @@
 	let users = [];
 	let error = null;
 	let orderHistory = [];
-
+	let cart;
 	onMount(async () => {
 		error = preInitializePage();
 		checkAuthInDashboardPage();
 		users = await getOnlineUsers();
-		console.log('Online Users:', users);
+
+		const userId = await getUserId(localStorage.getItem('userEmail'));
+
+		console.log('USERID: ' + userId);
+		// const response = await fetch(`http://localhost:8080/cart/cartById?id=` + userId);
+		// const cart = await response.json();
+		// console.log(cart);
+		// return cart;
+
+		try {
+			const response = await fetch('http://localhost:8080/cart/?id=' + userId, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(async (res) => {
+				const search = await res.json();
+				console.log('Cart', search);
+				cart = search;
+			});
+		} catch (error) {
+			console.error('Error retrieving search:', error);
+		}
 	});
+
+	async function handleCheckout() {
+		const userId = await getUserId(localStorage.getItem('userEmail'));
+		console.log('Checkout for user ID: ' + userId);
+	}
 
 	async function setOrderHistory() {
 		orderHistory = await getOrderHistory();
@@ -239,7 +268,30 @@
 					<p>No order history available.</p>
 				{/if}
 			{:else if state == 'chart'}
-				<p>You have 0 items in cart.</p>
+				{#if cart.length > 0}
+					<p>You have {cart.length} items in cart.</p>
+					{#each cart as item}
+						<div class="border-2 border-gray-400 p-2 mb-4">
+							<p>Cart ID: {item.cartId}</p>
+							<p>Customer: {item.customerId}</p>
+							<p>Order ID: {item.orderId}</p>
+							<p>Products: {item.productList}</p>
+							<!-- {#if item.productList !== null}
+								<h2>Items:</h2>
+								{#each item.productList as list}
+									<p>Product: {list[0]}</p>
+									<p>Quantity: {list[1]}</p>
+								{/each}
+							{/if} -->
+						</div>
+					{/each}
+					<button
+						class="bg-green-200 p-2 rounded hover:opacity-70"
+						on:click={() => handleCheckout()}>Checkout</button
+					>
+				{:else}
+					<p>No items in cart.</p>
+				{/if}
 			{:else if state == 'settings'}
 				<form action="">
 					<input class="p-2" type="text" placeholder="First Name" value="Admin" disabled />

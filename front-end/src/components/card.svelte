@@ -1,4 +1,50 @@
 <script>
+	import { getUserId } from '../events/util';
+
+	const addToCart = async (pId, pName) => {
+		console.log('ADD TO CART', pId, pName);
+		// 	"cartId": 5.0,
+		//  *     "customerId": 5.0,
+		//  *     "orderId": 5.0,
+		//  *     "productList": {
+		//  *         "productId1": "1",
+		//  *         "productId2": "2",
+		//  *         "productId3": "1"
+		//  *     }
+		console.log('Add to cart: ' + pId);
+		const email = localStorage.getItem('userEmail');
+		const userId = getUserId(email);
+		if (userId == null) {
+			alert('Please login first');
+			return;
+		}
+		const productId = pId;
+		const productList = new Map();
+		productList.set(pName, '1');
+		const cart = {
+			customerId: userId,
+			productId: productId,
+			productList: productList
+		};
+		try {
+			await fetch('http://localhost:8080/cart/create', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ cart })
+			}).then((res) => {
+				console.log(res);
+				if (res.status === 200) {
+					console.log('Added to cart successfully');
+					// Add a function to give information to user
+				}
+			});
+		} catch (error) {
+			console.log('Error creating user:', error);
+		}
+	};
+
 	export let products;
 </script>
 
@@ -30,7 +76,7 @@
 						<a href="">
 							<img src="https://img.icons8.com/material-outlined/24/000000/visible.png" /></a
 						>
-						<a href="">
+						<a href="" on:click={() => addToCart(product.pId, product.pName)}>
 							<img
 								src="https://img.icons8.com/material-outlined/24/000000/add-shopping-cart.png"
 							/></a
