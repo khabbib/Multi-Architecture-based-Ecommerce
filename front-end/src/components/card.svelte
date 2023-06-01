@@ -4,20 +4,13 @@
 
 	const addToCart = async (pId, pName) => {
 		console.log('ADD TO CART', pId, pName);
-		// 	"cartId": 5.0,
-		//  *     "customerId": 5.0,
-		//  *     "orderId": 5.0,
-		//  *     "productList": {
-		//  *         "productId1": "1",
-		//  *         "productId2": "2",
-		//  *         "productId3": "1"
-		//  *     }
+
 		console.log('Add to cart: ' + pId);
 		const email = localStorage.getItem('userEmail');
-		const userId = getUserId(email);
-		if (userId == null) {
-			alert('Please login first');
-			return;
+		const userId = await getUserId(email);
+
+		if (email == null || email == '' || userId == null || userId == '') {
+			navigateTo('login', 'Please login to add to cart');
 		}
 		const productId = pId;
 		const productList = new Map();
@@ -38,7 +31,7 @@
 				console.log(res);
 				if (res.status === 201) {
 					console.log('Added to cart successfully');
-					navigateTo('dashboard', "Added to cart successfully");
+					// navigateTo('dashboard', "Added to cart successfully");
 					// Add a function to give information to user
 				}
 			});
